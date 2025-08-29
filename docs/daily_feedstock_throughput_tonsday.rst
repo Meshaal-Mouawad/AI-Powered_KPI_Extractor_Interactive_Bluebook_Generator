@@ -29,10 +29,10 @@ Daily Feedstock Throughput (tons/day)
 
    <div style="margin-bottom: 1.5em; display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
       <span style="font-size: 13px; font-weight: 500; color: #4a5568;">Open in:</span>
-      <a href="vscode://file//Users/meshaalmouawad/AI-Powered_KPI_Extractor&_Interactive_Bluebook_Generator/sample_project/petrochemical_plant_operations.py:73" target="_blank" style="display: inline-block; background-color: #2c5282; color: white; padding: 8px 12px; border-radius: 6px; text-decoration: none; font-weight: 500; font-size: 13px;">
+      <a href="vscode://file//Users/meshaalmouawad/AI-Powered_KPI_Extractor_Interactive_Bluebook_Generator/sample_project/petrochemical_plant_operations.py:73" target="_blank" style="display: inline-block; background-color: #2c5282; color: white; padding: 8px 12px; border-radius: 6px; text-decoration: none; font-weight: 500; font-size: 13px;">
          VS Code
       </a>
-      <a href="pycharm://open?file=/Users/meshaalmouawad/AI-Powered_KPI_Extractor&_Interactive_Bluebook_Generator/sample_project/petrochemical_plant_operations.py&line=73" target="_blank" style="display: inline-block; background-color: #000000; color: white; padding: 8px 12px; border-radius: 6px; text-decoration: none; font-weight: 500; font-size: 13px;">
+      <a href="pycharm://open?file=/Users/meshaalmouawad/AI-Powered_KPI_Extractor_Interactive_Bluebook_Generator/sample_project/petrochemical_plant_operations.py&line=73" target="_blank" style="display: inline-block; background-color: #000000; color: white; padding: 8px 12px; border-radius: 6px; text-decoration: none; font-weight: 500; font-size: 13px;">
          PyCharm
       </a>
    </div>
@@ -41,38 +41,38 @@ Daily Feedstock Throughput (tons/day)
       <tbody>
          <tr>
             <td>Description</td>
-            <td><ul><li>The Daily Feedstock Throughput measures the total volume of raw material that a petrochemical plant processes over a 24-hour period</li><li>It reflects the plant's operational efficiency and capacity utilization</li></ul></td>
+            <td><ul><li>Daily Feedstock Throughput (tons/day) is a key performance indicator used to assess process efficiency and operational performance</li></ul></td>
          </tr>
          <tr>
             <td>Objective</td>
-            <td><ul><li>The objective of this KPI is to assess the plant's ability to process feedstock effectively</li><li>ensuring that production targets are met while optimizing resource use</li></ul></td>
+            <td><ul><li>The objective of Daily Feedstock Throughput (tons/day) is to provide a clear measure that supports monitoring</li><li>decision making</li><li>and continuous improvement</li></ul></td>
          </tr>
          <tr>
             <td>Formula</td>
             <td>
-               <p>The throughput is calculated by taking the total amount of feedstock processed in tons and dividing it by the number of hours the plant was operational, then multiplying by 24 to express it as a daily rate.</p>
+               <p>Calculated directly from the inputs found in the code implementation.</p>
                <div class="math-equation">$$ \mathit{Throughput} = \frac{\mathit{Total\,Feedstock\,Processed\,Tons}}{\mathit{Hours\,Online}} \times \mathit{24} $$</div><ul><li><i>Total Feedstock Processed Tons:</i> The numerator of the fraction.</li><li><i>Hours Online:</i> The denominator of the fraction.</li></ul><script>if (window.MathJax) {  if (MathJax.typesetPromise) { MathJax.typesetPromise(); }  else if (MathJax.typeset) { MathJax.typeset(); }}</script>
             </td>
          </tr>
          <tr>
             <td>Used in KPI(s)</td>
-            <td><ul><li>This KPI is used in various operational assessments and can influence decisions related to production planning</li><li>resource allocation</li><li>and performance benchmarking</li></ul></td>
+            <td><ul><li>This KPI can serve as an input to higher-level operational and performance dashboards</li></ul></td>
          </tr>
          <tr>
             <td>Input Measure</td>
-            <td><ul><li>The input measure for this KPI is the total feedstock processed in tons and the number of hours the plant has been online during the measurement period</li></ul></td>
+            <td><ul><li>Derived from the variables used in the code calculation for this KPI</li></ul></td>
          </tr>
          <tr>
             <td>Unit of Measure</td>
-            <td>tons/day</td>
+            <td>See calculation and context for the most appropriate unit.</td>
          </tr>
          <tr>
             <td>Reporting Source</td>
-            <td>The data for this KPI is typically sourced from the plant's operational logs and sensor data that track feedstock processing.</td>
+            <td>Typically sourced from process historians, production logs, or execution systems.</td>
          </tr>
          <tr>
             <td>Comments</td>
-            <td>Monitoring Daily Feedstock Throughput is crucial for identifying trends in production capacity and for making informed decisions regarding maintenance and operational improvements.</td>
+            <td></td>
          </tr>
       </tbody>
    </table>

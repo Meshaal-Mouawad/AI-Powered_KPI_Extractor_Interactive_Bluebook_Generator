@@ -29,10 +29,10 @@ Lost Time Injury Frequency Rate (LTIFR)
 
    <div style="margin-bottom: 1.5em; display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
       <span style="font-size: 13px; font-weight: 500; color: #4a5568;">Open in:</span>
-      <a href="vscode://file//Users/meshaalmouawad/AI-Powered_KPI_Extractor&_Interactive_Bluebook_Generator/sample_project/petrochemical_plant_operations.py:147" target="_blank" style="display: inline-block; background-color: #2c5282; color: white; padding: 8px 12px; border-radius: 6px; text-decoration: none; font-weight: 500; font-size: 13px;">
+      <a href="vscode://file//Users/meshaalmouawad/AI-Powered_KPI_Extractor_Interactive_Bluebook_Generator/sample_project/petrochemical_plant_operations.py:147" target="_blank" style="display: inline-block; background-color: #2c5282; color: white; padding: 8px 12px; border-radius: 6px; text-decoration: none; font-weight: 500; font-size: 13px;">
          VS Code
       </a>
-      <a href="pycharm://open?file=/Users/meshaalmouawad/AI-Powered_KPI_Extractor&_Interactive_Bluebook_Generator/sample_project/petrochemical_plant_operations.py&line=147" target="_blank" style="display: inline-block; background-color: #000000; color: white; padding: 8px 12px; border-radius: 6px; text-decoration: none; font-weight: 500; font-size: 13px;">
+      <a href="pycharm://open?file=/Users/meshaalmouawad/AI-Powered_KPI_Extractor_Interactive_Bluebook_Generator/sample_project/petrochemical_plant_operations.py&line=147" target="_blank" style="display: inline-block; background-color: #000000; color: white; padding: 8px 12px; border-radius: 6px; text-decoration: none; font-weight: 500; font-size: 13px;">
          PyCharm
       </a>
    </div>
@@ -41,38 +41,38 @@ Lost Time Injury Frequency Rate (LTIFR)
       <tbody>
          <tr>
             <td>Description</td>
-            <td><ul><li>The Lost Time Injury Frequency Rate</li><li>commonly referred to as LTIFR</li><li>is a critical safety metric that quantifies the number of lost time injuries occurring in a workplace over a specified period</li><li>typically expressed per million hours worked</li></ul></td>
+            <td><ul><li>Lost Time Injury Frequency Rate (LTIFR) is a key performance indicator used to assess process efficiency and operational performance</li></ul></td>
          </tr>
          <tr>
             <td>Objective</td>
-            <td><ul><li>The primary objective of LTIFR is to assess and improve workplace safety by tracking the frequency of injuries that result in employees being unable to perform their duties</li></ul></td>
+            <td><ul><li>The objective of Lost Time Injury Frequency Rate (LTIFR) is to provide a clear measure that supports monitoring</li><li>decision making</li><li>and continuous improvement</li></ul></td>
          </tr>
          <tr>
             <td>Formula</td>
             <td>
-               <p>LTIFR is calculated by taking the total number of lost time injuries and dividing it by the total hours worked, then multiplying the result by one million to standardize the rate.</p>
+               <p>Calculated directly from the inputs found in the code implementation.</p>
                <div class="math-equation">$$ \mathit{Ltifr} = \frac{\mathit{Lost\,Time\,Injuries}}{\mathit{Total\,Hours\,Worked}} \times \mathit{1\,000\,000} $$</div><ul><li><i>Lost Time Injuries:</i> The numerator of the fraction.</li><li><i>Total Hours Worked:</i> The denominator of the fraction.</li></ul><script>if (window.MathJax) {  if (MathJax.typesetPromise) { MathJax.typesetPromise(); }  else if (MathJax.typeset) { MathJax.typeset(); }}</script>
             </td>
          </tr>
          <tr>
             <td>Used in KPI(s)</td>
-            <td><ul><li>LTIFR is utilized in various safety performance indicators to monitor and enhance safety protocols within industrial environments</li></ul></td>
+            <td><ul><li>This KPI can serve as an input to higher-level operational and performance dashboards</li></ul></td>
          </tr>
          <tr>
             <td>Input Measure</td>
-            <td><ul><li>The inputs for calculating LTIFR include the total number of lost time injuries and the total hours worked by all employees during the reporting period</li></ul></td>
+            <td><ul><li>Derived from the variables used in the code calculation for this KPI</li></ul></td>
          </tr>
          <tr>
             <td>Unit of Measure</td>
-            <td>per million hours worked</td>
+            <td>See calculation and context for the most appropriate unit.</td>
          </tr>
          <tr>
             <td>Reporting Source</td>
-            <td>The data for LTIFR is typically sourced from workplace safety reports and human resources records that track injuries and hours worked.</td>
+            <td>Typically sourced from process historians, production logs, or execution systems.</td>
          </tr>
          <tr>
             <td>Comments</td>
-            <td>LTIFR serves as a lagging indicator of safety performance and is widely recognized in heavy industry as a benchmark for evaluating safety culture and practices.</td>
+            <td></td>
          </tr>
       </tbody>
    </table>

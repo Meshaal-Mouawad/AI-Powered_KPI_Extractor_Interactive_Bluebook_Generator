@@ -29,10 +29,10 @@ Pump Vibration Anomaly Rate
 
    <div style="margin-bottom: 1.5em; display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
       <span style="font-size: 13px; font-weight: 500; color: #4a5568;">Open in:</span>
-      <a href="vscode://file//Users/meshaalmouawad/AI-Powered_KPI_Extractor&_Interactive_Bluebook_Generator/sample_project/petrochemical_plant_operations.py:135" target="_blank" style="display: inline-block; background-color: #2c5282; color: white; padding: 8px 12px; border-radius: 6px; text-decoration: none; font-weight: 500; font-size: 13px;">
+      <a href="vscode://file//Users/meshaalmouawad/AI-Powered_KPI_Extractor_Interactive_Bluebook_Generator/sample_project/petrochemical_plant_operations.py:135" target="_blank" style="display: inline-block; background-color: #2c5282; color: white; padding: 8px 12px; border-radius: 6px; text-decoration: none; font-weight: 500; font-size: 13px;">
          VS Code
       </a>
-      <a href="pycharm://open?file=/Users/meshaalmouawad/AI-Powered_KPI_Extractor&_Interactive_Bluebook_Generator/sample_project/petrochemical_plant_operations.py&line=135" target="_blank" style="display: inline-block; background-color: #000000; color: white; padding: 8px 12px; border-radius: 6px; text-decoration: none; font-weight: 500; font-size: 13px;">
+      <a href="pycharm://open?file=/Users/meshaalmouawad/AI-Powered_KPI_Extractor_Interactive_Bluebook_Generator/sample_project/petrochemical_plant_operations.py&line=135" target="_blank" style="display: inline-block; background-color: #000000; color: white; padding: 8px 12px; border-radius: 6px; text-decoration: none; font-weight: 500; font-size: 13px;">
          PyCharm
       </a>
    </div>
@@ -41,38 +41,38 @@ Pump Vibration Anomaly Rate
       <tbody>
          <tr>
             <td>Description</td>
-            <td><ul><li>The Pump Vibration Anomaly Rate measures the percentage of vibration readings from pumps that exceed a predefined safe threshold</li><li>This KPI is crucial for identifying potential issues in pump operation before they lead to failures</li></ul></td>
+            <td><ul><li>Pump Vibration Anomaly Rate is a key performance indicator used to assess process efficiency and operational performance</li></ul></td>
          </tr>
          <tr>
             <td>Objective</td>
-            <td><ul><li>The primary objective of this KPI is to facilitate predictive maintenance by monitoring pump vibrations</li><li>thereby allowing for timely interventions to prevent equipment failures</li></ul></td>
+            <td><ul><li>The objective of Pump Vibration Anomaly Rate is to provide a clear measure that supports monitoring</li><li>decision making</li><li>and continuous improvement</li></ul></td>
          </tr>
          <tr>
             <td>Formula</td>
             <td>
-               <p>The formula for calculating the Pump Vibration Anomaly Rate involves determining the ratio of the number of vibration readings that exceed the safe threshold to the total number of vibration readings, expressed as a percentage.</p>
+               <p>Calculated directly from the inputs found in the code implementation.</p>
                <div class="math-equation">$$ \mathit{Vibration\,Threshold} = \frac{\mathit{5.0\,#\,Mm}}{\mathit{S}} $$</div><ul><li>5.0 # Mm: Value used in the calculation as defined by the code implementation.</li><li>S: Value used in the calculation as defined by the code implementation.</li></ul><script>if (window.MathJax) {  if (MathJax.typesetPromise) { MathJax.typesetPromise(); }  else if (MathJax.typeset) { MathJax.typeset(); }}</script>
             </td>
          </tr>
          <tr>
             <td>Used in KPI(s)</td>
-            <td><ul><li>This KPI is used in predictive maintenance strategies and reliability assessments for pump systems within industrial operations</li></ul></td>
+            <td><ul><li>This KPI can serve as an input to higher-level operational and performance dashboards</li></ul></td>
          </tr>
          <tr>
             <td>Input Measure</td>
-            <td><ul><li>Vibration readings from pumps</li><li>typically measured in millimeters per second</li></ul></td>
+            <td><ul><li>Derived from the variables used in the code calculation for this KPI</li></ul></td>
          </tr>
          <tr>
             <td>Unit of Measure</td>
-            <td>ratio (dimensionless)</td>
+            <td>See calculation and context for the most appropriate unit.</td>
          </tr>
          <tr>
             <td>Reporting Source</td>
-            <td>The data for this KPI is sourced from vibration sensors installed on pumps, which continuously monitor and record vibration levels.</td>
+            <td>Typically sourced from process historians, production logs, or execution systems.</td>
          </tr>
          <tr>
             <td>Comments</td>
-            <td>A high anomaly rate may indicate the need for maintenance or inspection of the pump, while a low rate suggests stable operation.</td>
+            <td></td>
          </tr>
       </tbody>
    </table>
