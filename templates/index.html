@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KPI Bluebook Generator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        #log { white-space: pre-wrap; }
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-100 text-gray-800 flex items-center justify-center min-h-screen">
+
+    <div class="w-full max-w-3xl bg-white rounded-lg shadow-lg p-8">
+        <h1 class="text-3xl font-bold text-center mb-2">KPI Bluebook Generator</h1>
+        <p class="text-center text-gray-500 mb-6">Enter the full path to a source code folder to scan for KPIs.</p>
+
+        <form id="generator-form" class="space-y-4">
+            <div>
+                <label for="path" class="block text-sm font-medium text-gray-700">Project Folder Path</label>
+                <input type="text" name="path" id="path" required
+                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2"
+                       placeholder="/Users/yourname/projects/my-cool-app">
+            </div>
+            <button type="submit" id="submit-btn"
+                    class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                Generate Bluebook
+            </button>
+        </form>
+
+        <div class="mt-8">
+            <h2 class="text-xl font-semibold mb-2">Log</h2>
+            <div class="bg-gray-900 text-white font-mono text-sm rounded-md p-4 h-64 overflow-y-auto" id="log-container">
+                <pre id="log">Ready to start.</pre>
+            </div>
+        </div>
+
+        <div id="result-link" class="mt-4 text-center hidden">
+            <!-- UPDATED LINK -->
+            <a href="/bluebook/index.html" target="_blank" class="text-indigo-600 hover:text-indigo-800 font-semibold">
+                View Your Generated Bluebook &rarr;
+            </a>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('generator-form');
+        const logEl = document.getElementById('log');
+        const submitBtn = document.getElementById('submit-btn');
+        const resultLink = document.getElementById('result-link');
+
+        let intervalId;
+
+        async function checkStatus() {
+            const response = await fetch('/status');
+            const data = await response.json();
+            logEl.textContent = data.output;
+
+            const logContainer = document.getElementById('log-container');
+            logContainer.scrollTop = logContainer.scrollHeight;
+
+            if (!data.running) {
+                clearInterval(intervalId);
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Generate Bluebook';
+                // Also show link when Sphinx build completes successfully
+                if (data.output.includes("Complete!") || data.output.includes("Sphinx build successful.")) {
+                    resultLink.classList.remove('hidden');
+                }
+            }
+        }
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(form);
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Generating...';
+            resultLink.classList.add('hidden');
+            logEl.textContent = 'Starting generation...';
+
+            const response = await fetch('/start', {
+                method: 'POST',
+                body: formData
+            });
+
+            if (response.ok) {
+                intervalId = setInterval(checkStatus, 1000);
+            } else {
+                const errorData = await response.json();
+                logEl.textContent = `Error: ${errorData.status}`;
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Generate Bluebook';
+            }
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,22 @@
+/*
+ * custom.css
+ * This file overrides the theme's default table styling to prevent overflow.
+ */
+
+.wy-table-responsive table td, .wy-table-responsive table th {
+    /* Force long words to break and wrap */
+    white-space: normal !important;
+    word-wrap: break-word;
+}
+
+.wy-table-responsive {
+    /* Ensure the table itself doesn't cause horizontal scrolling */
+    overflow-x: hidden !important;
+}
+
+/* Make the math formula responsive */
+.math-equation {
+    overflow-x: auto; /* This enables horizontal scrolling */
+    overflow-y: hidden;
+    padding-bottom: 10px;
+}

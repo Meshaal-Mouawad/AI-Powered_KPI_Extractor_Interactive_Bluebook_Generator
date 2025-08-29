@@ -1,0 +1,96 @@
+SOx Emissions Concentration (kg/m³)
+==================================================
+
+.. math::
+
+   \text{}
+
+.. raw:: html
+
+   <style>
+      .kpi-table {
+         width: 100%; border-collapse: collapse; margin-bottom: 1.5em;
+         border: 1px solid #e0e0e0; table-layout: fixed;
+      }
+      .kpi-table td {
+         padding: 12px; vertical-align: top; border: 1px solid #e0e0e0;
+         word-wrap: break-word;
+      }
+      .kpi-table td:first-child {
+         width: 25%; font-weight: bold; background-color: #f7f7f7;
+      }
+      .kpi-table ul { list-style-type: disc; padding-left: 20px; margin: 0; }
+      .kpi-table .math-equation {
+         text-align: center; margin: 1em 0; overflow-x: auto; padding: 5px;
+      }
+      .kpi-table .formula-notes li { margin-bottom: 0.5em; }
+      .kpi-table .formula-notes i { font-family: 'Times New Roman', serif; }
+   </style>
+
+   <div style="margin-bottom: 1.5em; display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+      <span style="font-size: 13px; font-weight: 500; color: #4a5568;">Open in:</span>
+      <a href="vscode://file//Users/meshaalmouawad/KPI_Inrctive_Bluebook/sample_project/petrochemical_plant_operations.py:157" target="_blank" style="display: inline-block; background-color: #2c5282; color: white; padding: 8px 12px; border-radius: 6px; text-decoration: none; font-weight: 500; font-size: 13px;">
+         VS Code
+      </a>
+      <a href="pycharm://open?file=/Users/meshaalmouawad/KPI_Inrctive_Bluebook/sample_project/petrochemical_plant_operations.py&line=157" target="_blank" style="display: inline-block; background-color: #000000; color: white; padding: 8px 12px; border-radius: 6px; text-decoration: none; font-weight: 500; font-size: 13px;">
+         PyCharm
+      </a>
+   </div>
+
+   <table class="kpi-table">
+      <tbody>
+         <tr>
+            <td>Description</td>
+            <td><ul><li>The SOx Emissions Concentration measures the amount of sulfur oxides emitted per cubic meter of flue gas</li><li>This KPI is crucial for understanding the environmental impact of emissions from industrial processes</li></ul></td>
+         </tr>
+         <tr>
+            <td>Objective</td>
+            <td><ul><li>The primary objective of this KPI is to monitor compliance with environmental regulations regarding sulfur oxide emissions</li><li>ensuring that emissions are kept within acceptable limits</li></ul></td>
+         </tr>
+         <tr>
+            <td>Formula</td>
+            <td>
+               <p>The concentration is calculated by dividing the total weight of sulfur oxides emitted in kilograms by the total volume of flue gas in cubic meters.</p>
+               <div class="math-equation">$$ \mathit{Sox\,Rate} = \frac{\mathit{Sox\,Emitted\,Kg}}{\mathit{Flue\,Gas\,Volume\,M3}} $$</div><ul><li>Sox Emitted Kg: Value used in the calculation as defined by the code implementation.</li><li>Flue Gas Volume M3: Value used in the calculation as defined by the code implementation.</li></ul><script>if (window.MathJax) {  if (MathJax.typesetPromise) { MathJax.typesetPromise(); }  else if (MathJax.typeset) { MathJax.typeset(); }}</script>
+            </td>
+         </tr>
+         <tr>
+            <td>Used in KPI(s)</td>
+            <td><ul><li>This KPI is used in environmental performance assessments and regulatory compliance reporting</li></ul></td>
+         </tr>
+         <tr>
+            <td>Input Measure</td>
+            <td><ul><li>The inputs for this KPI include the total weight of sulfur oxides emitted and the total volume of flue gas produced</li></ul></td>
+         </tr>
+         <tr>
+            <td>Unit of Measure</td>
+            <td>kg/m³</td>
+         </tr>
+         <tr>
+            <td>Reporting Source</td>
+            <td>The data for this KPI is typically sourced from emissions monitoring systems and environmental compliance reports.</td>
+         </tr>
+         <tr>
+            <td>Comments</td>
+            <td>Monitoring SOx emissions concentration is essential for minimizing air pollution and adhering to environmental standards.</td>
+         </tr>
+      </tbody>
+   </table>
+
+.. admonition:: Code Context
+   :class: dropdown
+
+   .. code-block:: python
+      :linenos:
+   
+      :emphasize-lines: 5
+   
+
+      def calculate_sox_emissions_rate(sox_emitted_kg: float, flue_gas_volume_m3: float) -> float:
+       """Calculates the concentration of SOx in emissions."""
+       if flue_gas_volume_m3 == 0:
+           return 0.0
+       # KPI: SOx Emissions Concentration (kg/m³)
+       # Monitors compliance with environmental regulations for sulfur oxide emissions.
+       sox_rate = sox_emitted_kg / flue_gas_volume_m3
+       return sox_rate

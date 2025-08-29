@@ -1,0 +1,36 @@
+graph TD
+    subgraph User Interface
+        A[Flask Web App]
+    end
+
+    subgraph Backend Logic
+        B[Generator Main Script]
+        C[KPI Extractor]
+        D[AI Description Generator]
+        E[Programmatic Formula Generator]
+    end
+
+    subgraph External Services
+        F[OpenAI API]
+    end
+
+    subgraph Build System
+        G[Sphinx Engine]
+    end
+
+    subgraph Data
+        H[Source Code Files]
+        I[Generated .rst Files]
+        J[Final HTML Bluebook]
+    end
+
+    A -- Triggers --> B
+    B -- Uses --> C
+    B -- Uses --> D
+    B -- Uses --> E
+    C -- Reads --> H
+    D -- Calls --> F
+    B -- Writes --> I
+    G -- Reads --> I
+    G -- Writes --> J
+    A -- Serves --> J
