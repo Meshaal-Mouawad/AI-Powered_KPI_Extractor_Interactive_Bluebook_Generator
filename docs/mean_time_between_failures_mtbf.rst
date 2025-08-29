@@ -1,0 +1,97 @@
+Mean Time Between Failures (MTBF)
+==================================================
+
+.. math::
+
+   \text{}
+
+.. raw:: html
+
+   <style>
+      .kpi-table {
+         width: 100%; border-collapse: collapse; margin-bottom: 1.5em;
+         border: 1px solid #e0e0e0; table-layout: fixed;
+      }
+      .kpi-table td {
+         padding: 12px; vertical-align: top; border: 1px solid #e0e0e0;
+         word-wrap: break-word;
+      }
+      .kpi-table td:first-child {
+         width: 25%; font-weight: bold; background-color: #f7f7f7;
+      }
+      .kpi-table ul { list-style-type: disc; padding-left: 20px; margin: 0; }
+      .kpi-table .math-equation {
+         text-align: center; margin: 1em 0; overflow-x: auto; padding: 5px;
+      }
+      .kpi-table .formula-notes li { margin-bottom: 0.5em; }
+      .kpi-table .formula-notes i { font-family: 'Times New Roman', serif; }
+   </style>
+
+   <div style="margin-bottom: 1.5em; display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+      <span style="font-size: 13px; font-weight: 500; color: #4a5568;">Open in:</span>
+      <a href="vscode://file//Users/meshaalmouawad/AI-Powered_KPI_Extractor&_Interactive_Bluebook_Generator/sample_project/petrochemical_plant_operations.py:115" target="_blank" style="display: inline-block; background-color: #2c5282; color: white; padding: 8px 12px; border-radius: 6px; text-decoration: none; font-weight: 500; font-size: 13px;">
+         VS Code
+      </a>
+      <a href="pycharm://open?file=/Users/meshaalmouawad/AI-Powered_KPI_Extractor&_Interactive_Bluebook_Generator/sample_project/petrochemical_plant_operations.py&line=115" target="_blank" style="display: inline-block; background-color: #000000; color: white; padding: 8px 12px; border-radius: 6px; text-decoration: none; font-weight: 500; font-size: 13px;">
+         PyCharm
+      </a>
+   </div>
+
+   <table class="kpi-table">
+      <tbody>
+         <tr>
+            <td>Description</td>
+            <td><ul><li>Mean Time Between Failures</li><li>or MTBF</li><li>is a key performance indicator that measures the average time a piece of equipment operates before experiencing a failure</li><li>It is an essential metric for understanding the reliability of equipment in a plant</li></ul></td>
+         </tr>
+         <tr>
+            <td>Objective</td>
+            <td><ul><li>The objective of calculating MTBF is to assess the reliability and effectiveness of maintenance strategies for critical equipment</li><li>helping to minimize downtime and improve operational efficiency</li></ul></td>
+         </tr>
+         <tr>
+            <td>Formula</td>
+            <td>
+               <p>MTBF is calculated by dividing the total operating hours of the equipment by the number of failures that occurred during that time period.</p>
+               <div class="math-equation">$$ \mathit{MTBF} = \frac{\mathit{Operating\,Hours}}{\mathit{Number\,Of\,Failures}} $$</div><ul><li>Operating Hours: Total operating hours in the measurement period.</li><li>Number Of Failures: Value used in the calculation as defined by the code implementation.</li></ul><script>if (window.MathJax) {  if (MathJax.typesetPromise) { MathJax.typesetPromise(); }  else if (MathJax.typeset) { MathJax.typeset(); }}</script>
+            </td>
+         </tr>
+         <tr>
+            <td>Used in KPI(s)</td>
+            <td><ul><li>MTBF is used in various KPIs related to asset reliability and maintenance performance</li><li>providing insights into equipment performance and maintenance needs</li></ul></td>
+         </tr>
+         <tr>
+            <td>Input Measure</td>
+            <td><ul><li>The inputs for calculating MTBF include the total operating hours of the equipment and the total number of failures that occurred during that time</li></ul></td>
+         </tr>
+         <tr>
+            <td>Unit of Measure</td>
+            <td>hours</td>
+         </tr>
+         <tr>
+            <td>Reporting Source</td>
+            <td>The data for MTBF is typically sourced from maintenance logs and operational records within the plant's maintenance management system.</td>
+         </tr>
+         <tr>
+            <td>Comments</td>
+            <td>A higher MTBF indicates better reliability and less frequent failures, which is crucial for maintaining productivity and reducing maintenance costs.</td>
+         </tr>
+      </tbody>
+   </table>
+
+.. admonition:: Code Context
+   :class: dropdown
+
+   .. code-block:: python
+      :linenos:
+   
+      :emphasize-lines: 5
+   
+
+      def calculate_mean_time_between_failures(operating_hours: int, number_of_failures: int) -> float:
+       """Calculates the average time a piece of equipment operates before failing."""
+       if number_of_failures == 0:
+           return operating_hours
+       # KPI: Mean Time Between Failures (MTBF)
+       # A core metric for assessing the reliability and maintenance strategy of critical equipment.
+       mtbf = operating_hours / number_of_failures
+       return mtbf
+
