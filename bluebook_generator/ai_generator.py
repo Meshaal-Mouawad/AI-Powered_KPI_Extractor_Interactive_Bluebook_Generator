@@ -9,6 +9,7 @@ load_dotenv()
 
 
 import re
+import ast  # ensure availability for _extract_function_block
 
 
 def _infer_unit_of_measure(kpi_name: str, code_context: str, current_value: str | None) -> str:

@@ -114,9 +114,23 @@ def generate_formula_from_code(code_context: str) -> dict:
         # Find a likely calculation assignment: has '=', not a comment/docstring, and RHS looks like a formula
         if '=' in stripped and not stripped.startswith(('#', '"""', "'''")):
             lhs, rhs = [part.strip() for part in stripped.split('=', 1)]
+            # Strip inline comments to avoid MathJax '#' errors
+            if '#' in rhs:
+                rhs = rhs.split('#', 1)[0].strip()
+
+            # Skip trivial constants (e.g., "x = 5.0")
+            is_constant = bool(re.fullmatch(r"[0-9.+\-eE]+", rhs))
+
             # Prefer expressions that contain operators or math funcs, not simple constant assignments
-            if any(op in rhs for op in ('*', '/', '-', '+')) or 'np.var' in rhs or 'np.mean' in rhs:
-                calculation_line = stripped
+            is_calc = (
+                any(op in rhs for op in ('*', '/', '-', '+'))
+                or 'len(' in rhs
+                or 'np.' in rhs
+                or '(' in rhs  # function calls / comprehensions
+            )
+
+            if is_calc and not is_constant:
+                calculation_line = f"{lhs} = {rhs}"
                 break
 
     if not calculation_line:
@@ -128,6 +142,9 @@ def generate_formula_from_code(code_context: str) -> dict:
 
     result_var = parts[0].strip()
     expression = parts[1].strip()
+    # Final safety: strip inline comments from the expression
+    if '#' in expression:
+        expression = expression.split('#', 1)[0].strip()
 
     def format_var(v: str) -> str:
         # Insert spaces between camelCase boundaries and underscores,
