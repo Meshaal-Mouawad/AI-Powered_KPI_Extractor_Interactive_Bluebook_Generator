@@ -3,11 +3,11 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="./">
 <head>
-  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SOx Emissions Concentration (kg/m³) &mdash; KPI Bluebook  documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=92fd9be5" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="_static/custom.css?v=1efea441" />
 
@@ -15,7 +15,7 @@
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
       <script src="_static/documentation_options.js?v=5929fcd5"></script>
-      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
       <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "displayMath": [["$$", "$$"], ["\\[", "\\]"]], "processClass": "math-equation", "ignoreClass": "tex2jax_ignore"}})</script>
       <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "displayMath": [["$$", "$$"], ["\\[", "\\]"]]}, "options": {"processHtmlClass": "math-equation", "ignoreHtmlClass": "tex2jax_ignore"}}</script>
@@ -167,7 +167,7 @@
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="p">:</span><span class="n">emphasize</span><span class="o">-</span><span class="n">lines</span><span class="p">:</span> <span class="mi">5</span>
 <span class="linenos"> 2</span>
 <span class="linenos"> 3</span>
-<span class="linenos"> 4</span><span class="k">def</span><span class="w"> </span><span class="nf">calculate_sox_emissions_rate</span><span class="p">(</span><span class="n">sox_emitted_kg</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">flue_gas_volume_m3</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="linenos"> 4</span><span class="k">def</span> <span class="nf">calculate_sox_emissions_rate</span><span class="p">(</span><span class="n">sox_emitted_kg</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">flue_gas_volume_m3</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
 <span class="linenos"> 5</span><span class="w"> </span><span class="sd">&quot;&quot;&quot;Calculates the concentration of SOx in emissions.&quot;&quot;&quot;</span>
 <span class="linenos"> 6</span> <span class="k">if</span> <span class="n">flue_gas_volume_m3</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
 <span class="linenos"> 7</span>     <span class="k">return</span> <span class="mf">0.0</span>

@@ -1,4 +1,4 @@
-Pump Vibration Anomaly Rate
+Flare Gas Recovery Rate
 ==================================================
 
 .. math::
@@ -29,10 +29,10 @@ Pump Vibration Anomaly Rate
 
    <div style="margin-bottom: 1.5em; display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
       <span style="font-size: 13px; font-weight: 500; color: #4a5568;">Open in:</span>
-      <a href="vscode://file//Users/meshaalmouawad/AI-Powered_KPI_Extractor_Interactive_Bluebook_Generator/sample_project/petrochemical_plant_operations.py:135" target="_blank" style="display: inline-block; background-color: #2c5282; color: white; padding: 8px 12px; border-radius: 6px; text-decoration: none; font-weight: 500; font-size: 13px;">
+      <a href="vscode://file//Users/meshaalmouawad/AI-Powered_KPI_Extractor_Interactive_Bluebook_Generator/sample_project/petrochemical_plant_operations.py:168" target="_blank" style="display: inline-block; background-color: #2c5282; color: white; padding: 8px 12px; border-radius: 6px; text-decoration: none; font-weight: 500; font-size: 13px;">
          VS Code
       </a>
-      <a href="pycharm://open?file=/Users/meshaalmouawad/AI-Powered_KPI_Extractor_Interactive_Bluebook_Generator/sample_project/petrochemical_plant_operations.py&line=135" target="_blank" style="display: inline-block; background-color: #000000; color: white; padding: 8px 12px; border-radius: 6px; text-decoration: none; font-weight: 500; font-size: 13px;">
+      <a href="pycharm://open?file=/Users/meshaalmouawad/AI-Powered_KPI_Extractor_Interactive_Bluebook_Generator/sample_project/petrochemical_plant_operations.py&line=168" target="_blank" style="display: inline-block; background-color: #000000; color: white; padding: 8px 12px; border-radius: 6px; text-decoration: none; font-weight: 500; font-size: 13px;">
          PyCharm
       </a>
    </div>
@@ -41,17 +41,17 @@ Pump Vibration Anomaly Rate
       <tbody>
          <tr>
             <td>Description</td>
-            <td><ul><li>Pump Vibration Anomaly Rate is a key performance indicator used to assess process efficiency and operational performance</li></ul></td>
+            <td><ul><li>Flare Gas Recovery Rate is a key performance indicator used to assess process efficiency and operational performance</li></ul></td>
          </tr>
          <tr>
             <td>Objective</td>
-            <td><ul><li>The objective of Pump Vibration Anomaly Rate is to provide a clear measure that supports monitoring</li><li>decision making</li><li>and continuous improvement</li></ul></td>
+            <td><ul><li>The objective of Flare Gas Recovery Rate is to provide a clear measure that supports monitoring</li><li>decision making</li><li>and continuous improvement</li></ul></td>
          </tr>
          <tr>
             <td>Formula</td>
             <td>
                <p>Calculated directly from the inputs found in the code implementation.</p>
-               <div class="math-equation">$$ \mathit{Anomaly\,Rate} = \frac{\mathit{Len(Anomalies)}}{\mathit{Len(Vibration\,Readings)}} \times \mathit{100} $$</div><ul><li><i>Len(Anomalies):</i> The numerator of the fraction.</li><li><i>Len(Vibration Readings):</i> The denominator of the fraction.</li></ul><script>if (window.MathJax) {  if (MathJax.typesetPromise) { MathJax.typesetPromise(); }  else if (MathJax.typeset) { MathJax.typeset(); }}</script>
+               <div class="math-equation">$$ \mathit{Total\,Gas} = \mathit{Gas\,Flared\,M3} + \mathit{Gas\,Recovered\,M3} $$</div><ul><li>Gas Flared M3: Value used in the calculation as defined by the code implementation.</li><li>Gas Recovered M3: Value used in the calculation as defined by the code implementation.</li></ul><script>if (window.MathJax) {  if (MathJax.typesetPromise) { MathJax.typesetPromise(); }  else if (MathJax.typeset) { MathJax.typeset(); }}</script>
             </td>
          </tr>
          <tr>
@@ -83,17 +83,16 @@ Pump Vibration Anomaly Rate
    .. code-block:: python
       :linenos:
    
-      :emphasize-lines: 7
+      :emphasize-lines: 6
    
 
-      def calculate_pump_vibration_anomaly_rate(vibration_readings: list) -> float:
-       """Calculates the percentage of vibration readings that exceed a safe threshold."""
-       if not vibration_readings:
-           return 0.0
-       vibration_threshold = 5.0  # mm/s
-       anomalies = [r for r in vibration_readings if r > vibration_threshold]
-       # KPI: Pump Vibration Anomaly Rate
-       # A predictive maintenance KPI used to anticipate pump failures and plan proactive maintenance.
-       anomaly_rate = (len(anomalies) / len(vibration_readings)) * 100
-       return anomaly_rate
+      def calculate_flare_gas_recovery_percentage(gas_flared_m3: float, gas_recovered_m3: float) -> float:
+       """Calculates the percentage of gas that is recovered instead of flared."""
+       total_gas = gas_flared_m3 + gas_recovered_m3
+       if total_gas == 0:
+           return 100.0
+       # KPI: Flare Gas Recovery Rate
+       # Measures the effectiveness of systems designed to reduce waste and environmental impact.
+       recovery_rate = (gas_recovered_m3 / total_gas) * 100
+       return recovery_rate
 

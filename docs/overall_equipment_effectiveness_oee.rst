@@ -1,4 +1,4 @@
-Pump Vibration Anomaly Rate
+Overall Equipment Effectiveness (OEE)
 ==================================================
 
 .. math::
@@ -29,10 +29,10 @@ Pump Vibration Anomaly Rate
 
    <div style="margin-bottom: 1.5em; display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
       <span style="font-size: 13px; font-weight: 500; color: #4a5568;">Open in:</span>
-      <a href="vscode://file//Users/meshaalmouawad/AI-Powered_KPI_Extractor_Interactive_Bluebook_Generator/sample_project/petrochemical_plant_operations.py:135" target="_blank" style="display: inline-block; background-color: #2c5282; color: white; padding: 8px 12px; border-radius: 6px; text-decoration: none; font-weight: 500; font-size: 13px;">
+      <a href="vscode://file//Users/meshaalmouawad/AI-Powered_KPI_Extractor_Interactive_Bluebook_Generator/sample_project/petrochemical_plant_operations.py:123" target="_blank" style="display: inline-block; background-color: #2c5282; color: white; padding: 8px 12px; border-radius: 6px; text-decoration: none; font-weight: 500; font-size: 13px;">
          VS Code
       </a>
-      <a href="pycharm://open?file=/Users/meshaalmouawad/AI-Powered_KPI_Extractor_Interactive_Bluebook_Generator/sample_project/petrochemical_plant_operations.py&line=135" target="_blank" style="display: inline-block; background-color: #000000; color: white; padding: 8px 12px; border-radius: 6px; text-decoration: none; font-weight: 500; font-size: 13px;">
+      <a href="pycharm://open?file=/Users/meshaalmouawad/AI-Powered_KPI_Extractor_Interactive_Bluebook_Generator/sample_project/petrochemical_plant_operations.py&line=123" target="_blank" style="display: inline-block; background-color: #000000; color: white; padding: 8px 12px; border-radius: 6px; text-decoration: none; font-weight: 500; font-size: 13px;">
          PyCharm
       </a>
    </div>
@@ -41,17 +41,17 @@ Pump Vibration Anomaly Rate
       <tbody>
          <tr>
             <td>Description</td>
-            <td><ul><li>Pump Vibration Anomaly Rate is a key performance indicator used to assess process efficiency and operational performance</li></ul></td>
+            <td><ul><li>Overall Equipment Effectiveness (OEE) is a key performance indicator used to assess process efficiency and operational performance</li></ul></td>
          </tr>
          <tr>
             <td>Objective</td>
-            <td><ul><li>The objective of Pump Vibration Anomaly Rate is to provide a clear measure that supports monitoring</li><li>decision making</li><li>and continuous improvement</li></ul></td>
+            <td><ul><li>The objective of Overall Equipment Effectiveness (OEE) is to provide a clear measure that supports monitoring</li><li>decision making</li><li>and continuous improvement</li></ul></td>
          </tr>
          <tr>
             <td>Formula</td>
             <td>
                <p>Calculated directly from the inputs found in the code implementation.</p>
-               <div class="math-equation">$$ \mathit{Anomaly\,Rate} = \frac{\mathit{Len(Anomalies)}}{\mathit{Len(Vibration\,Readings)}} \times \mathit{100} $$</div><ul><li><i>Len(Anomalies):</i> The numerator of the fraction.</li><li><i>Len(Vibration Readings):</i> The denominator of the fraction.</li></ul><script>if (window.MathJax) {  if (MathJax.typesetPromise) { MathJax.typesetPromise(); }  else if (MathJax.typeset) { MathJax.typeset(); }}</script>
+               <div class="math-equation">$$ \mathit{OEE} = \mathit{Availability} \times \mathit{Performance} \times \mathit{Quality} \times \mathit{100} $$</div><ul><li>Availability: Availability factor representing runtime as a share of scheduled time.</li><li>Performance: Performance factor representing actual production rate versus ideal rate.</li><li>Quality: Quality factor representing on-spec (good) output as a share of total output.</li><li>100: Value used in the calculation as defined by the code implementation.</li></ul><script>if (window.MathJax) {  if (MathJax.typesetPromise) { MathJax.typesetPromise(); }  else if (MathJax.typeset) { MathJax.typeset(); }}</script>
             </td>
          </tr>
          <tr>
@@ -83,17 +83,12 @@ Pump Vibration Anomaly Rate
    .. code-block:: python
       :linenos:
    
-      :emphasize-lines: 7
+      :emphasize-lines: 3
    
 
-      def calculate_pump_vibration_anomaly_rate(vibration_readings: list) -> float:
-       """Calculates the percentage of vibration readings that exceed a safe threshold."""
-       if not vibration_readings:
-           return 0.0
-       vibration_threshold = 5.0  # mm/s
-       anomalies = [r for r in vibration_readings if r > vibration_threshold]
-       # KPI: Pump Vibration Anomaly Rate
-       # A predictive maintenance KPI used to anticipate pump failures and plan proactive maintenance.
-       anomaly_rate = (len(anomalies) / len(vibration_readings)) * 100
-       return anomaly_rate
-
+      def calculate_overall_equipment_effectiveness(availability: float, performance: float, quality: float) -> float:
+       """Calculates the OEE, a composite metric for manufacturing productivity."""
+       # KPI: Overall Equipment Effectiveness (OEE)
+       # Combines availability, performance, and quality to give a single measure of asset productivity.
+       oee = availability * performance * quality * 100
+       return oee
