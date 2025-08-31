@@ -1,4 +1,4 @@
-Ethylene Yield Percentage
+Propylene to Ethylene (P/E) Ratio
 ==================================================
 
 .. math::
@@ -29,10 +29,10 @@ Ethylene Yield Percentage
 
    <div style="margin-bottom: 1.5em; display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
       <span style="font-size: 13px; font-weight: 500; color: #4a5568;">Open in:</span>
-      <a href="vscode://file//Users/meshaalmouawad/AI-Powered_KPI_Extractor_Interactive_Bluebook_Generator/sample_project/petrochemical_plant_operations.py:53" target="_blank" style="display: inline-block; background-color: #2c5282; color: white; padding: 8px 12px; border-radius: 6px; text-decoration: none; font-weight: 500; font-size: 13px;">
+      <a href="vscode://file//Users/meshaalmouawad/AI-Powered_KPI_Extractor_Interactive_Bluebook_Generator/sample_project/petrochemical_plant_operations.py:63" target="_blank" style="display: inline-block; background-color: #2c5282; color: white; padding: 8px 12px; border-radius: 6px; text-decoration: none; font-weight: 500; font-size: 13px;">
          VS Code
       </a>
-      <a href="pycharm://open?file=/Users/meshaalmouawad/AI-Powered_KPI_Extractor_Interactive_Bluebook_Generator/sample_project/petrochemical_plant_operations.py&line=53" target="_blank" style="display: inline-block; background-color: #000000; color: white; padding: 8px 12px; border-radius: 6px; text-decoration: none; font-weight: 500; font-size: 13px;">
+      <a href="pycharm://open?file=/Users/meshaalmouawad/AI-Powered_KPI_Extractor_Interactive_Bluebook_Generator/sample_project/petrochemical_plant_operations.py&line=63" target="_blank" style="display: inline-block; background-color: #000000; color: white; padding: 8px 12px; border-radius: 6px; text-decoration: none; font-weight: 500; font-size: 13px;">
          PyCharm
       </a>
    </div>
@@ -41,17 +41,17 @@ Ethylene Yield Percentage
       <tbody>
          <tr>
             <td>Description</td>
-            <td><ul><li>Ethylene Yield Percentage is a key performance indicator used to assess process efficiency and operational performance</li></ul></td>
+            <td><ul><li>Propylene to Ethylene (P/E) Ratio is a key performance indicator used to assess process efficiency and operational performance</li></ul></td>
          </tr>
          <tr>
             <td>Objective</td>
-            <td><ul><li>The objective of Ethylene Yield Percentage is to provide a clear measure that supports monitoring</li><li>decision making</li><li>and continuous improvement</li></ul></td>
+            <td><ul><li>The objective of Propylene to Ethylene (P/E) Ratio is to provide a clear measure that supports monitoring</li><li>decision making</li><li>and continuous improvement</li></ul></td>
          </tr>
          <tr>
             <td>Formula</td>
             <td>
                <p>Calculated directly from the inputs found in the code implementation.</p>
-               <div class="math-equation">$$ \mathit{Yield\,Percentage} = \frac{\mathit{Ethylene\,Produced\,Tons}}{\mathit{Feedstock\,Volume\,Tons}} \times \mathit{100} $$</div><ul><li><i>Ethylene Produced Tons:</i> The numerator of the fraction.</li><li><i>Feedstock Volume Tons:</i> The denominator of the fraction.</li></ul><script>if (window.MathJax) {  if (MathJax.typesetPromise) { MathJax.typesetPromise(); }  else if (MathJax.typeset) { MathJax.typeset(); }}</script>
+               <div class="math-equation">$$ \mathit{Pe\,Ratio} = \frac{\mathit{Propylene\,Produced\,Tons}}{\mathit{Ethylene\,Produced\,Tons}} $$</div><ul><li>Propylene Produced Tons: Total propylene produced during the measurement period (tons).</li><li>Ethylene Produced Tons: Total ethylene produced during the measurement period (tons).</li></ul><script>if (window.MathJax) {  if (MathJax.typesetPromise) { MathJax.typesetPromise(); }  else if (MathJax.typeset) { MathJax.typeset(); }}</script>
             </td>
          </tr>
          <tr>
@@ -86,11 +86,11 @@ Ethylene Yield Percentage
       :emphasize-lines: 5
    
 
-      def calculate_ethylene_yield(feedstock_volume_tons: float, ethylene_produced_tons: float) -> float:
-       """Calculates the percentage yield of ethylene from a given amount of feedstock."""
-       if feedstock_volume_tons == 0:
+      def calculate_propylene_to_ethylene_ratio(propylene_produced_tons: float, ethylene_produced_tons: float) -> float:
+       """Calculates the P/E ratio, a key indicator of product mix."""
+       if ethylene_produced_tons == 0:
            return 0.0
-       # KPI: Ethylene Yield Percentage
-       # Measures the efficiency of the steam cracker in converting feedstock to the primary product.
-       yield_percentage = (ethylene_produced_tons / feedstock_volume_tons) * 100
-       return yield_percentage
+       # KPI: Propylene to Ethylene (P/E) Ratio
+       # This ratio is critical for aligning production with market demand and maximizing profitability.
+       pe_ratio = propylene_produced_tons / ethylene_produced_tons
+       return pe_ratio
