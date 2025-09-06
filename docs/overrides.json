@@ -1,0 +1,26 @@
+{
+  "Ethylene Yield Percentage": {
+    "description": "- The Propylene to Ethylene (P/E) Ratio is a key performance indicator that measures the relative production levels of propylene and ethylene in a petrochemical plant\n- This ratio provides insights into the product mix and helps in understanding the operational efficiency of the plant",
+    "objective": "The objective of monitoring the P/E ratio is to align production with market demand and maximize profitability by optimizing the output of these two critical petrochemical products",
+    "input_measure": "",
+    "unit_of_measure": "",
+    "reporting_source": "",
+    "comments": "A higher P/E ratio may indicate a favorable market for propylene, while a lower ratio could suggest a need to adjust production strategies to meet changing market demands.\nA higher P/E ratio, such as 10:1, means significantly more propylene is produced than ethylene."
+  },
+  "Mean Time Between Failures (MTBF)": {
+    "description": "",
+    "objective": "",
+    "input_measure": "",
+    "unit_of_measure": "",
+    "reporting_source": "",
+    "comments": "- MTBF applies to systems and components that can be repaired and put back into service. For non-repairable items, the Mean Time to Failure (MTTF) metric is used instead.\n- MTBF is a useful metric, but it doesn't provide information on the cause or severity of failures. Combining MTBF with other KPIs, such as MTTR (Mean Time to Repair KPI), offers a more complete picture of system performance."
+  },
+  "Propylene to Ethylene (P/E) Ratio": {
+    "description": "",
+    "objective": "",
+    "input_measure": "",
+    "unit_of_measure": "",
+    "reporting_source": "",
+    "comments": "Integrating processes like olefin cracking or metathesis units can increase the overall propylene yield and thus the P/E ratio."
+  }
+}

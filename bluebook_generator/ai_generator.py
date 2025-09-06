@@ -1,17 +1,294 @@
 import os
 import json
 import time
-from typing import Dict, Any
+from typing import Dict, Any, List, Tuple
 from dotenv import load_dotenv
 from openai import OpenAI
 
 load_dotenv()
+from .kpi_extractor import find_kpis_in_directory
 
 
 import re
-import ast  # ensure availability for _extract_function_block
+import ast
+import numpy as np  # used only for cosine similarity
 
+# Explicitly export public API to avoid "cannot import name" issues
 
+# ---- Lightweight Knowledge Base (KB) + Overrides integration ----
+
+def _kb_file_path() -> str:
+    # Put your curated petrochemical KPI KB here (optional). Example schema below.
+    # Path is relative to project root; adjust as needed.
+    return os.path.join(os.path.dirname(os.path.dirname(__file__)), "bluebook_generator", "kb", "petro_kpi_kb.json")
+
+def _overrides_file_path() -> str:
+    # Stores user edits by KPI name. Created on first edit.
+    return os.path.join(os.path.dirname(os.path.dirname(__file__)), "docs", "overrides.json")
+
+def _safe_load_json(path: str) -> Any:
+    try:
+        if os.path.exists(path):
+            with open(path, "r", encoding="utf-8") as f:
+                return json.load(f)
+    except Exception:
+        pass
+    return None
+
+def _get_text_embedding(client: OpenAI, text: str) -> List[float]:
+    # Small, inexpensive embedding for retrieval
+    emb = client.embeddings.create(model="text-embedding-3-small", input=text)
+    return emb.data[0].embedding
+
+def _cosine_sim(a: np.ndarray, b: np.ndarray) -> float:
+    denom = (np.linalg.norm(a) * np.linalg.norm(b))
+    if denom == 0:
+        return 0.0
+    return float(np.dot(a, b) / denom)
+
+def _retrieve_kb_examples(client: OpenAI, kpi_name: str, top_k: int = 3) -> List[Dict[str, Any]]:
+    """
+    Returns up to top_k KB items most similar to the KPI name.
+    KB item schema example:
+      {
+        "name": "Polymer Melt Flow Index (MFI) Variance",
+        "description": "Measures the variability ...",
+        "objective": "...",
+        "input_measure": "...",
+        "unit_of_measure": "dimensionless",
+        "reporting_source": "Laboratory test results ..."
+      }
+    """
+    kb_path = _kb_file_path()
+    kb = _safe_load_json(kb_path)
+    if not kb or not isinstance(kb, list):
+        return []
+
+    try:
+        query_emb = np.array(_get_text_embedding(client, kpi_name), dtype=np.float32)
+    except Exception:
+        return []
+
+    ranked: List[Tuple[float, Dict[str, Any]]] = []
+    for item in kb:
+        text = f"{item.get('name','')} {item.get('description','')} {item.get('objective','')}"
+        try:
+            emb = np.array(_get_text_embedding(client, text), dtype=np.float32)
+            ranked.append((_cosine_sim(query_emb, emb), item))
+        except Exception:
+            continue
+
+    ranked.sort(key=lambda x: x[0], reverse=True)
+    return [r[1] for r in ranked[:top_k]]
+
+def _load_user_overrides_for(kpi_name: str) -> Dict[str, Any]:
+    """
+    overrides.json structure:
+    {
+      "KPI Name": {
+        "description": "...",
+        "objective": "...",
+        "input_measure": "...",
+        "unit_of_measure": "...",
+        "reporting_source": "...",
+        "comments": "..."
+      },
+      ...
+    }
+    """
+    path = _overrides_file_path()
+    data = _safe_load_json(path)
+    if isinstance(data, dict):
+        return data.get(kpi_name, {}) or {}
+    return {}
+
+_GENERIC_PHRASES = {
+    "desc": [
+        "is a key performance indicator used to assess process efficiency and operational performance",
+    ],
+    "obj": [
+        "provide a clear measure that supports monitoring",
+        "decision making",
+        "continuous improvement",
+    ],
+    "used": [
+        "can serve as an input to higher-level operational and performance dashboards",
+    ],
+    "input": [
+        "derived from the variables used in the code calculation for this kpi",
+    ],
+    "comments_empty": [
+        "no additional comments or special considerations were provided for this kpi",
+    ],
+}
+
+def _is_generic_text(text: str | None, kind: str) -> bool:
+    if not text:
+        return True
+    t = text.strip().lower()
+    patterns = _GENERIC_PHRASES.get(kind, [])
+    return any(p in t for p in patterns)
+
+def _append_sentence_if_missing(text: str, sentence: str) -> str:
+    text = (text or "").strip()
+    if not text:
+        return sentence
+    if sentence and sentence.lower() not in text.lower():
+        return f"{text} {sentence}"
+    return text
+
+# NEW: strict single-category classifier based on KPI name only
+def _classify_kpi(kpi_name: str) -> str | None:
+    n = (kpi_name or "").lower()
+    # Order matters: pick the most specific first
+    if "mfi" in n or "melt flow index" in n:
+        return "mfi_variance"
+    if "propyl" in n and "ethyl" in n or "p/e" in n:
+        return "pe_ratio"
+    if "on-spec" in n or "on spec" in n or "on_spec" in n:
+        return "on_spec_percentage"
+    if "flare" in n and "recover" in n:
+        return "flare_recovery_rate"
+    if "throughput" in n:
+        return "throughput"
+    if "yield" in n and "percentage" in n:
+        return "yield_percentage"
+    if "oee" in n or "overall equipment effectiveness" in n:
+        return "oee"
+    if "specific catalyst cost" in n:
+        return "specific_catalyst_cost"
+    return None
+
+def _enrich_with_domain_hints(kpi_name: str, code_context: str, data: Dict[str, Any]) -> Dict[str, Any]:
+    """
+    Merge generic fields with domain-aware sentences. Exactly ONE category applies,
+    chosen from the KPI name to avoid cross-contamination between KPIs.
+    """
+    category = _classify_kpi(kpi_name)
+    ctx = (code_context or "").lower()
+
+    def set_if_generic(field: str, value: str):
+        current = data.get(field, "") or ""
+        data[field] = value if _is_generic_text(
+            current,
+            "desc" if field == "description" else
+            "obj" if field == "objective" else
+            "used" if field == "used_in_kpis" else
+            "input" if field == "input_measure" else
+            "comments_empty" if field == "comments" else "desc"
+        ) else _append_sentence_if_missing(current, value)
+
+    uom = (data.get("unit_of_measure") or "").strip().lower()
+    src = (data.get("reporting_source") or "").strip().lower()
+
+    if category == "mfi_variance":
+        set_if_generic("description",
+            "The Polymer Melt Flow Index (MFI) Variance measures the variability in the melt flow index of polymer samples and indicates how easily the polymer flows when melted.")
+        set_if_generic("objective",
+            "Monitoring MFI variance helps ensure consistent product quality and process stability; low variance suggests a stable process and adherence to quality standards.")
+        set_if_generic("input_measure",
+            "Melt Flow Index test results from polymer samples collected during production or laboratory testing.")
+        set_if_generic("used_in_kpis",
+            "Used in quality control and assurance to evaluate polymer production performance and detect potential manufacturing issues.")
+        if uom in {"", "variance (units^2)", "unit not specified", "n/a"}:
+            data["unit_of_measure"] = "dimensionless"
+        if not src or "histor" in src or "logs" in src:
+            data["reporting_source"] = "Laboratory test results of polymer samples taken during production."
+        set_if_generic("comments",
+            "Tracking MFI variance is essential for maintaining product quality and ensuring products meet required specifications for intended applications.")
+
+    elif category == "pe_ratio":
+        set_if_generic("description",
+            "The ratio of propylene to ethylene production volumes, used to assess the balance of the product slate.")
+        set_if_generic("objective",
+            "Align production strategy with market demand and margins by monitoring relative propylene versus ethylene output.")
+        set_if_generic("input_measure",
+            "Total propylene produced and total ethylene produced in the measurement period.")
+        if uom in {"", "unit not specified", "n/a"}:
+            data["unit_of_measure"] = "ratio (dimensionless)"
+        if not src:
+            data["reporting_source"] = "Process historian (e.g., AVEVA PI System) and control system archives."
+
+    elif category == "on_spec_percentage":
+        set_if_generic("description",
+            "This KPI expresses the proportion of production that meets all quality standards relative to total batches.")
+        set_if_generic("objective",
+            "Improve first-pass quality and reduce rework or off-spec material by monitoring on-spec performance over time.")
+        set_if_generic("input_measure",
+            "Counts of on-spec batches and total batches in the measurement period.")
+        if uom in {"", "unit not specified", "n/a"}:
+            data["unit_of_measure"] = "%"
+        if not src:
+            data["reporting_source"] = "Process historian and quality management/execution system records."
+
+    elif category == "flare_recovery_rate":
+        set_if_generic("description",
+            "Share of total gas that is recovered instead of flared, indicating the effectiveness of recovery systems.")
+        set_if_generic("objective",
+            "Reduce flaring and emissions by improving recovery system reliability and operation.")
+        set_if_generic("input_measure",
+            "Gas flared volume and gas recovered volume over the measurement period.")
+        if uom in {"", "unit not specified", "n/a", "variance (units^2)"}:
+            data["unit_of_measure"] = "%"
+        if not src:
+            data["reporting_source"] = "Process historian (flare meters and recovery system flow meters)."
+
+    elif category == "throughput":
+        set_if_generic("description",
+            "Average processing rate of material over the measurement period, typically normalized to daily capacity.")
+        set_if_generic("objective",
+            "Maximize utilization while respecting equipment and constraint limits.")
+        set_if_generic("input_measure",
+            "Total feedstock processed and the number of operating hours in the measurement period.")
+        if ("* 24" in ctx or "*24" in ctx) and ("/ hours" in ctx or "/hours" in ctx or "hours_online" in ctx):
+            data["unit_of_measure"] = "tons/day"
+        elif uom in {"", "unit not specified", "n/a"}:
+            data["unit_of_measure"] = "tons/hour"
+        if not src:
+            data["reporting_source"] = "Process historian (e.g., AVEVA PI System) and control system archives."
+
+    elif category == "yield_percentage":
+        set_if_generic("description",
+            "Proportion of desired product produced relative to total input, indicating conversion efficiency.")
+        set_if_generic("objective",
+            "Improve conversion efficiency and identify losses or off-spec production by trending yield over time.")
+        set_if_generic("input_measure",
+            "Desired product output and corresponding input over the measurement period.")
+        if uom in {"", "unit not specified", "n/a"}:
+            data["unit_of_measure"] = "%"
+        if not src:
+            data["reporting_source"] = "Process historian and production execution logs."
+
+    elif category == "oee":
+        set_if_generic("description",
+            "Overall Equipment Effectiveness combines Availability, Performance, and Quality into a single effectiveness score.")
+        set_if_generic("objective",
+            "Increase effective productive time by reducing downtime, speed losses, and quality losses.")
+        set_if_generic("input_measure",
+            "Availability, performance, and quality factors calculated for the asset or line.")
+        if uom in {"", "unit not specified", "n/a"}:
+            data["unit_of_measure"] = "%"
+        if not src:
+            data["reporting_source"] = "MES/Production systems and equipment runtime counters."
+
+    elif category == "specific_catalyst_cost":
+        set_if_generic("description",
+            "Cost of catalyst consumed per ton of product, used to monitor and optimize catalyst usage.")
+        set_if_generic("objective",
+            "Control catalyst spend while maintaining performance and product quality.")
+        set_if_generic("input_measure",
+            "Catalyst cost used and product tons over the measurement period.")
+        if uom in {"", "unit not specified", "n/a"}:
+            data["unit_of_measure"] = "currency per ton"
+        if not src:
+            data["reporting_source"] = "ERP/finance records and production totals from historians or MES."
+
+    # If after enrichment comments remain empty, ensure non-empty default
+    if _is_generic_text(data.get("comments"), "comments_empty"):
+        data["comments"] = "No additional comments or special considerations were provided for this KPI."
+    return data
+
+# ------------------ Existing helpers (restored) ------------------
 def _infer_unit_of_measure(kpi_name: str, code_context: str, current_value: str | None) -> str:
     """
     Best-effort unit inference from KPI name and code context.
@@ -30,12 +307,11 @@ def _infer_unit_of_measure(kpi_name: str, code_context: str, current_value: str 
         )
 
     if not is_generic(current_value):
-        return current_value  # keep a specific unit provided by the AI
+        return current_value
 
     name = (kpi_name or "").lower()
     ctx = (code_context or "").lower()
 
-    # 1) Explicit from name
     if "tons/day" in name or "ton/day" in name:
         return "tons/day"
     if "oee" in name or "overall equipment effectiveness" in name:
@@ -47,13 +323,11 @@ def _infer_unit_of_measure(kpi_name: str, code_context: str, current_value: str 
     if "mtbf" in name or "mean time between failures" in name:
         return "hours per failure"
 
-    # 2) From code context hints
     if "tons/day" in ctx or "ton/day" in ctx:
         return "tons/day"
     if "np.var(" in ctx or "variance" in ctx:
         return "variance (units^2)"
 
-    # Heuristic for throughput using tons and hours
     if "throughput" in name or "throughput" in ctx:
         has_tons = "ton" in ctx or "tons" in ctx
         divides_hours = "/ hours" in ctx or "/hours" in ctx or " / 24" in ctx
@@ -63,123 +337,52 @@ def _infer_unit_of_measure(kpi_name: str, code_context: str, current_value: str 
         if has_tons and divides_hours:
             return "tons/hour"
 
-    # Generic presence of percentage-like calculation
     if "* 100" in ctx or "*100" in ctx:
         return "%"
 
-    # Fall back to a safe default if nothing detected
     return current_value or "unit not specified"
 
-
-def generate_formula_from_code(code_context: str) -> dict:
+def _infer_reporting_source(code_context: str, current_value: str | None) -> str:
     """
-    Analyzes the raw code to programmatically generate a perfect HTML/MathJax block.
-    This is 100% reliable.
+    Provide a more specific reporting source when the current value looks generic or empty.
     """
-    formula_data = {
-        "formula_html": "<p>See code context for implementation details.</p>"
-    }
-
-    # Pick the best calculation-like assignment line (skip constants and strip inline comments).
-    calculation_line = ""
-    for raw in code_context.splitlines():
-        line = raw.strip()
-        if '=' not in line or line.startswith(('#', '"""', "'''")):
-            continue
-
-        lhs, rhs = [p.strip() for p in line.split('=', 1)]
-
-        # Strip inline comments to avoid MathJax '#' errors
-        if '#' in rhs:
-            rhs = rhs.split('#', 1)[0].strip()
-
-        # Ignore empty or trivial RHS (constants only, like "5.0")
-        is_constant = bool(re.fullmatch(r"[0-9.+\-eE]+", rhs))
-        # Prefer calculation-like expressions
-        is_calc = (
-            any(op in rhs for op in ('*', '/', '+', '-'))
-            or 'len(' in rhs
-            or 'np.' in rhs
-            or '(' in rhs  # function call patterns
+    def is_generic(v: str | None) -> bool:
+        if not v:
+            return True
+        v_low = v.strip().lower()
+        return (
+            v_low.startswith("typically sourced")
+            or v_low in {"n/a", "not specified"}
+            or len(v_low) < 3
         )
 
-        if is_calc and not is_constant:
-            calculation_line = f"{lhs} = {rhs}"
-            break
+    if not is_generic(current_value):
+        return current_value
 
-    # Fallback: try to find any assignment and strip inline comments (last resort)
-    if not calculation_line:
-        m = re.search(r'([a-zA-Z_][a-zA-Z0-9_]*)\s*=\s*(.+)', code_context)
-        if m:
-            lhs, rhs = m.groups()
-            rhs = rhs.split('#', 1)[0].strip()
-            calculation_line = f"{lhs.strip()} = {rhs}"
+    ctx = (code_context or "").lower()
 
-    if not calculation_line:
-        return formula_data
+    if any(k in ctx for k in ["histori", "pi system", "osisoft", "aveva", "processbook"]):
+        return "Process historian (e.g., AVEVA PI System) and control system archives."
+    if any(k in ctx for k in ["opc", "scada", "dcs", "plc"]):
+        return "SCADA/DCS via OPC/PLC tags."
+    if any(k in ctx for k in ["sensor", "telemetry", "iot"]):
+        return "Direct sensor telemetry and IoT gateways."
+    if any(k in ctx for k in ["sql", "postgres", "mysql", "mssql", "sqlite", "warehouse", "bigquery", "snowflake"]):
+        return "Manufacturing database or data warehouse (SQL-backed)."
+    if any(k in ctx for k in ["csv", ".csv", "xlsx", "excel"]):
+        return "File-based logs and exports (CSV/Excel) from plant systems."
+    if "api" in ctx or "requests." in ctx:
+        return "REST API from plant or MES systems."
+    if "log" in ctx:
+        return "Production execution logs."
 
-    result_var, expression = [p.strip() for p in calculation_line.split('=', 1)]
+    return "Operations data sources such as historians, SCADA/DCS tags, and production logs."
 
-    def pretty_name(v: str) -> str:
-        # Convert snake_case to Title Case with spaces
-        v = re.sub(r'[_\s]+', ' ', v).strip().title()
-        return v
-
-    def fmt_var(v: str) -> str:
-        # Handle len(x) specially
-        m = re.fullmatch(r'len\((.+)\)', v.strip())
-        if m:
-            inner = pretty_name(m.group(1))
-            return r"\mathrm{Len}\!\left(\mathrm{%s}\right)" % inner
-        return r"\mathrm{%s}" % pretty_name(v)
-
-    latex_str = ""
-    notes_list = []
-
-    # --- Logic for different formula types ---
-    # (a / b) * 100
-    m = re.search(r'\((.*?)\s*/\s*(.*?)\)\s*\*\s*100', expression)
-    if m:
-        num, den = [s.strip() for s in m.groups()]
-        latex_str = r"%s = \frac{%s}{%s} \times 100" % (fmt_var(result_var), fmt_var(num), fmt_var(den))
-        notes_list.append(f"<i>{pretty_name(num)}:</i> The numerator of the fraction.")
-        notes_list.append(f"<i>{pretty_name(den)}:</i> The denominator of the fraction.")
-    # (a / b) * c
-    elif re.search(r'\((.*?)\s*/\s*(.*?)\)\s*\*\s*([0-9]+(?:\.[0-9]+)?)', expression):
-        m = re.search(r'\((.*?)\s*/\s*(.*?)\)\s*\*\s*([0-9]+(?:\.[0-9]+)?)', expression)
-        num, den, scalar = m.groups()
-        num, den = num.strip(), den.strip()
-        latex_str = r"%s = \frac{%s}{%s} \times %s" % (fmt_var(result_var), fmt_var(num), fmt_var(den), scalar)
-        notes_list.append(f"<i>{pretty_name(num)}:</i> The numerator of the fraction.")
-        notes_list.append(f"<i>{pretty_name(den)}:</i> The denominator of the fraction.")
-    # a / b
-    elif '/' in expression:
-        parts = [s.strip() for s in expression.split('/')]
-        if len(parts) == 2:
-            latex_str = r"%s = \frac{%s}{%s}" % (fmt_var(result_var), fmt_var(parts[0]), fmt_var(parts[1]))
-    # a * b * c
-    elif '*' in expression:
-        parts = [s.strip() for s in expression.split('*')]
-        latex_str = r"%s = %s" % (fmt_var(result_var), r' \times '.join(fmt_var(p) for p in parts))
-    # a - b
-    elif '-' in expression and all(p.strip() for p in expression.split('-', 1)):
-        parts = [s.strip() for s in expression.split('-')]
-        if len(parts) == 2:
-            latex_str = r"%s = %s - %s" % (fmt_var(result_var), fmt_var(parts[0]), fmt_var(parts[1]))
-    # len(a) / len(b)
-    elif re.search(r'len\((.*?)\)\s*/\s*len\((.*?)\)', expression):
-        m = re.search(r'len\((.*?)\)\s*/\s*len\((.*?)\)', expression)
-        num, den = m.groups()
-        latex_str = r"%s = \frac{%s}{%s}" % (fmt_var(result_var), fmt_var(f"len({num})"), fmt_var(f"len({den})"))
-
-    if latex_str:
-        notes_html = "<ul>" + "".join(f"<li>{n}</li>" for n in notes_list) + "</ul>" if notes_list else ""
-        formula_data["formula_html"] = f'<div class="math-equation">$$ {latex_str} $$</div>{notes_html}'
-    else:
-        formula_data["formula_html"] = "<p>See code context for implementation details.</p>"
-
-    return formula_data
-
+def _fill_comments_if_empty(text: str | None) -> str:
+    text = (text or "").strip()
+    if text:
+        return text
+    return "No additional comments or special considerations were provided for this KPI."
 
 def generate_kpi_details(kpi_name: str, code_context: str) -> Dict[str, Any]:
     """Uses OpenAI's GPT model to generate plain text descriptions ONLY."""
@@ -189,21 +392,47 @@ def generate_kpi_details(kpi_name: str, code_context: str) -> Dict[str, Any]:
 
     client = OpenAI(api_key=api_key)
 
+    # 1) Retrieval: domain KB + user overrides as few-shot guidance
+    kb_examples = _retrieve_kb_examples(client, kpi_name, top_k=3)
+    user_overrides = _load_user_overrides_for(kpi_name)
+
+    kb_block = ""
+    if kb_examples:
+        # Provide compact JSON snippets as guidance (not mandatory)
+        kb_block = "Domain Knowledge (Petrochemical KPI examples):\n" + json.dumps(kb_examples, ensure_ascii=False)
+
+    overrides_block = ""
+    if user_overrides:
+        overrides_block = "User-Approved Overrides (preferred wording for this KPI):\n" + json.dumps(user_overrides, ensure_ascii=False)
+
+    guidance = "\n\n".join([b for b in [kb_block, overrides_block] if b])
+
     prompt = f"""
-    You are an expert technical writer. Based on the KPI name and code below, generate a JSON object containing plain English descriptions.
-    **RULES:**
-    1. Write each field as a natural language paragraph or sentence.
-    2. **DO NOT use lists, bullet points, semicolons, or any special formatting.**
-    3. **DO NOT generate any LaTeX or mathematical formulas.**
+    You are an expert technical writer for oil, gas, and petrochemicals.
+    Use the KPI name, code, and any provided domain knowledge to write accurate, concise text.
 
-    **KPI Name:** "{kpi_name}"
-    **Code Context:** ```python\n{code_context}\n```
+    Guidance (optional, use if relevant):
+    {guidance or "None"}
 
-    Generate a JSON object with these exact keys: "description", "objective", "formula_description", "used_in_kpis", "input_measure", "unit_of_measure", "reporting_source", "comments".
+    RULES:
+    1) Write each field as a natural-language sentence or brief paragraph (no bullets in raw text).
+    2) Do NOT output lists, semicolons, or formulas (that's handled elsewhere).
+    3) Stay specific to this KPI; do not copy irrelevant content from examples.
+
+    KPI Name: "{kpi_name}"
+    Code Context: ```python
+    {code_context}
+    ```
+
+    Generate a JSON object with these exact keys:
+    "description", "objective", "formula_description", "used_in_kpis",
+    "input_measure", "unit_of_measure", "reporting_source", "comments".
     """
 
     retries = 8
-    delay = 8  # shorter initial delay to speed up a bit
+    delay = 8
+    result: Dict[str, Any] | None = None
+
     for i in range(retries):
         try:
             response = client.chat.completions.create(
@@ -212,80 +441,80 @@ def generate_kpi_details(kpi_name: str, code_context: str) -> Dict[str, Any]:
                 response_format={"type": "json_object"},
                 temperature=0.1,
             )
-            return json.loads(response.choices[0].message.content)
-        except Exception as e:
+            content = getattr(getattr(response, "choices", [None])[0], "message", None)
+            content_text = getattr(content, "content", None)
+            if not content_text or not isinstance(content_text, str):
+                raise ValueError("Empty or invalid model response content.")
+            parsed = json.loads(content_text)
+            if not isinstance(parsed, dict):
+                raise ValueError("Model response is not a JSON object.")
+            result = parsed
+            break
+        except Exception:
             if i < retries - 1:
                 time.sleep(delay)
                 delay = min(delay * 2, 60)
-            else:
-                return {
-                    "description": f"{kpi_name} is a key performance indicator used to assess process efficiency and operational performance.",
-                    "objective": f"The objective of {kpi_name} is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
-                    "formula_description": "Calculated directly from the inputs found in the code implementation.",
-                    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
-                    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
-                    "unit_of_measure": "See calculation and context for the most appropriate unit.",
-                    "reporting_source": "Typically sourced from process historians, production logs, or execution systems.",
-                    "comments": ""
-                }
+                continue
+            result = {
+                "description": f"{kpi_name} is a key performance indicator used to assess process efficiency and operational performance.",
+                "objective": f"The objective of {kpi_name} is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+                "formula_description": "Calculated directly from the inputs found in the code implementation.",
+                "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+                "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+                "unit_of_measure": "See calculation and context for the most appropriate unit.",
+                "reporting_source": "Typically sourced from process historians, production logs, or execution systems.",
+                "comments": "No additional comments or special considerations were provided for this KPI."
+            }
 
+    # Ensure all required keys exist
+    for key in ("description", "objective", "formula_description", "used_in_kpis",
+                "input_measure", "unit_of_measure", "reporting_source", "comments"):
+        result.setdefault(key, "")
 
-def _extract_function_block(code_context: str, anchor_line_number: int):
-    """
-    Returns (scoped_function_block, start_index_in_original_context).
+    # Apply safeguards
+    result["unit_of_measure"] = _infer_unit_of_measure(kpi_name, code_context, result.get("unit_of_measure"))
+    result["reporting_source"] = _infer_reporting_source(code_context, result.get("reporting_source"))
+    result["comments"] = _fill_comments_if_empty(result.get("comments"))
 
-    Prefer AST-based slicing to get the exact function that contains anchor_line_number.
-    Falls back to indentation-based heuristic if AST parsing fails.
-    """
-    lines = code_context.splitlines()
-    if not lines or anchor_line_number <= 0 or anchor_line_number > len(lines):
-        return code_context, 0
+    # Domain enrichment (petrochemicals only, controlled by feature flag and strict classifier)
+    result = _enrich_with_domain_hints(kpi_name, code_context, result)
 
-    # 1) AST-based extraction (robust)
-    try:
-        tree = ast.parse(code_context)
-        for node in tree.body:
-            if isinstance(node, ast.FunctionDef):
-                start = node.lineno
-                end = getattr(node, "end_lineno", None)
-                if end is None:
-                    # Compute end by walking the body (for older Python, but kept as safeguard)
-                    last = node.body[-1]
-                    end = getattr(last, "end_lineno", getattr(last, "lineno", start))
-                if start <= anchor_line_number <= end:
-                    return "\n".join(lines[start - 1:end]), start - 1
-        # If not found via AST, continue to heuristic
-    except Exception:
-        pass
+    # Finally merge explicit user overrides (user takes precedence)
+    if user_overrides:
+        for k, v in user_overrides.items():
+            if v:
+                result[k] = v
 
-    # 2) Heuristic fallback (improved)
-    anchor_idx = anchor_line_number - 1
+    return result
 
-    # Find the start of the function that contains the anchor
-    start_idx = 0
-    for i in range(anchor_idx, -1, -1):
-        if lines[i].lstrip().startswith("def "):
-            start_idx = i
-            break
+# ... existing code ...
 
-    def_indent = len(lines[start_idx]) - len(lines[start_idx].lstrip())
+def generate_bluebook(source_code_path: str):
+    """Main generator logic that yields progress messages."""
+    # 1) Remove old generated .rst files (keep index.rst if present)
+    for item in DOCS_SOURCE_DIR.glob('*.rst'):
+        if item.is_file() and item.name != 'index.rst':
+            item.unlink()
+    yield "Cleaned old documentation files."
 
-    # End at next def with same/less indent OR any non-empty line whose indent drops below def indent
-    end_idx = len(lines)
-    for j in range(start_idx + 1, len(lines)):
-        stripped = lines[j].strip()
-        indent = len(lines[j]) - len(lines[j].lstrip())
-        if not stripped:
-            continue
-        if indent < def_indent:
-            end_idx = j
-            break
-        if lines[j].lstrip().startswith("def ") and indent <= def_indent:
-            end_idx = j
-            break
-        # Also stop at common top-level blocks
-        if indent == 0 and (stripped.startswith("#") or stripped.startswith("if __name__")):
-            end_idx = j
-            break
+    # 2) Also remove previous HTML build so stale pages cannot survive
+    build_dir = DOCS_SOURCE_DIR / '_build'
+    if build_dir.exists():
+        import shutil
+        shutil.rmtree(build_dir, ignore_errors=True)
+        yield "Removed previous Sphinx _build directory."
 
-    return "\n".join(lines[start_idx:end_idx]), start_idx
+    # NEW: log the path we are scanning
+    yield f"Scanning for KPIs in: {source_code_path}"
+
+    kpis = find_kpis_in_directory(source_code_path)
+    yield f"Scanner result: {len(kpis)} items"
+
+    # Log first few KPIs for quick verification
+    for idx, k in enumerate(kpis[:10], start=1):
+        yield f"[{idx}] {k.get('name')} — {k.get('file_path')}:{k.get('file_line')}"
+
+    if not kpis:
+        yield "No KPIs found in the specified directory."
+        return
+    yield f"Found {len(kpis)} KPIs. Starting AI generation for descriptions..."

@@ -1,0 +1,6 @@
+-- KPI: Flare Gas Recovery Rate
+-- Simplified view artifact text
+SELECT
+  CASE WHEN (gas_flared_m3 + gas_recovered_m3) = 0 THEN 0
+       ELSE 100 * gas_recovered_m3 / (gas_flared_m3 + gas_recovered_m3) END AS recovery_rate_percent
+FROM FLARE_DAILY_SUMMARY;

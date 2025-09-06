@@ -1,4 +1,4 @@
-Cooling Water Delta-T (°C)
+Cooling Water Delta-T (°C
 ==================================================
 
 .. math::
@@ -25,54 +25,55 @@ Cooling Water Delta-T (°C)
       }
       .kpi-table .formula-notes li { margin-bottom: 0.5em; }
       .kpi-table .formula-notes i { font-family: 'Times New Roman', serif; }
+      .btn { display:inline-block; padding:8px 12px; border-radius:6px; color:#fff; text-decoration:none; font-weight:500; font-size:13px; }
+      .btn-vscode { background-color:#2c5282; }
+      .btn-pycharm { background-color:#000; }
+      .btn-edit { background-color:#4a7c59; }
    </style>
 
    <div style="margin-bottom: 1.5em; display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
       <span style="font-size: 13px; font-weight: 500; color: #4a5568;">Open in:</span>
-      <a href="vscode://file//Users/meshaalmouawad/AI-Powered_KPI_Extractor_Interactive_Bluebook_Generator/sample_project/petrochemical_plant_operations.py:103" target="_blank" style="display: inline-block; background-color: #2c5282; color: white; padding: 8px 12px; border-radius: 6px; text-decoration: none; font-weight: 500; font-size: 13px;">
-         VS Code
-      </a>
-      <a href="pycharm://open?file=/Users/meshaalmouawad/AI-Powered_KPI_Extractor_Interactive_Bluebook_Generator/sample_project/petrochemical_plant_operations.py&line=103" target="_blank" style="display: inline-block; background-color: #000000; color: white; padding: 8px 12px; border-radius: 6px; text-decoration: none; font-weight: 500; font-size: 13px;">
-         PyCharm
-      </a>
+      <a href="vscode://file//Users/meshaalmouawad/AI-Powered_KPI_Extractor_Interactive_Bluebook_Generator/sample_project/csv_kpi.cs:0" target="_blank" class="btn btn-vscode">VS Code</a>
+      <a href="pycharm://open?file=/Users/meshaalmouawad/AI-Powered_KPI_Extractor_Interactive_Bluebook_Generator/sample_project/csv_kpi.cs&line=0" target="_blank" class="btn btn-pycharm">PyCharm</a>
+      <a href="/edit?kpi=Cooling%20Water%20Delta-T%20%28%C2%B0C" target="_blank" class="btn btn-edit">Edit</a>
    </div>
 
    <table class="kpi-table">
       <tbody>
          <tr>
             <td>Description</td>
-            <td><ul><li>Cooling Water Delta-T (°C) is a key performance indicator used to assess process efficiency and operational performance</li></ul></td>
+            <td><ul><li>Cooling Water Delta-T measures the temperature difference between the inlet and outlet of cooling water systems</li><li>indicating the effectiveness of heat exchange processes</li></ul></td>
          </tr>
          <tr>
             <td>Objective</td>
-            <td><ul><li>The objective of Cooling Water Delta-T (°C) is to provide a clear measure that supports monitoring</li><li>decision making</li><li>and continuous improvement</li></ul></td>
+            <td><ul><li>The objective of monitoring Cooling Water Delta-T is to ensure optimal cooling system performance</li><li>enhance energy efficiency</li><li>and prevent overheating of equipment</li></ul></td>
          </tr>
          <tr>
             <td>Formula</td>
             <td>
-               <p>Calculated directly from the inputs found in the code implementation.</p>
-               <div class="math-equation">$$ \mathit{Delta\,T} = \mathit{Outlet\,Temp} - \mathit{Inlet\,Temp} $$</div><ul><li>Outlet Temp: Value used in the calculation as defined by the code implementation.</li><li>Inlet Temp: Value used in the calculation as defined by the code implementation.</li></ul><script>if (window.MathJax) {  if (MathJax.typesetPromise) { MathJax.typesetPromise(); }  else if (MathJax.typeset) { MathJax.typeset(); }}</script>
+               <p>The Cooling Water Delta-T is calculated by subtracting the inlet temperature of the cooling water from its outlet temperature.</p>
+               <div class="math-equation">$$ \mathit{Result} = \mathit{Outlet\,C} - \mathit{Inlet\,C;\,\}\,\}} $$</div>
             </td>
          </tr>
          <tr>
             <td>Used in KPI(s)</td>
-            <td><ul><li>This KPI can serve as an input to higher-level operational and performance dashboards</li></ul></td>
+            <td><ul><li>This KPI is used in various performance indicators related to cooling system efficiency</li><li>energy consumption</li><li>and equipment reliability</li></ul></td>
          </tr>
          <tr>
             <td>Input Measure</td>
-            <td><ul><li>Derived from the variables used in the code calculation for this KPI</li></ul></td>
+            <td><ul><li>The input measures for this KPI are the temperatures of the cooling water at the inlet and outlet points</li></ul></td>
          </tr>
          <tr>
             <td>Unit of Measure</td>
-            <td>See calculation and context for the most appropriate unit.</td>
+            <td>The unit of measure for Cooling Water Delta-T is degrees Celsius.</td>
          </tr>
          <tr>
             <td>Reporting Source</td>
-            <td>Typically sourced from process historians, production logs, or execution systems.</td>
+            <td>Data for this KPI is typically sourced from temperature sensors installed in the cooling water system.</td>
          </tr>
          <tr>
             <td>Comments</td>
-            <td></td>
+            <td>Regular monitoring of Cooling Water Delta-T can help identify potential issues in cooling systems, allowing for timely maintenance and optimization.</td>
          </tr>
       </tbody>
    </table>
@@ -83,13 +84,13 @@ Cooling Water Delta-T (°C)
    .. code-block:: python
       :linenos:
    
-      :emphasize-lines: 3
-   
 
-      def calculate_cooling_water_effectiveness(inlet_temp: float, outlet_temp: float) -> float:
-       """Calculates the temperature difference, indicating heat exchanger performance."""
-       # KPI: Cooling Water Delta-T (°C)
-       # A lower-than-expected Delta-T can indicate fouling or scaling in heat exchangers.
-       delta_t = outlet_temp - inlet_temp
-       return delta_t
-
+      // KPI: Cooling Water Delta-T (°C)
+   public static class CoolingWater
+   {
+       public static double DeltaT(double inlet_c, double outlet_c)
+       {
+           // ΔT = outlet - inlet
+           return outlet_c - inlet_c;
+       }
+   }
