@@ -571,67 +571,68 @@ def generate_formula_from_code(code_context: str) -> dict:
     return formula_data
 
 def create_rst_file(kpi_data: dict, details: dict, template: jinja2.Template):
-    """Generates and saves a .rst file for a single KPI."""
+    """Generates and saves a .rst file for a single KPI (all languages)."""
     from html import escape
     import os
 
+    # 1) Find the KPI marker line within the provided code context (for line highlighting)
     kpi_line_in_context = 0
-    context_lines = kpi_data['code_context'].split('\n')
+    context_lines = (kpi_data.get('code_context') or '').split('\n')
+    kpi_name = kpi_data.get('name') or ''
     for i, line in enumerate(context_lines):
-        if f"# KPI: {kpi_data['name']}" in line:
+        if f"# KPI: {kpi_name}" in line or f"-- KPI: {kpi_name}" in line or f"' KPI: {kpi_name}" in line or f"/* KPI: {kpi_name}" in line:
             kpi_line_in_context = i + 1
             break
     kpi_data['context_line_number'] = kpi_line_in_context
 
-    # Scope only for Python files; other languages keep full context
-    file_path = kpi_data.get('file_path', '') or ''
-    _, ext = os.path.splitext(file_path.lower())
-    if ext == ".py":
-        scoped_context, start_idx = _extract_function_block(kpi_data['code_context'], kpi_line_in_context)
-        programmatic_formula = generate_formula_from_code(scoped_context)
+    # 2) Determine file extension and possibly scope Python to function block
+    file_path = kpi_data.get('file_path') or ''
+    _, ext = os.path.splitext(str(file_path).lower())
 
-        # Adjust the emphasize line number so it's relative to the scoped block
+    if ext == ".py":
+        # Scope to the function that contains the KPI marker for cleaner context
+        scoped_context, start_idx = _extract_function_block(kpi_data.get('code_context', ''), kpi_line_in_context)
+        kpi_data['code_context'] = scoped_context
+        # Recompute relative line number inside the scoped block
         if kpi_line_in_context > 0:
-            relative_line = kpi_line_in_context - start_idx
-            kpi_data['context_line_number'] = relative_line if relative_line > 0 else 0
+            rel = kpi_line_in_context - start_idx
+            kpi_data['context_line_number'] = rel if rel > 0 else 0
         else:
             kpi_data['context_line_number'] = 0
-
-        # Replace displayed code with the scoped one
-        kpi_data['code_context'] = scoped_context
+        programmatic_formula = generate_formula_from_code(scoped_context)
     else:
-        # Use the original, full context so multi-line SQL/T-SQL/HANA/ABAP statements remain intact
-        programmatic_formula = generate_formula_from_code(kpi_data['code_context'])
-        # No change to kpi_data['context
-        # Pre-format the AI's plain text into HTML lists (with sanitization + escaping)
-        final_details = {
-            "description_html": format_text_as_html_list(details.get("description", "")),
-            "objective_html": format_text_as_html_list(details.get("objective", "")),
-            "formula_description": escape(details.get("formula_description", "") or ""),
-            "used_in_kpis_html": format_text_as_html_list(details.get("used_in_kpis", "")),
-            "input_measure_html": format_text_as_html_list(details.get("input_measure", "")),
-            "unit_of_measure": escape(details.get("unit_of_measure", "") or ""),
-            "reporting_source": escape(details.get("reporting_source", "") or ""),
-            "comments": escape(details.get("comments", "") or ""),
-            **programmatic_formula
-        }
+        # Keep full context for SQL-like/ABAP/etc.
+        programmatic_formula = generate_formula_from_code(kpi_data.get('code_context', ''))
 
-        filename = "".join(c for c in kpi_data['name'] if c.isalnum() or c in (' ', '_')).rstrip()
-        filename = filename.replace(' ', '_').lower() + '.rst'
-        output_path = DOCS_SOURCE_DIR / filename
+    # 3) Build final_details consistently for all languages
+    final_details = {
+        "description_html": format_text_as_html_list(details.get("description", "")),
+        "objective_html": format_text_as_html_list(details.get("objective", "")),
+        "formula_description": escape(details.get("formula_description", "") or ""),
+        "used_in_kpis_html": format_text_as_html_list(details.get("used_in_kpis", "")),
+        "input_measure_html": format_text_as_html_list(details.get("input_measure", "")),
+        "unit_of_measure": escape(details.get("unit_of_measure", "") or ""),
+        "reporting_source": escape(details.get("reporting_source", "") or ""),
+        "comments": escape(details.get("comments", "") or ""),
+        **(programmatic_formula or {}),
+    }
 
-        content = template.render(kpi=kpi_data, details=final_details)
+    # If an explicit LaTeX formula was provided in kpi_data, prefer it
+    explicit_formula = kpi_data.get("formula")
+    if explicit_formula:
+        final_details["formula_html"] = f'<div class="math-equation">$$ {explicit_formula} $$</div>'
 
-        with open(output_path, 'w', encoding='utf-8') as f:
-            f.write(content)
-        return filename
+    # 4) Compute safe filename and write the .rst file
+    safe_name = "".join(c for c in (kpi_name or '') if c.isalnum() or c in (' ', '_')).rstrip()
+    filename = (safe_name.replace(' ', '_').lower() or 'kpi') + '.rst'
+    output_path = DOCS_SOURCE_DIR / filename
 
-    formula = kpi_data.get("formula")
-    if formula:
-        # Render as LaTeX math block
-        details["formula_html"] = f".. math::\n\n   {formula}\n"
-    else:
-        details["formula_html"] = "See code context for implementation details."
+    content = template.render(kpi=kpi_data, details=final_details)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    with open(output_path, 'w', encoding='utf-8') as f:
+        f.write(content)
+
+    return filename
 # ------------- Minimal index.rst writer -------------
 def update_index_rst(page_filenames):
     """
