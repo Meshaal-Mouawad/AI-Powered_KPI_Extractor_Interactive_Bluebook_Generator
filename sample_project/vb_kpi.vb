@@ -1,7 +1,10 @@
-def calculate_demo_throughput(total_feedstock_tons: float, hours_online: float) -> float:
-    # KPI: Daily Feedstock Throughput (tons/day)
-    # Math Formula: Throughput = (Total Feedstock / Hours Online) * 24
-    if hours_online == 0:
-        return 0.0
-    throughput = (total_feedstock_tons / hours_online) * 24
-    return throughput
+' KPI: Mean Time Between Failures (MTBF)
+' Formula: \mathrm{MTBF} = \frac{\mathrm{Operating\ Hours}}{\mathrm{Number\ of\ Failures}}
+Public Module KpiDemo
+    Public Function CalcMTBF(operatingHours As Integer, numberOfFailures As Integer) As Double
+        If numberOfFailures = 0 Then
+            Return operatingHours
+        End If
+        Return operatingHours / numberOfFailures
+    End Function
+End Module

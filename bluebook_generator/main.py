@@ -208,25 +208,20 @@ def generate_formula_from_code(code_context: str) -> dict:
     # Remove outer SQL wrappers like CAST(...), COALESCE(...), NULLIF(...), parentheses
     def unwrap_sql_expr(expr: str) -> str:
         e = expr.strip()
-        # unwrap CAST(...)
+        # FIX: use the correct group name "inner" consistently
         m = re.search(r"(?is)\bCAST\s*\(\s*(?P<inner>.+?)\s+AS\s+[^\)]+\)", e)
         if m:
-            e = m.group("i").strip()
-        # unwrap COALESCE(x, y)
+            e = m.group("inner").strip()
         m = re.search(r"(?is)\bCOALESCE\s*\(\s*(?P<inner>.+?)\s*,\s*.+?\)", e)
         if m:
-            e = m.group("i").strip()
-        # unwrap NULLIF(x, y)
+            e = m.group("inner").strip()
         m = re.search(r"(?is)\bNULLIF\s*\(\s*(?P<inner>.+?)\s*,\s*.+?\)", e)
         if m:
-            e = m.group("i").strip()
-        # outer parentheses
+            e = m.group("inner").strip()
         e = e.strip()
         if e.startswith("(") and e.endswith(")"):
-            # remove only one pair to avoid over-trimming
             e = e[1:-1].strip()
         return e
-
     # Clean lines for single-line patterns
     cleaned = []
     for raw in ctx.splitlines():
@@ -461,13 +456,11 @@ def generate_formula_from_code(code_context: str) -> dict:
                     expr = f"{a.strip()} / {b.strip()}"
             return build_html(alias, expr)
 
-    # 2c) NEW: T-SQL strong percent fallback (handles CAST/NULLIF in any order without AS match)
-    #    Looks for a clear percent expression anywhere in the buffer.
+    # 2c) Strong T‑SQL percent fallback (covers CAST/NULLIF with or without AS match)
     m_tsql_pct = re.search(r"(?is)100\s*\*\s*\(([^)]+?/[^)]+?)\)|\(([^)]+?/[^)]+?)\)\s*\*\s*100", ctx)
     if m_tsql_pct:
         expr_inner = (m_tsql_pct.group(1) or m_tsql_pct.group(2) or "").strip()
         if expr_inner:
-            # Try to find a nearby alias/name for the result
             m_alias_near = re.search(r"(?is)\bAS\s+(\[[^\]]+\]|\"[^\"]+\"|'[^']+'|[A-Za-z_][A-Za-z0-9_]*)", ctx)
             result_name = "Result"
             if m_alias_near:
@@ -475,13 +468,24 @@ def generate_formula_from_code(code_context: str) -> dict:
                 result_name = re.sub(r'^[\[\("\']|[\]\)"\']$', '', alias).strip() or result_name
             return build_html(result_name, expr_inner)
 
+    # 2d) CAST(...) AS <alias> direct fallback (extract inner first arg of CAST)
+    m_cast_as = re.search(
+        r'(?is)CAST\s*\(\s*(?P<inner>.+?)\s+AS\s+[^\)]+\)\s+AS\s+(?P<alias>\[[^\]]+\]|"[^"]+"|\'[^\']+\'|[A-Za-z_][A-Za-z0-9_]*)',
+        ctx
+    )
+    if m_cast_as:
+        alias = re.sub(r'^[\[\("\']|[\]\)"\']$', '', m_cast_as.group("alias")).strip()
+        expr = unwrap_sql_expr(m_cast_as.group("inner"))
+        if alias and expr:
+            return build_html(alias, expr)
+
     # 3) return <expr>;
     m = re.search(r"(?is)\breturn\b\s+(?P<expr>.+)", ctx)
     if m and gd(m, "expr"):
         return build_html("Result", gd(m, "expr"))
 
-    # 3b) NEW: VB-specific Return at line start (case-insensitive, single-line)
-    m_vb_return = re.search(r"(?im)^\s*return\s+(?P<expr>.+)$", ctx)
+    # 3b) VB Return: handle at line start with optional indent (e.g., "Return operatingHours / numberOfFailures")
+    m_vb_return = re.search(r"(?im)^\s*return\s+(?P<expr>[^\r\n]+)$", ctx)
     if m_vb_return:
         expr = m_vb_return.group("expr").strip()
         if expr:
@@ -501,17 +505,16 @@ def generate_formula_from_code(code_context: str) -> dict:
                 if any(op in rhs for op in ('*', '/', '+', '-')):
                     return build_html(lhs, rhs)
 
-    # 4b) NEW: Python/any-language assignment with math on the same line (last match wins)
+    # 4b) Python/any-language assignment with math on the same line (take last match)
     assigns = list(re.finditer(r"(?im)^\s*([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(?P<expr>.+)$", ctx))
     if assigns:
-        # Prefer the last assignment that looks mathy
-        for m in reversed(assigns):
-            expr = m.group("expr").strip()
+        for mm in reversed(assigns):
+            expr = mm.group("expr").strip()
             if any(op in expr for op in ("*", "/", "+", "-")):
-                lhs = m.group(1)
+                lhs = mm.group(1)
                 return build_html(lhs, expr)
 
-    # 4c) NEW: ABAP assignment (ends with a period); capture expression before '.'
+    # 4c) ABAP assignment ending with period (e.g., lv_rate = (...) * 100.)
     m_abap = re.search(r"(?im)^\s*([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(?P<expr>.+?)\.\s*$", ctx)
     if m_abap:
         lhs = m_abap.group(1)
@@ -599,33 +602,64 @@ def create_rst_file(kpi_data: dict, details: dict, template: jinja2.Template):
     else:
         # Use the original, full context so multi-line SQL/T-SQL/HANA/ABAP statements remain intact
         programmatic_formula = generate_formula_from_code(kpi_data['code_context'])
-        # No change to kpi_data['context_line_number'] for non-Python (keep 0 or detected)
+        # No change to kpi_data['context
+        # Pre-format the AI's plain text into HTML lists (with sanitization + escaping)
+        final_details = {
+            "description_html": format_text_as_html_list(details.get("description", "")),
+            "objective_html": format_text_as_html_list(details.get("objective", "")),
+            "formula_description": escape(details.get("formula_description", "") or ""),
+            "used_in_kpis_html": format_text_as_html_list(details.get("used_in_kpis", "")),
+            "input_measure_html": format_text_as_html_list(details.get("input_measure", "")),
+            "unit_of_measure": escape(details.get("unit_of_measure", "") or ""),
+            "reporting_source": escape(details.get("reporting_source", "") or ""),
+            "comments": escape(details.get("comments", "") or ""),
+            **programmatic_formula
+        }
 
-    # Pre-format the AI's plain text into HTML lists (with sanitization + escaping)
-    final_details = {
-        "description_html": format_text_as_html_list(details.get("description", "")),
-        "objective_html": format_text_as_html_list(details.get("objective", "")),
-        "formula_description": escape(details.get("formula_description", "") or ""),
-        "used_in_kpis_html": format_text_as_html_list(details.get("used_in_kpis", "")),
-        "input_measure_html": format_text_as_html_list(details.get("input_measure", "")),
-        "unit_of_measure": escape(details.get("unit_of_measure", "") or ""),
-        "reporting_source": escape(details.get("reporting_source", "") or ""),
-        "comments": escape(details.get("comments", "") or ""),
-        **programmatic_formula
-    }
-    filename = "".join(c for c in kpi_data['name'] if c.isalnum() or c in (' ', '_')).rstrip()
-    filename = filename.replace(' ', '_').lower() + '.rst'
-    output_path = DOCS_SOURCE_DIR / filename
+        filename = "".join(c for c in kpi_data['name'] if c.isalnum() or c in (' ', '_')).rstrip()
+        filename = filename.replace(' ', '_').lower() + '.rst'
+        output_path = DOCS_SOURCE_DIR / filename
 
-    content = template.render(kpi=kpi_data, details=final_details)
+        content = template.render(kpi=kpi_data, details=final_details)
 
-    with open(output_path, 'w', encoding='utf-8') as f:
-        f.write(content)
-    return filename
+        with open(output_path, 'w', encoding='utf-8') as f:
+            f.write(content)
+        return filename
+
+    formula = kpi_data.get("formula")
+    if formula:
+        # Render as LaTeX math block
+        details["formula_html"] = f".. math::\n\n   {formula}\n"
+    else:
+        details["formula_html"] = "See code context for implementation details."
+# ------------- Minimal index.rst writer -------------
+def update_index_rst(page_filenames):
+    """
+    Write docs/index.rst with a toctree listing for the generated KPI pages.
+    """
+    index_path = DOCS_SOURCE_DIR / "index.rst"
+    title = "KPI Bluebook"
+    lines = [
+        title,
+        "=" * len(title),
+        "",
+        ".. toctree:",
+        "   :maxdepth: 2",
+        "   :caption: Key Performance Indicators:",
+        "",
+    ]
+    for fname in page_filenames:
+        stem = os.path.splitext(os.path.basename(fname))[0]
+        lines.append(f"   {stem}")
+    index_path.parent.mkdir(parents=True, exist_ok=True)
+    with open(index_path, "w", encoding="utf-8") as f:
+        f.write("\n".join(lines))
+
+# ------------- Public pipeline -------------
 
 def generate_bluebook(source_code_path: str):
     """
-    Pipeline that yields progress messages:
+    Pipeline that yields progress messages consumed by the web UI:
       1) Clean docs/*.rst (except index.rst) and docs/_build
       2) Scan KPIs
       3) Render .rst pages
@@ -658,6 +692,7 @@ def generate_bluebook(source_code_path: str):
     try:
         template = env.get_template("kpi_template.rst.j2")
     except Exception:
+        # Minimal fallback template if the file is missing
         template = env.from_string(
             "{{ kpi.name }}\n{{ '=' * (kpi.name|length) }}\n\n"
             ".. raw:: html\n\n   {{ details.formula_html|safe }}\n\n"
@@ -671,7 +706,7 @@ def generate_bluebook(source_code_path: str):
         name = k.get("name") or f"KPI {idx}"
         yield f"Processing KPI: '{name}'..."
 
-        # AI details (safe fallback on error)
+        # AI narrative (safe fallback on error)
         try:
             details = generate_kpi_details(name, k.get("code_context", ""))
         except Exception as e:
@@ -695,8 +730,7 @@ def generate_bluebook(source_code_path: str):
         except Exception as e:
             yield f"Failed to render page for '{name}': {e}"
 
-        # Gentle pacing
-        time.sleep(0.05)
+        time.sleep(0.05)  # gentle pacing
 
     # Update index.rst
     try:
@@ -705,13 +739,11 @@ def generate_bluebook(source_code_path: str):
     except Exception as e:
         yield f"Failed to update index.rst: {e}"
 
-    # Try sphinx-build (non-blocking)
+    # Try sphinx-build; do not fail pipeline if missing
     try:
         subprocess.run(
             ["sphinx-build", "-b", "html", str(DOCS_SOURCE_DIR), str(DOCS_SOURCE_DIR / "_build")],
-            check=False,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
+            check=False, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
         )
         yield "Triggered sphinx-build (if available)."
     except Exception as e:

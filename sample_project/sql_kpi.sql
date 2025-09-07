@@ -1,5 +1,4 @@
--- KPI: Energy Intensity Index (EII)
--- Example pattern: SELECT ... AS kpi_...
-SELECT 
-    total_energy_mmbtu / NULLIF(reference_energy_mmbtu, 0) AS kpi_eii
-FROM unit_energy_summary;
+CREATE VIEW kpi_on_spec_rate AS
+SELECT
+    CAST(100.0 * on_spec_batches / NULLIF(total_batches, 0) AS FLOAT) AS on_spec_percentage
+FROM batch_quality_summary;
