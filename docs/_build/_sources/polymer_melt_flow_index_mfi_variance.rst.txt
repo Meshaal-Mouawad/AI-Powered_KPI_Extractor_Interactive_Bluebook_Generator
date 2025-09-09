@@ -42,38 +42,38 @@ Polymer Melt Flow Index (MFI) Variance
       <tbody>
          <tr>
             <td>Description</td>
-            <td><ul><li>The Polymer Melt Flow Index (MFI) Variance measures the variability in the melt flow index of polymer samples and indicates how easily the polymer flows when melted</li></ul></td>
+            <td><ul><li>The Polymer Melt Flow Index (MFI) Variance measures the variability in the flow characteristics of polymer materials</li><li>indicating consistency in processing and product quality</li><li>The Polymer Melt Flow Index (MFI) Variance measures the variability in the melt flow index of polymer samples and indicates how easily the polymer flows when melted</li></ul></td>
          </tr>
          <tr>
             <td>Objective</td>
-            <td><ul><li>Monitoring MFI variance helps ensure consistent product quality and process stability</li><li>low variance suggests a stable process and adherence to quality standards</li></ul></td>
+            <td><ul><li>The objective of monitoring MFI Variance is to ensure that the polymer production process remains stable and that the final products meet specified performance criteria</li><li>Monitoring MFI variance helps ensure consistent product quality and process stability</li><li>low variance suggests a stable process and adherence to quality standards</li></ul></td>
          </tr>
          <tr>
             <td>Formula</td>
             <td>
-               <p>Calculated directly from the inputs found in the code implementation.</p>
+               <p>The MFI Variance is calculated by determining the average of the squared differences between each MFI measurement and the overall mean MFI, divided by the number of measurements.</p>
                <p>See code context for implementation details.</p>
             </td>
          </tr>
          <tr>
             <td>Used in KPI(s)</td>
-            <td><ul><li>Used in quality control and assurance to evaluate polymer production performance and detect potential manufacturing issues</li></ul></td>
+            <td><ul><li>This KPI is utilized in quality control and production efficiency assessments within polymer manufacturing processes</li><li>Used in quality control and assurance to evaluate polymer production performance and detect potential manufacturing issues</li></ul></td>
          </tr>
          <tr>
             <td>Input Measure</td>
-            <td><ul><li>Melt Flow Index test results from polymer samples collected during production or laboratory testing</li></ul></td>
+            <td><ul><li>The input measures for this KPI are the individual Melt Flow Index values obtained from polymer samples during testing</li><li>Melt Flow Index test results from polymer samples collected during production or laboratory testing</li></ul></td>
          </tr>
          <tr>
             <td>Unit of Measure</td>
-            <td>dimensionless</td>
+            <td>The unit of measure for MFI Variance is typically expressed in square units of the Melt Flow Index.</td>
          </tr>
          <tr>
             <td>Reporting Source</td>
-            <td>Laboratory test results of polymer samples taken during production.</td>
+            <td>Data for this KPI is sourced from laboratory testing results and quality assurance reports.</td>
          </tr>
          <tr>
             <td>Comments</td>
-            <td>Tracking MFI variance is essential for maintaining product quality and ensuring products meet required specifications for intended applications.</td>
+            <td>A low MFI Variance indicates a consistent polymer production process, while a high variance may signal issues that require investigation and corrective action. Tracking MFI variance is essential for maintaining product quality and ensuring products meet required specifications for intended applications.</td>
          </tr>
       </tbody>
    </table>
@@ -81,7 +81,11 @@ Polymer Melt Flow Index (MFI) Variance
 .. admonition:: Code Context
    :class: dropdown
 
-   .. code-block:: python
+   
+   
+   
+
+   .. code-block:: abap
       :linenos:
    
 

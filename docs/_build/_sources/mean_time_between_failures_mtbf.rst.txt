@@ -42,38 +42,38 @@ Mean Time Between Failures (MTBF
       <tbody>
          <tr>
             <td>Description</td>
-            <td><ul><li>Mean Time Between Failures (MTBF is a key performance indicator used to assess process efficiency and operational performance</li></ul></td>
+            <td><ul><li>Mean Time Between Failures (MTBF) is a key performance indicator that measures the average time elapsed between failures of a system or equipment during its operational period</li></ul></td>
          </tr>
          <tr>
             <td>Objective</td>
-            <td><ul><li>The objective of Mean Time Between Failures (MTBF is to provide a clear measure that supports monitoring</li><li>decision making</li><li>and continuous improvement</li></ul></td>
+            <td><ul><li>The objective of tracking MTBF is to assess the reliability and performance of equipment</li><li>enabling organizations to identify areas for improvement and reduce downtime</li></ul></td>
          </tr>
          <tr>
             <td>Formula</td>
             <td>
-               <p>Calculated directly from the inputs found in the code implementation.</p>
+               <p>MTBF is calculated by dividing the total operating hours by the number of failures that occur within that timeframe.</p>
                <p>See code context for implementation details.</p>
             </td>
          </tr>
          <tr>
             <td>Used in KPI(s)</td>
-            <td><ul><li>This KPI can serve as an input to higher-level operational and performance dashboards</li></ul></td>
+            <td><ul><li>MTBF is commonly used in reliability engineering</li><li>maintenance management</li><li>and operational efficiency assessments</li></ul></td>
          </tr>
          <tr>
             <td>Input Measure</td>
-            <td><ul><li>Derived from the variables used in the code calculation for this KPI</li></ul></td>
+            <td><ul><li>The primary inputs for calculating MTBF are the total operating hours of the equipment and the total number of failures experienced during that period</li></ul></td>
          </tr>
          <tr>
             <td>Unit of Measure</td>
-            <td>hours per failure</td>
+            <td>MTBF is typically expressed in hours.</td>
          </tr>
          <tr>
             <td>Reporting Source</td>
-            <td>Operations data sources such as historians, SCADA/DCS tags, and production logs.</td>
+            <td>Data for MTBF calculations is usually sourced from maintenance logs, operational records, and failure reports.</td>
          </tr>
          <tr>
             <td>Comments</td>
-            <td>No additional comments or special considerations were provided for this KPI.</td>
+            <td>A higher MTBF indicates better reliability and performance, while a lower MTBF suggests frequent failures that may require investigation and corrective action.</td>
          </tr>
       </tbody>
    </table>
@@ -81,7 +81,11 @@ Mean Time Between Failures (MTBF
 .. admonition:: Code Context
    :class: dropdown
 
-   .. code-block:: python
+   
+   
+   
+
+   .. code-block:: vbnet
       :linenos:
    
       :emphasize-lines: 1

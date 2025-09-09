@@ -81,7 +81,13 @@
 .. admonition:: Code Context
    :class: dropdown
 
-   .. code-block:: python
+   {% set lang = (kpi.language or 'text') %}
+   {% set pygments_map = {
+         'python':'python', 'sql':'sql', 'tsql':'sql', 'plsql':'sql', 'hana':'sql', 'abap':'abap', 'vbnet':'vbnet', 'csharp':'csharp', 'iec_st':'iecst', 'generic':'text', 'text':'text'
+      } %}
+   {% set code_lang = pygments_map.get(lang, 'text') %}
+
+   .. code-block:: {{ code_lang }}
       :linenos:
    {% if kpi.context_line_number and kpi.context_line_number > 0 %}
       :emphasize-lines: {{ kpi.context_line_number }}

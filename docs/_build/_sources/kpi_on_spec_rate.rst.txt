@@ -42,38 +42,38 @@ kpi on spec rate
       <tbody>
          <tr>
             <td>Description</td>
-            <td><ul><li>This KPI expresses the proportion of production that meets all quality standards relative to total batches</li></ul></td>
+            <td><ul><li>The KPI on spec rate measures the percentage of batches produced that meet the specified quality standards within a given timeframe</li><li>This KPI expresses the proportion of production that meets all quality standards relative to total batches</li></ul></td>
          </tr>
          <tr>
             <td>Objective</td>
-            <td><ul><li>Improve first-pass quality and reduce rework or off-spec material by monitoring on-spec performance over time</li></ul></td>
+            <td><ul><li>The objective of this KPI is to ensure that production processes consistently yield high-quality products</li><li>thereby minimizing waste and enhancing customer satisfaction</li><li>Improve first-pass quality and reduce rework or off-spec material by monitoring on-spec performance over time</li></ul></td>
          </tr>
          <tr>
             <td>Formula</td>
             <td>
-               <p>Calculated directly from the inputs found in the code implementation.</p>
+               <p>This KPI is calculated by taking the number of on-spec batches and dividing it by the total number of batches produced, then multiplying the result by 100 to express it as a percentage.</p>
                <p>See code context for implementation details.</p>
             </td>
          </tr>
          <tr>
             <td>Used in KPI(s)</td>
-            <td><ul><li>This KPI can serve as an input to higher-level operational and performance dashboards</li></ul></td>
+            <td><ul><li>This KPI is utilized in quality control assessments and operational efficiency evaluations within the production process</li></ul></td>
          </tr>
          <tr>
             <td>Input Measure</td>
-            <td><ul><li>Counts of on-spec batches and total batches in the measurement period</li></ul></td>
+            <td><ul><li>The input measures for this KPI include the count of on-spec batches and the total count of batches produced during the reporting period</li><li>Counts of on-spec batches and total batches in the measurement period</li></ul></td>
          </tr>
          <tr>
             <td>Unit of Measure</td>
-            <td>See calculation and context for the most appropriate unit.</td>
+            <td>The unit of measure for this KPI is percentage.</td>
          </tr>
          <tr>
             <td>Reporting Source</td>
-            <td>Operations data sources such as historians, SCADA/DCS tags, and production logs.</td>
+            <td>The data for this KPI is sourced from the batch quality summary database, which aggregates quality metrics from production.</td>
          </tr>
          <tr>
             <td>Comments</td>
-            <td>No additional comments or special considerations were provided for this KPI.</td>
+            <td>A high on spec rate indicates effective quality control processes, while a low rate may signal the need for process improvements or additional training for staff.</td>
          </tr>
       </tbody>
    </table>
@@ -81,7 +81,11 @@ kpi on spec rate
 .. admonition:: Code Context
    :class: dropdown
 
-   .. code-block:: python
+   
+   
+   
+
+   .. code-block:: sql
       :linenos:
    
 

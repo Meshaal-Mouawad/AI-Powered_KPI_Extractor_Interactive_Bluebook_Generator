@@ -322,12 +322,13 @@ def generate_formula_from_code(code_context: str) -> dict:
 
     def unwrap_sql_expr(expr: str) -> str:
         e = expr.strip()
-        m = re.search(r"(?is)\bCAST\s*\(\s*(?P<i>.+?)\s+AS\s+[^\)]+\)", e)
-        if m: e = m.group("i").strip()
-        m = re.search(r"(?is)\bCOALESCE\s*\(\s*(?P<i>.+?)\s*,\s*.+?\)", e)
-        if m: e = m.group("i").strip()
-        m = re.search(r"(?is)\bNULLIF\s*\(\s*(?P<i>.+?)\s*,\s*.+?\)", e)
-        if m: e = m.group("i").strip()
+        # Use a consistent group name 'inner' and access the same
+        m = re.search(r"(?is)\\bCAST\\s*\\(\\s*(?P<inner>.+?)\\s+AS\\s+[^\\)]+\\)", e)
+        if m: e = m.group("inner").strip()
+        m = re.search(r"(?is)\\bCOALESCE\\s*\\(\\s*(?P<inner>.+?)\\s*,\\s*.+?\\)", e)
+        if m: e = m.group("inner").strip()
+        m = re.search(r"(?is)\\bNULLIF\\s*\\(\\s*(?P<inner>.+?)\\s*,\\s*.+?\\)", e)
+        if m: e = m.group("inner").strip()
         e = e.strip()
         if e.startswith("(") and e.endswith(")"): e = e[1:-1].strip()
         return e
@@ -637,6 +638,7 @@ def create_rst_file(kpi_data: dict, details: dict, template: jinja2.Template):
 def update_index_rst(page_filenames):
     """
     Write docs/index.rst with a toctree listing for the generated KPI pages.
+    Defensive against None or non-string entries.
     """
     index_path = DOCS_SOURCE_DIR / "index.rst"
     title = "KPI Bluebook"
@@ -649,9 +651,16 @@ def update_index_rst(page_filenames):
         "   :caption: Key Performance Indicators:",
         "",
     ]
-    for fname in page_filenames:
-        stem = os.path.splitext(os.path.basename(fname))[0]
-        lines.append(f"   {stem}")
+    for fname in (page_filenames or []):
+        if not fname:
+            continue
+        try:
+            base = os.path.basename(str(fname))
+            stem = os.path.splitext(base)[0]
+            if stem:
+                lines.append(f"   {stem}")
+        except Exception:
+            continue
     index_path.parent.mkdir(parents=True, exist_ok=True)
     with open(index_path, "w", encoding="utf-8") as f:
         f.write("\n".join(lines))
