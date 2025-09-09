@@ -639,6 +639,8 @@ def update_index_rst(page_filenames):
     """
     Write docs/index.rst with a toctree listing for the generated KPI pages.
     Defensive against None or non-string entries.
+    Additionally, always include a :glob: wildcard to ensure the index lists
+    all .rst pages even if explicit names drift or are missing.
     """
     index_path = DOCS_SOURCE_DIR / "index.rst"
     title = "KPI Bluebook"
@@ -649,8 +651,11 @@ def update_index_rst(page_filenames):
         ".. toctree:",
         "   :maxdepth: 2",
         "   :caption: Key Performance Indicators:",
+        "   :glob:",
         "",
     ]
+    # Add explicit filenames when provided
+    added_explicit = False
     for fname in (page_filenames or []):
         if not fname:
             continue
@@ -659,8 +664,12 @@ def update_index_rst(page_filenames):
             stem = os.path.splitext(base)[0]
             if stem:
                 lines.append(f"   {stem}")
+                added_explicit = True
         except Exception:
             continue
+    # Always include wildcard to pick up any generated pages
+    lines.append("   *")
+
     index_path.parent.mkdir(parents=True, exist_ok=True)
     with open(index_path, "w", encoding="utf-8") as f:
         f.write("\n".join(lines))

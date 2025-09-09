@@ -2,6 +2,12 @@ import os
 import re
 from typing import List, Dict, Tuple
 
+# Optional formula extraction from comments like "Formula: ..."
+try:
+    from .parser import extract_formula_from_comments as _extract_formula_from_comments
+except Exception:
+    _extract_formula_from_comments = None
+
 __all__ = ["find_kpis_in_directory"]
 
 
@@ -490,6 +496,14 @@ def find_kpis_in_directory(root_path: str) -> List[Dict]:
             # Attach file path and accumulate
             for k in file_kpis:
                 k["file_path"] = path
+                # Try to extract an explicit formula from comments if helper available
+                if _extract_formula_from_comments:
+                    try:
+                        formula = _extract_formula_from_comments(text.splitlines())
+                        if formula:
+                            k["formula"] = formula
+                    except Exception:
+                        pass
 
             if not file_kpis:
                 continue

@@ -51,13 +51,13 @@ Cooling Water Delta-T (°C
          <tr>
             <td>Formula</td>
             <td>
-               <p>The Cooling Water Delta-T is calculated by subtracting the inlet temperature from the outlet temperature of the cooling water.</p>
+               <p>The Cooling Water Delta-T is calculated by subtracting the inlet temperature of the cooling water from its outlet temperature.</p>
                <div class="math-equation">$$ \mathit{Result} = \mathit{Outlet\,C} - \mathit{Inlet\,C;\,\}\,\}} $$</div>
             </td>
          </tr>
          <tr>
             <td>Used in KPI(s)</td>
-            <td><ul><li>This KPI is used in various performance indicators related to cooling system efficiency and thermal management</li></ul></td>
+            <td><ul><li>This KPI is used in performance assessments of cooling systems</li><li>energy management</li><li>and operational efficiency evaluations</li></ul></td>
          </tr>
          <tr>
             <td>Input Measure</td>
@@ -65,7 +65,7 @@ Cooling Water Delta-T (°C
          </tr>
          <tr>
             <td>Unit of Measure</td>
-            <td>The unit of measure for Cooling Water Delta-T is degrees Celsius.</td>
+            <td>The unit of measure for Cooling Water Delta-T is degrees Celsius (°C).</td>
          </tr>
          <tr>
             <td>Reporting Source</td>

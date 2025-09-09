@@ -9,12 +9,12 @@ copyright = '2025, Meshaal Mouawad'
 author = 'Meshaal Mouawad'
 
 # -- General configuration ---------------------------------------------------
+
 extensions = [
     'sphinx.ext.autodoc',
-    'sphinx_rtd_theme',
-    'sphinx.ext.mathjax',
+    'sphinx.ext.napoleon',
+    'sphinx.ext.mathjax',  # required to render .. math:: blocks
 ]
-
 templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
