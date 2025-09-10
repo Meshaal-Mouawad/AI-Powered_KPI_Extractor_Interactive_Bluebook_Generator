@@ -70,6 +70,40 @@ def _window(lines: List[str], center: int, before: int = 10, after: int = 20) ->
     return "\n".join(lines[start:end])
 
 
+def _expand_forward_statement(lines: List[str], start_index: int, back: int = 5, max_forward: int = 200) -> str:
+    """Return a forward-expanded SQL-ish statement context starting a few lines before start_index.
+
+    - Includes up to `back` lines before the start_index for context.
+    - Scans forward up to `max_forward` lines or until a likely statement terminator is seen:
+      semicolon at low parenthesis depth, a lone GO, or end of file.
+    - Works for SQL/T-SQL/PLSQL/HANA snippets where KPI comment precedes a CREATE/SELECT.
+    """
+    import re as _re
+
+    n = len(lines)
+    if n == 0:
+        return ""
+
+    start = max(0, min(start_index, n - 1))
+    ctx_start = max(0, start - back)
+
+    end = start
+    depth = 0
+    for j in range(start, min(n, start + max_forward)):
+        line = lines[j].rstrip("\n")
+        end = j
+        # Track parentheses depth to avoid stopping too early inside CAST(...), CASE(...), etc.
+        depth += line.count("(") - line.count(")")
+        if _re.search(r";\s*$", line) and depth <= 0:
+            break
+        if _re.match(r"^\s*GO\s*$", line, _re.I):
+            break
+        if _re.match(r"^\s*/\s*$", line):  # Oracle '/' statement separator on its own line
+            break
+
+    return "\n".join(l.rstrip("\n") for l in lines[ctx_start:end + 1])
+
+
 def _normalize_name(raw: str) -> str:
     name = (raw or "").strip()
     name = re.sub(r'^[\[\("\']+|[\]\)"\']+$', "", name).strip()
@@ -309,9 +343,6 @@ def _extract_tsql(text: str) -> List[Dict]:
     return _extract_sql_like(text, "tsql")
 
 
-def _extract_hana(text: str) -> List[Dict]:
-    """SAP HANA SQLScript artifacts → reuse SQL-like extraction with label 'hana'."""
-    return _extract_sql_like(text, "hana")
 
 
 def _extract_plsql(text: str) -> List[Dict]:
