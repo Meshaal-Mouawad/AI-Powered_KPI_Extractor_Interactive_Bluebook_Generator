@@ -1,0 +1,25 @@
+@startuml
+title Bluebook Generation (High-Level) Diagram
+
+start
+
+:Receive path from UI/CLI;
+:Scan for KPI markers (kpi_extractor);
+
+if (KPIs found?) then (yes)
+  while (KPIs remain to be processed?) is (yes)
+    :Pick next KPI (name, file, line, context);
+    :Derive MathJax formula (main + parser helpers);
+    :Generate AI text (ai_generator);
+    :Render KPI page from template;
+  endwhile (no)
+
+  :Update docs/index.rst;
+  :Run sphinx-build to generate docs/_build;
+  stop
+else (no)
+  :Report "No KPIs found";
+  stop
+endif
+
+@enduml

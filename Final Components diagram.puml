@@ -1,0 +1,38 @@
+@startuml
+title AI-Powered KPI Extractor & Interactive Bluebook Generator - Components
+
+skinparam componentStyle rectangle
+skinparam shadowing false
+
+package "User Repository" {
+  [Mixed Source Files] as SRC
+}
+
+package "bluebook_generator" {
+  [kpi_extractor.py] as EX
+  [parser.py] as PAR
+  [main.py] as CORE
+  [ai_generator.py] as AI
+  [templates/kpi_template.rst.j2] as TPL
+}
+
+package "Sphinx" {
+  [RST Pages (docs/*.rst)] as RST
+  [HTML Builder] as SBUILDER
+  [HTML Output (docs/_build)] as HTML
+}
+
+[app.py (Flask UI)] as APP
+
+SRC -down-> EX : scan
+EX -right-> CORE : "KPIs {name,line,code_context}"
+CORE -down-> PAR : parse/unwrap helpers
+CORE -down-> AI : narratives / unit inference
+AI -up-> CORE : "description / objective / unit / notes"
+CORE -right-> TPL : render per-KPI
+CORE -down-> RST : write .rst
+RST -right-> SBUILDER : sphinx-build
+SBUILDER -down-> HTML : site
+APP -left-> CORE : "generate_bluebook(path)"
+
+@enduml

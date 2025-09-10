@@ -1,0 +1,36 @@
+@startuml
+title Programmatic Formula Extraction (Low-Level) flowchart.
+
+start
+
+:Input code_context;
+:Strip comments and normalize whitespace;
+
+if (DAX DEFINE/RETURN?) then (yes)
+  :Use RETURN body;
+
+else if (SQL SELECT ... AS ...?) then (yes)
+  :Take last expression/alias;
+  :Unwrap CAST/NULLIF/COALESCE;
+
+else if (C-like `return expr;`?) then (yes)
+  :Use the `expr` part;
+  :Set name = "Result";
+
+else if (Assignment with `=` or `:=`?) then (yes)
+  :Set lhs = variable;
+  :Set rhs = expression (if math-like);
+
+else if (Percent form `100*(a/b)`?) then (yes)
+  :Extract the division part (a/b);
+
+else (no, fallback)
+  :Generic sweep for math patterns
+  (prefer percent, then last division);
+endif
+
+:Format as LaTeX with friendly tokens;
+
+stop
+
+@enduml
