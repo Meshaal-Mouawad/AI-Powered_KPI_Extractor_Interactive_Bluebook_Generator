@@ -42,38 +42,38 @@ Maintenance to Operating Cost Ratio
       <tbody>
          <tr>
             <td>Description</td>
-            <td><ul><li>Maintenance to Operating Cost Ratio is a key performance indicator used to assess process efficiency and operational performance</li></ul></td>
+            <td><ul><li>The Maintenance to Operating Cost Ratio measures the proportion of maintenance costs relative to total operating costs within an organization</li><li>This KPI provides insight into how effectively maintenance resources are being utilized in relation to overall operational expenditures</li></ul></td>
          </tr>
          <tr>
             <td>Objective</td>
-            <td><ul><li>The objective of Maintenance to Operating Cost Ratio is to provide a clear measure that supports monitoring</li><li>decision making</li><li>and continuous improvement</li></ul></td>
+            <td><ul><li>The objective of this KPI is to evaluate the efficiency of maintenance spending and to identify opportunities for cost optimization in operational processes</li></ul></td>
          </tr>
          <tr>
             <td>Formula</td>
             <td>
-               <p>Calculated directly from the inputs found in the code implementation.</p>
+               <p>The ratio is calculated by taking the percentage of maintenance costs that are on specification compared to the total operating costs, expressed as a percentage.</p>
                <div class="math-equation">$$ \mathit{Maintenance\,To\,Operating\,Cost\,Ratio} = 100 \times \frac{\mathit{On\,Spec}}{\mathit{Total}} $$</div><ul><li><i>On Spec:</i> The numerator of the fraction.</li><li><i>Total:</i> The denominator of the fraction.</li></ul>
             </td>
          </tr>
          <tr>
             <td>Used in KPI(s)</td>
-            <td><ul><li>This KPI can serve as an input to higher-level operational and performance dashboards</li></ul></td>
+            <td><ul><li>This KPI is utilized in performance assessments to gauge maintenance efficiency and operational cost management</li></ul></td>
          </tr>
          <tr>
             <td>Input Measure</td>
-            <td><ul><li>Derived from the variables used in the code calculation for this KPI</li></ul></td>
+            <td><ul><li>The input measures for this KPI include the total maintenance costs and the total operating costs incurred during a specific period</li></ul></td>
          </tr>
          <tr>
             <td>Unit of Measure</td>
-            <td>ratio (dimensionless)</td>
+            <td>The unit of measure for this KPI is expressed as a percentage.</td>
          </tr>
          <tr>
             <td>Reporting Source</td>
-            <td>Operations data sources such as historians, SCADA/DCS tags, and production logs.</td>
+            <td>The reporting source for this KPI typically includes financial reports, maintenance logs, and operational cost statements.</td>
          </tr>
          <tr>
             <td>Comments</td>
-            <td>No additional comments or special considerations were provided for this KPI.</td>
+            <td>A higher Maintenance to Operating Cost Ratio indicates a greater proportion of costs allocated to maintenance, which may suggest a need for improved maintenance strategies or operational efficiencies.</td>
          </tr>
       </tbody>
    </table>

@@ -42,22 +42,22 @@ Cooling Water Delta-T (°C
       <tbody>
          <tr>
             <td>Description</td>
-            <td><ul><li>Cooling Water Delta-T measures the temperature difference between the inlet and outlet of cooling water systems</li><li>indicating the effectiveness of heat exchange processes</li></ul></td>
+            <td><ul><li>Cooling Water Delta-T measures the temperature difference between the inlet and outlet of cooling water systems</li><li>indicating the efficiency of heat exchange processes</li></ul></td>
          </tr>
          <tr>
             <td>Objective</td>
-            <td><ul><li>The objective of monitoring Cooling Water Delta-T is to ensure optimal cooling system performance</li><li>enhance energy efficiency</li><li>and prevent overheating of equipment</li></ul></td>
+            <td><ul><li>The objective of monitoring Cooling Water Delta-T is to ensure optimal cooling system performance and to identify potential issues such as fouling or inadequate heat transfer</li></ul></td>
          </tr>
          <tr>
             <td>Formula</td>
             <td>
-               <p>The Cooling Water Delta-T is calculated by subtracting the inlet temperature of the cooling water from its outlet temperature.</p>
+               <p>The Cooling Water Delta-T is calculated by subtracting the inlet temperature of the cooling water from the outlet temperature.</p>
                <div class="math-equation">$$ \mathit{Result} = \mathit{Outlet\,C} - \mathit{Inlet\,C;\,\}\,\}} $$</div>
             </td>
          </tr>
          <tr>
             <td>Used in KPI(s)</td>
-            <td><ul><li>This KPI is used in performance assessments of cooling systems</li><li>energy management</li><li>and operational efficiency evaluations</li></ul></td>
+            <td><ul><li>This KPI is used in various performance indicators related to cooling system efficiency</li><li>heat exchanger performance</li><li>and overall process optimization</li></ul></td>
          </tr>
          <tr>
             <td>Input Measure</td>
@@ -65,7 +65,7 @@ Cooling Water Delta-T (°C
          </tr>
          <tr>
             <td>Unit of Measure</td>
-            <td>The unit of measure for Cooling Water Delta-T is degrees Celsius (°C).</td>
+            <td>The unit of measure for Cooling Water Delta-T is degrees Celsius.</td>
          </tr>
          <tr>
             <td>Reporting Source</td>
@@ -73,7 +73,7 @@ Cooling Water Delta-T (°C
          </tr>
          <tr>
             <td>Comments</td>
-            <td>Monitoring Cooling Water Delta-T is crucial for identifying potential issues in cooling systems, such as fouling or inadequate flow rates, which can lead to operational inefficiencies.</td>
+            <td>Regular monitoring of Cooling Water Delta-T can help in predictive maintenance and in optimizing energy consumption within cooling systems.</td>
          </tr>
       </tbody>
    </table>

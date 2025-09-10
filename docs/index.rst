@@ -1,7 +1,7 @@
 KPI Bluebook
 ============
 
-.. toctree:
+.. toctree::
    :maxdepth: 2
    :caption: Key Performance Indicators:
    :glob:

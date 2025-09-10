@@ -42,38 +42,38 @@ OEE %
       <tbody>
          <tr>
             <td>Description</td>
-            <td><ul><li>Overall Equipment Effectiveness combines Availability</li><li>Performance</li><li>and Quality into a single effectiveness score</li></ul></td>
+            <td><ul><li>Overall Equipment Effectiveness (OEE) is a key performance indicator that measures the efficiency and effectiveness of manufacturing equipment by evaluating its availability</li><li>performance</li><li>and quality output</li><li>Overall Equipment Effectiveness combines Availability</li><li>Performance</li><li>and Quality into a single effectiveness score</li></ul></td>
          </tr>
          <tr>
             <td>Objective</td>
-            <td><ul><li>Increase effective productive time by reducing downtime</li><li>speed losses</li><li>and quality losses</li></ul></td>
+            <td><ul><li>The objective of OEE is to provide a comprehensive view of equipment productivity</li><li>helping organizations identify areas for improvement and optimize operational performance</li><li>Increase effective productive time by reducing downtime</li><li>speed losses</li><li>and quality losses</li></ul></td>
          </tr>
          <tr>
             <td>Formula</td>
             <td>
-               <p>Calculated directly from the inputs found in the code implementation.</p>
+               <p>OEE is calculated by multiplying the availability, performance, and quality rates of equipment, expressed as a percentage.</p>
                <div class="math-equation">$$ \mathit{Oee\,\%} = \mathit{(Availability} \times \mathit{Performance} \times \mathit{Quality)} \times \mathit{100} $$</div>
             </td>
          </tr>
          <tr>
             <td>Used in KPI(s)</td>
-            <td><ul><li>This KPI can serve as an input to higher-level operational and performance dashboards</li></ul></td>
+            <td><ul><li>OEE is utilized in various KPIs related to production efficiency</li><li>equipment utilization</li><li>and operational excellence</li></ul></td>
          </tr>
          <tr>
             <td>Input Measure</td>
-            <td><ul><li>Availability</li><li>performance</li><li>and quality factors calculated for the asset or line</li></ul></td>
+            <td><ul><li>The input measures for OEE include availability</li><li>performance</li><li>and quality metrics</li><li>which are essential for calculating the overall effectiveness</li><li>Availability</li><li>performance</li><li>and quality factors calculated for the asset or line</li></ul></td>
          </tr>
          <tr>
             <td>Unit of Measure</td>
-            <td>%</td>
+            <td>OEE is expressed as a percentage, indicating the proportion of manufacturing time that is truly productive.</td>
          </tr>
          <tr>
             <td>Reporting Source</td>
-            <td>Operations data sources such as historians, SCADA/DCS tags, and production logs.</td>
+            <td>The reporting source for OEE typically includes production data from manufacturing systems, maintenance logs, and quality control records.</td>
          </tr>
          <tr>
             <td>Comments</td>
-            <td>No additional comments or special considerations were provided for this KPI.</td>
+            <td>A high OEE percentage indicates that equipment is operating efficiently, while a low percentage highlights potential issues that may require attention to enhance productivity.</td>
          </tr>
       </tbody>
    </table>

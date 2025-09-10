@@ -42,38 +42,38 @@ Polymer Melt Flow Index (MFI) Variance
       <tbody>
          <tr>
             <td>Description</td>
-            <td><ul><li>The Polymer Melt Flow Index (MFI) Variance measures the variability in the melt flow index of polymer samples and indicates how easily the polymer flows when melted</li></ul></td>
+            <td><ul><li>The Polymer Melt Flow Index (MFI) Variance measures the variability in the melt flow rate of polymers</li><li>which is critical for assessing the consistency and quality of polymer production</li><li>The Polymer Melt Flow Index (MFI) Variance measures the variability in the melt flow index of polymer samples and indicates how easily the polymer flows when melted</li></ul></td>
          </tr>
          <tr>
             <td>Objective</td>
-            <td><ul><li>Monitoring MFI variance helps ensure consistent product quality and process stability</li><li>low variance suggests a stable process and adherence to quality standards</li></ul></td>
+            <td><ul><li>The objective of monitoring MFI Variance is to ensure that the polymer manufacturing process remains stable and produces materials with predictable flow characteristics</li><li>which are essential for downstream processing and product performance</li><li>Monitoring MFI variance helps ensure consistent product quality and process stability</li><li>low variance suggests a stable process and adherence to quality standards</li></ul></td>
          </tr>
          <tr>
             <td>Formula</td>
             <td>
-               <p>Calculated directly from the inputs found in the code implementation.</p>
+               <p>The MFI Variance is calculated by determining the average melt flow index and assessing the dispersion of individual measurements from this average, providing insight into the uniformity of the polymer&#x27;s flow properties.</p>
                <div class="math-equation">$$ \mathrm{MFI\ Variance} = \frac{\sum (x_i - \bar{x})^2}{n} $$</div>
             </td>
          </tr>
          <tr>
             <td>Used in KPI(s)</td>
-            <td><ul><li>Used in quality control and assurance to evaluate polymer production performance and detect potential manufacturing issues</li></ul></td>
+            <td><ul><li>This KPI is used in quality control and process optimization metrics within the polymer production sector</li><li>Used in quality control and assurance to evaluate polymer production performance and detect potential manufacturing issues</li></ul></td>
          </tr>
          <tr>
             <td>Input Measure</td>
-            <td><ul><li>Melt Flow Index test results from polymer samples collected during production or laboratory testing</li></ul></td>
+            <td><ul><li>The input measures for calculating MFI Variance include individual melt flow index readings obtained from polymer samples during production</li><li>Melt Flow Index test results from polymer samples collected during production or laboratory testing</li></ul></td>
          </tr>
          <tr>
             <td>Unit of Measure</td>
-            <td>dimensionless</td>
+            <td>The unit of measure for MFI Variance is typically expressed in square units of the melt flow index, reflecting the degree of variability.</td>
          </tr>
          <tr>
             <td>Reporting Source</td>
-            <td>Laboratory test results of polymer samples taken during production.</td>
+            <td>Data for MFI Variance is sourced from laboratory testing results and quality assurance processes within the polymer manufacturing facility.</td>
          </tr>
          <tr>
             <td>Comments</td>
-            <td>Tracking MFI variance is essential for maintaining product quality and ensuring products meet required specifications for intended applications.</td>
+            <td>Monitoring MFI Variance is essential for maintaining product quality and ensuring compliance with industry standards, as significant variance may indicate issues in the production process. Tracking MFI variance is essential for maintaining product quality and ensuring products meet required specifications for intended applications.</td>
          </tr>
       </tbody>
    </table>

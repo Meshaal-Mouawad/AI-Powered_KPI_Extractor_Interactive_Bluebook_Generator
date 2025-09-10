@@ -263,10 +263,45 @@ def _extract_sql_like(text: str, dialect: str) -> List[Dict]:
 
 def _extract_hana(text: str) -> List[Dict]:
     """
-    SAP HANA SQLScript artifacts often embed SQLScript with comments like -- or /* ... */
-    We'll reuse SQL-like patterns with a 'hana' label.
+    SAP HANA SQLScript artifacts often embed SQLScript with comments like -- or /* ... */.
+    Handle both SQL-like content and JSON-style .hdbview definitions.
     """
-    return _extract_sql_like(text, "hana")
+    # 1) Try SQL-like first
+    out = _extract_sql_like(text, "hana")
+    if out:
+        return out
+
+    # 2) JSON-style .hdbview fallback
+    try:
+        import json
+        obj = json.loads(text)
+        vd = (obj.get("viewDefinition") or {})
+        cols = vd.get("columns") or []
+        best = None
+        for c in cols:
+            name = (c.get("name") or "").strip()
+            expr = (c.get("expression") or "").strip()
+            if not name or not expr:
+                continue
+            score = 1
+            if "kpi" in name.lower():
+                score += 2
+            if any(ch in expr for ch in "*/+-"):
+                score += 1
+            best = max([best, (score, name, expr)] if best else [(score, name, expr)], key=lambda t: t[0])
+        if best:
+            _, name, expr = best
+            code = f"SELECT {expr} AS {name}"
+            return [{
+                "name": _normalize_name(name),
+                "language": "hana",
+                "file_line": 1,
+                "code_context": code,
+            }]
+    except Exception:
+        pass
+
+    return []
 
 
 def _extract_tsql(text: str) -> List[Dict]:
@@ -281,7 +316,22 @@ def _extract_hana(text: str) -> List[Dict]:
 
 def _extract_plsql(text: str) -> List[Dict]:
     """PL/SQL files (.pks/.pkb/.pls) → reuse SQL-like extraction with label 'plsql'."""
-    return _extract_sql_like(text, "plsql")
+    out = _extract_sql_like(text, "plsql")
+    if out:
+        return out
+    # Fallback for .pks package spec: capture FUNCTION signatures
+    lines = text.splitlines()
+    for i, line in enumerate(lines):
+        m = re.search(r"\bFUNCTION\s+([A-Za-z0-9_\.$]+)", line, re.I)
+        if m:
+            fn = _normalize_name(m.group(1))
+            return [{
+                "name": fn,
+                "language": "plsql",
+                "file_line": i + 1,
+                "code_context": _window(lines, i),
+            }]
+    return out
 
 
 def _extract_dax(text: str) -> List[Dict]:

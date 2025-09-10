@@ -46,7 +46,7 @@ Propylene to Ethylene (P/E) Ratio
          </tr>
          <tr>
             <td>Objective</td>
-            <td><ul><li>The objective of this KPI is to optimize the production processes to enhance the yield of propylene relative to ethylene</li><li>thereby improving overall profitability</li><li>Align production strategy with market demand and margins by monitoring relative propylene versus ethylene output</li></ul></td>
+            <td><ul><li>The objective of this KPI is to optimize the production efficiency of propylene relative to ethylene</li><li>thereby enhancing profitability and resource utilization</li><li>Align production strategy with market demand and margins by monitoring relative propylene versus ethylene output</li></ul></td>
          </tr>
          <tr>
             <td>Formula</td>
@@ -57,15 +57,15 @@ Propylene to Ethylene (P/E) Ratio
          </tr>
          <tr>
             <td>Used in KPI(s)</td>
-            <td><ul><li>This KPI is utilized in performance evaluations and operational assessments within petrochemical production facilities</li></ul></td>
+            <td><ul><li>This KPI is used in evaluating the performance of olefin production processes and assessing the effectiveness of integration strategies</li></ul></td>
          </tr>
          <tr>
             <td>Input Measure</td>
-            <td><ul><li>The input measures for this KPI are the total tons of propylene and ethylene produced during a specified time period</li><li>Total propylene produced and total ethylene produced in the measurement period</li></ul></td>
+            <td><ul><li>The input measures for this KPI are the total tons of propylene and ethylene produced during a specified period</li><li>Total propylene produced and total ethylene produced in the measurement period</li></ul></td>
          </tr>
          <tr>
             <td>Unit of Measure</td>
-            <td>The unit of measure for the P/E Ratio is a dimensionless ratio, expressed as a numerical value.</td>
+            <td>The unit of measure for the P/E Ratio is a dimensionless ratio, expressed as a number.</td>
          </tr>
          <tr>
             <td>Reporting Source</td>

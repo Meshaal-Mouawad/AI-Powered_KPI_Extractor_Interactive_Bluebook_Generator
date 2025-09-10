@@ -648,7 +648,7 @@ def update_index_rst(page_filenames):
         title,
         "=" * len(title),
         "",
-        ".. toctree:",
+        ".. toctree::",
         "   :maxdepth: 2",
         "   :caption: Key Performance Indicators:",
         "   :glob:",
