@@ -1,0 +1,46 @@
+@startuml
+package "Source Code Repository" as repo {
+  [Source Code Repository]
+}
+
+package "Extraction Layer" as extract {
+  [Code Extractor]
+}
+
+package "Documentation Layer" as doc {
+  [Literate Programming Engine]
+}
+
+package "Analysis Layer" as analysis {
+  [KPI Extraction Module]
+  [AI-Powered Parsing & Annotation]
+}
+
+package "Generation Layer" as gen {
+  [Bluebook Generation Engine]
+}
+
+package "Interface Layer" as ui {
+  [Interactive Enterprise Bluebook]
+}
+
+package "Feedback Loop" as feedback {
+  [User Feedback]
+  [Feedback Loop]
+}
+
+[Source Code Repository] --> [Code Extractor]
+[Code Extractor] --> [Literate Programming Engine]
+[Literate Programming Engine] --> [KPI Extraction Module]
+[KPI Extraction Module] --> [AI-Powered Parsing & Annotation]
+[AI-Powered Parsing & Annotation] --> [Bluebook Generation Engine]
+[Bluebook Generation Engine] --> [Interactive Enterprise Bluebook]
+[Interactive Enterprise Bluebook] --> [User Feedback]
+[User Feedback] --> [Feedback Loop]
+[Feedback Loop] --> [AI-Powered Parsing & Annotation]
+[Feedback Loop] --> [KPI Extraction Module]
+
+note right of [Feedback Loop]
+  Iterative Refinement
+end note
+@enduml

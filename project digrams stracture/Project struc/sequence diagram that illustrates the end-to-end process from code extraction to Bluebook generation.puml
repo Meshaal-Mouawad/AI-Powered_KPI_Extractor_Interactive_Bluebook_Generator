@@ -1,0 +1,45 @@
+@startuml Code_to_Bluebook_Sequence
+title Sequential Process: From Code Extraction to Bluebook Generation
+
+actor "User" as user
+participant "CLI / Web UI" as ui
+participant "Directory Scanner" as scanner
+participant "Language Hinting" as langhint
+participant "KPI Extractor" as extractor
+participant "Comment Parser (Formula)" as parser
+participant "KB Orchestrator" as kbo
+database "Knowledge Base (KB)" as kb
+participant "AI Narrative Generator" as ai
+participant "Bluebook Renderer" as renderer
+collections "Bluebook Artifacts\n(HTML/Docs)" as book
+collections "Source Repos / File System" as fs
+
+== Start ==
+user -> ui : Select project & start generation
+
+== Discovery ==
+ui -> scanner : Start scan
+scanner -> fs : Traverse directories/files
+
+loop For each file
+  scanner -> langhint : Infer language by extension
+  scanner -> extractor : Send file content + language hint
+  extractor -> parser : Extract "Formula:" (optional)
+  extractor --> kbo : Emit KPI candidate(s)
+end
+
+== Merge & Enrich ==
+kbo -> kb : Load curated entries (overrides)
+kbo -> kbo : Merge candidates + curated fields
+alt AI enrichment enabled
+  kbo -> ai : Request descriptions/units/rationale
+  ai --> kbo : Enriched details
+end
+
+== Render ==
+kbo -> renderer : Submit enriched KPI records
+renderer -> book : Generate Bluebook pages (HTML/Docs)
+
+== Finish ==
+ui <- book : Bluebook ready (links, pages, index)
+@enduml

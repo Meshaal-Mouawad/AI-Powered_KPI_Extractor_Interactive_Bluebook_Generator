@@ -1,0 +1,63 @@
+@startuml Interactive_Bluebook_Activity
+title AI-Powered KPI Extractor & Interactive Bluebook - Activity Diagram
+
+skinparam wrapWidth 220
+skinparam maxMessageSize 120
+
+start
+
+partition "User/Trigger" {
+  :Select Root Directory / Run Config;
+  :Trigger Scan/Regeneration (CLI/Web);
+}
+
+partition "Discovery Pipeline" {
+  :Traverse Directory Tree;
+  :Filter Non-text/Binary/Hidden Files;
+  :Infer Language by Extension;
+  :Read File (safe, size-limited);
+  :Extract KPI Candidates\n- Comment markers (e.g., "KPI: ...")\n- Structural patterns (views, functions, measures)\n- Capture code context + file:line\n- Optionally extract "Formula:" comments;
+}
+
+partition "KB Merge & Curation" {
+  :Load KB (prior curated entries);
+  :Merge Extracted Candidates with KB\n- Prefer curated text fields\n- Preserve provenance (file, line, context);
+}
+
+partition "AI Enhancement (optional)" {
+  if ("AI narrative enabled?") then (Yes)
+    :Generate/Refine Descriptions, Units,\nRationale, Edge-cases;
+  else (No)
+    :Bypass AI enhancement;
+  endif
+}
+
+partition "Render & Publish" {
+  :Render Interactive Bluebook Pages\n- Per-KPI pages + Catalog\n- Include deep links to IDEs\n- Include Edit action linked to KB;
+  :Publish/Serve Bluebook Output;
+}
+
+partition "User Interaction (Bluebook)" {
+  fork
+    :User clicks "Open in IDE";
+    if ("Preferred IDE?") then (PyCharm)
+      :Open pycharm://open?file=...&line=...;
+    else (VS Code)
+      :Open vscode://file/...:line;
+    endif
+    :Developer edits code in IDE;
+    :Commit/PR (external to system);
+  fork again
+    :User clicks "Edit" on KPI Page;
+    :Update Fields (name, formula, units, notes);
+    :Save to KB (persist curated values);
+  end fork
+}
+
+partition "Continuous Operation" {
+  :Next Regeneration Triggered;
+  :Re-scan, Extract, Merge with KB,\nRe-render with latest code + curation;
+}
+
+stop
+@enduml

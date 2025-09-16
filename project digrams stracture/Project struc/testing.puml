@@ -1,0 +1,27 @@
+@startuml Manual_vs_Automated_KPI
+
+title Traditional Manual Documentation vs Automated KPI Extraction
+
+start
+
+split
+  partition "Traditional Manual Documentation" {
+    :Traditional Manual Documentation;
+    :Manual Data Entry;
+    :Spreadsheet Updates;
+    :Error-Prone Operations;
+    :Delayed Reporting;
+  }
+split again
+  partition "Automated KPI Extraction" {
+    :Automated KPI Extraction;
+    :Automated Code Parsing;
+    :AI-Driven Extraction;
+    :Dynamic Bluebook Generation;
+    :Real-Time Updates;
+    :Accurate and Consistent Reporting;
+  }
+end split
+
+stop
+@enduml

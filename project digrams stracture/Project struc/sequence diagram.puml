@@ -1,0 +1,78 @@
+@startuml AI-Powered_KPI_Extractor_Interactive_Bluebook_Generator_Sequence
+title AI-Powered KPI Extractor & Interactive Bluebook - Sequence Diagram
+
+actor "User" as user
+participant "CLI Runner" as cli
+participant "Web App / Bluebook UI" as web
+participant "Directory Scanner" as scanner
+participant "Language Hinting" as langhint
+participant "KPI Extractor" as extractor
+participant "Comment Parser (Formula)" as parser
+participant "KB Orchestrator" as kbo
+database "Knowledge Base (KB Store)" as kb
+participant "AI Narrative Generator" as ai
+participant "Bluebook Renderer (Templates)" as renderer
+collections "Bluebook Artifacts (HTML/Docs)" as book
+collections "Config/Env" as cfg
+collections "File System / Repos" as fs
+participant "IDE Deep-Link Adapter" as ide
+participant "PyCharm" as pycharm
+participant "VS Code" as vscode
+
+== Initialization ==
+user -> web : Open UI / choose project
+web -> cfg : Read settings
+cli -> cfg : (optional) Read settings
+user -> cli : (optional) Start generation
+user -> web : (or) Start generation
+
+== Discovery & Extraction ==
+web -> scanner : Start scan
+cli -> scanner : (optional) Start scan
+scanner -> fs : Traverse directories/files
+
+loop For each file
+  scanner -> langhint : Detect language by extension
+  scanner -> extractor : Submit file content + language hint
+  extractor -> parser : Extract "Formula:" (optional)
+  extractor --> kbo : Emit KPI candidate(s)
+end
+
+== Merge, Enrich, Render ==
+kbo -> kb : Load prior curated entries
+kbo -> kbo : Merge candidates + curated fields
+kbo -> ai : Enhance descriptions, units, rationale (optional)
+kbo -> renderer : Send enriched KPI records
+renderer -> book : Write interactive Bluebook pages
+renderer -> ide : Embed deep links (file + line → IDE)
+
+== Serve Interactive Bluebook ==
+web -> book : Serve Bluebook pages to users
+user <- web : Interactive pages with Open-in-IDE + Edit actions
+
+== Open in IDE (Developer Path) ==
+user -> web : Click "Open in PyCharm" or "Open in VS Code"
+web -> ide : Redirect deep link
+alt PyCharm
+  ide -> pycharm : pycharm://open?file=...&line=...
+else VS Code
+  ide -> vscode : vscode://file/...:line
+end
+user -> pycharm : Edit code (external to system)
+user -> vscode : Edit code (external to system)
+
+== Edit & Persist (Business/Team Path) ==
+user -> web : Click "Edit" on KPI page
+web -> kb : Save curated changes (override fields)
+
+== Continuous Improvement ==
+user -> web : Trigger regeneration later
+web -> scanner : Re-scan files
+scanner -> extractor : Extract KPIs again
+extractor --> kbo : Provide updated candidates
+kbo -> kb : Load overrides
+kbo -> kbo : Merge with KB and refine
+kbo -> renderer : Re-render
+renderer -> book : Publish updated Bluebook
+
+@enduml
