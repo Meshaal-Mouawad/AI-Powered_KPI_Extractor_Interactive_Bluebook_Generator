@@ -1,36 +1,22 @@
-graph TD
-    subgraph User Interface
-        A[Flask Web App]
-    end
+@startuml
+actor "Developer" as Dev
+actor "Bluebook Manager" as BM
+actor "Business Analyst / RACI Stakeholders" as BA
 
-    subgraph Backend Logic
-        B[Generator Main Script]
-        C[KPI Extractor]
-        D[AI Description Generator]
-        E[Programmatic Formula Generator]
-    end
+rectangle "As-Is KPI Update Workflow" {
+  usecase "Consult manual Bluebook (PDF)" as UC1
+  usecase "Search codebase for KPI" as UC2
+  usecase "Update KPI in IDE" as UC3
+  usecase "Report update to Bluebook team" as UC4
+  usecase "Update master Bluebook doc" as UC5
+  usecase "Distribute updated Bluebook (RACI)" as UC6
+}
 
-    subgraph External Services
-        F[OpenAI API]
-    end
-
-    subgraph Build System
-        G[Sphinx Engine]
-    end
-
-    subgraph Data
-        H[Source Code Files]
-        I[Generated .rst Files]
-        J[Final HTML Bluebook]
-    end
-
-    A -- Triggers --> B
-    B -- Uses --> C
-    B -- Uses --> D
-    B -- Uses --> E
-    C -- Reads --> H
-    D -- Calls --> F
-    B -- Writes --> I
-    G -- Reads --> I
-    G -- Writes --> J
-    A -- Serves --> J
+Dev --> UC1
+Dev --> UC2
+Dev --> UC3
+Dev --> UC4
+BM --> UC5
+BM --> UC6
+BA --> UC6
+@enduml
