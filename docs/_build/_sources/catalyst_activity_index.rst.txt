@@ -59,10 +59,10 @@ Catalyst Activity Index
          <tr>
             <td>Generation time</td>
             <td>
-               1m 14s (AI 1m 14s + Render 0.0s)
+               0.0s (AI 0.0s + Render 0.0s)
                <div style="font-size: 12px; color: #6b7280; margin-top: 4px;">
-                  Total: 73.909s
-                  • AI: 73.909s
+                  Total: 0.0s
+                  • AI: 0.0s
                   • Render: 0.0s
                </div>
             </td>

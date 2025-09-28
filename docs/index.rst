@@ -6,28 +6,28 @@ KPI Bluebook
    :caption: Key Performance Indicators:
    :glob:
 
+   reactor_selectivity
    furnace_efficiency
    kpi_flare_recovery_pct
    propylene_to_ethylene_pe_ratio
-   distillation_column_efficiency
+   cooling_water_deltat_c
    benzene_purity
-   reactor_selectivity
-   furnace_oee
+   steamtoethylene_ratio
    maintenance_to_operating_cost_ratio
    reactor_selectivity
-   furnace_oee
+   reactor_conversion
    oee
    aromatics_recovery
-   steamtoethylene_ratio
-   reactor_conversion
-   cooling_water_deltat_c
-   flare_reduction
    hydrogen_utilization
-   compressor_availability
-   dehydrogenation_selectivity
+   distillation_column_efficiency
+   flare_reduction
    catalyst_activity_index
+   dehydrogenation_selectivity
+   compressor_availability
    productionloss
+   furnace_oee
+   ethylene_yield
+   furnace_oee
    polymerization_conversion
    propylene_yield
-   ethylene_yield
    *

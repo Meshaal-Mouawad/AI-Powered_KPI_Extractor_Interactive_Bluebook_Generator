@@ -61,8 +61,8 @@ Polymerization Conversion %
             <td>
                1m 26s (AI 1m 26s + Render 0.0s)
                <div style="font-size: 12px; color: #6b7280; margin-top: 4px;">
-                  Total: 86.132s
-                  • AI: 86.132s
+                  Total: 85.881s
+                  • AI: 85.881s
                   • Render: 0.0s
                </div>
             </td>

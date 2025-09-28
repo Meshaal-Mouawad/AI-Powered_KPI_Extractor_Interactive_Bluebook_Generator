@@ -42,7 +42,7 @@ ProductionLoss
       <tbody>
          <tr>
             <td>Description</td>
-            <td><ul><li>Production Loss measures the difference between the planned output and the actual output in a production environment</li><li>highlighting inefficiencies or disruptions in the production process</li></ul></td>
+            <td><ul><li>Production Loss measures the difference between the planned output and the actual output in a production process</li><li>It highlights inefficiencies and areas where production targets are not met</li></ul></td>
          </tr>
          <tr>
             <td>Objective</td>
@@ -51,7 +51,7 @@ ProductionLoss
          <tr>
             <td>Formula</td>
             <td>
-               <p>Production Loss is calculated by subtracting the total actual output from the total planned output, providing a clear indication of lost production opportunities.</p>
+               <p>Production Loss is calculated by subtracting the total actual output from the total planned output over a specified period.</p>
                <div class="math-equation">$$ \mathit{Production\,Loss} = \mathit{Sum(Production[Planned\,Output])} - \mathit{Sum(Production[Actual\,Output])} $$</div>
             </td>
          </tr>
@@ -59,10 +59,10 @@ ProductionLoss
          <tr>
             <td>Generation time</td>
             <td>
-               1m 12s (AI 1m 12s + Render 0.0s)
+               0.0s (AI 0.0s + Render 0.0s)
                <div style="font-size: 12px; color: #6b7280; margin-top: 4px;">
-                  Total: 71.61s
-                  • AI: 71.61s
+                  Total: 0.0s
+                  • AI: 0.0s
                   • Render: 0.0s
                </div>
             </td>
@@ -78,23 +78,23 @@ ProductionLoss
          </tr>
          <tr>
             <td>Used in KPI(s)</td>
-            <td><ul><li>Production Loss is utilized in various key performance indicators to assess operational performance</li><li>efficiency</li><li>and productivity within the production sector</li></ul></td>
+            <td><ul><li>Production Loss is utilized in various KPIs related to operational efficiency</li><li>production performance</li><li>and resource management</li></ul></td>
          </tr>
          <tr>
             <td>Input Measure</td>
-            <td><ul><li>The input measures for this KPI include planned output and actual output from production activities</li></ul></td>
+            <td><ul><li>The input measures for this KPI include both planned output and actual output from production activities</li></ul></td>
          </tr>
          <tr>
             <td>Unit of Measure</td>
-            <td>The unit of measure for Production Loss is typically expressed in units of output, such as barrels for oil production or tons for petrochemical production.</td>
+            <td>The unit of measure for Production Loss is typically expressed in units of output, such as barrels for oil and gas production or tons for petrochemical production.</td>
          </tr>
          <tr>
             <td>Reporting Source</td>
-            <td>The reporting source for this KPI is derived from production data collected during operational activities, often reported through production management systems.</td>
+            <td>The reporting source for this KPI is derived from production data collected during operational reporting cycles.</td>
          </tr>
          <tr>
             <td>Comments</td>
-            <td>Monitoring Production Loss is crucial for continuous improvement initiatives and can significantly impact profitability and resource allocation in the oil, gas, and petrochemical industries.</td>
+            <td>Monitoring Production Loss is crucial for continuous improvement initiatives and can significantly impact profitability and resource allocation.</td>
          </tr>
       </tbody>
    </table>

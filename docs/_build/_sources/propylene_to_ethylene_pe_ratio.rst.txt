@@ -62,8 +62,8 @@ Propylene to Ethylene (P/E) Ratio
                0.0s (AI 0.0s + Render 0.0s)
                <div style="font-size: 12px; color: #6b7280; margin-top: 4px;">
                   Total: 0.003s
-                  • AI: 0.0s
-                  • Render: 0.002s
+                  • AI: 0.001s
+                  • Render: 0.003s
                </div>
             </td>
          </tr>

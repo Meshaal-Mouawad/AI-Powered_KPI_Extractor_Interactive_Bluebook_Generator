@@ -59,10 +59,10 @@ Ethylene Yield %
          <tr>
             <td>Generation time</td>
             <td>
-               48.9s (AI 48.9s + Render 0.0s)
+               0.0s (AI 0.0s + Render 0.0s)
                <div style="font-size: 12px; color: #6b7280; margin-top: 4px;">
-                  Total: 48.945s
-                  • AI: 48.944s
+                  Total: 0.001s
+                  • AI: 0.0s
                   • Render: 0.0s
                </div>
             </td>

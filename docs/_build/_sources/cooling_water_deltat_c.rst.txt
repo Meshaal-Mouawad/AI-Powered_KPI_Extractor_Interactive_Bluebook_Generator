@@ -59,10 +59,10 @@ Cooling Water Delta-T (°C
          <tr>
             <td>Generation time</td>
             <td>
-               1m 29s (AI 1m 29s + Render 0.0s)
+               0.0s (AI 0.0s + Render 0.0s)
                <div style="font-size: 12px; color: #6b7280; margin-top: 4px;">
-                  Total: 89.412s
-                  • AI: 89.41s
+                  Total: 0.002s
+                  • AI: 0.001s
                   • Render: 0.001s
                </div>
             </td>

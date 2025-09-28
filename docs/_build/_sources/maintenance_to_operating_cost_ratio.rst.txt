@@ -62,7 +62,7 @@ Maintenance to Operating Cost Ratio
                0.0s (AI 0.0s + Render 0.0s)
                <div style="font-size: 12px; color: #6b7280; margin-top: 4px;">
                   Total: 0.001s
-                  • AI: 0.001s
+                  • AI: 0.0s
                   • Render: 0.0s
                </div>
             </td>

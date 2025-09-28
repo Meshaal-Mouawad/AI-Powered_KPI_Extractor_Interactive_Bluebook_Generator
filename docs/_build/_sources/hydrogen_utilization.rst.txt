@@ -46,7 +46,7 @@ Hydrogen Utilization %
          </tr>
          <tr>
             <td>Objective</td>
-            <td><ul><li>The objective of this KPI is to assess how effectively hydrogen is being utilized in operations</li><li>which can help identify areas for improvement and optimize resource allocation</li></ul></td>
+            <td><ul><li>The objective of this KPI is to assess how effectively hydrogen is being utilized in operations</li><li>which can help identify areas for improvement in efficiency and resource management</li></ul></td>
          </tr>
          <tr>
             <td>Formula</td>
@@ -59,10 +59,10 @@ Hydrogen Utilization %
          <tr>
             <td>Generation time</td>
             <td>
-               49.7s (AI 49.7s + Render 0.0s)
+               0.0s (AI 0.0s + Render 0.0s)
                <div style="font-size: 12px; color: #6b7280; margin-top: 4px;">
-                  Total: 49.735s
-                  • AI: 49.735s
+                  Total: 0.0s
+                  • AI: 0.0s
                   • Render: 0.0s
                </div>
             </td>
@@ -78,7 +78,7 @@ Hydrogen Utilization %
          </tr>
          <tr>
             <td>Used in KPI(s)</td>
-            <td><ul><li>This KPI is used in various performance assessments related to hydrogen production and consumption efficiency in the oil</li><li>gas</li><li>and petrochemical sectors</li></ul></td>
+            <td><ul><li>This KPI is used in performance assessments related to hydrogen production and consumption</li><li>as well as in sustainability initiatives aimed at reducing waste and optimizing resource use</li></ul></td>
          </tr>
          <tr>
             <td>Input Measure</td>
@@ -86,15 +86,15 @@ Hydrogen Utilization %
          </tr>
          <tr>
             <td>Unit of Measure</td>
-            <td>The unit of measure for Hydrogen Utilization % is a percentage.</td>
+            <td>The unit of measure for Hydrogen Utilization % is percentage.</td>
          </tr>
          <tr>
             <td>Reporting Source</td>
-            <td>The data for this KPI is typically sourced from operational reports and monitoring systems that track hydrogen supply and consumption.</td>
+            <td>The reporting source for this KPI is typically operational data collected from hydrogen supply and consumption metrics.</td>
          </tr>
          <tr>
             <td>Comments</td>
-            <td>A high Hydrogen Utilization % indicates effective use of hydrogen, while a low percentage may signal inefficiencies or losses in the system.</td>
+            <td>A high Hydrogen Utilization % indicates efficient use of hydrogen, while a low percentage may suggest inefficiencies or losses in the system.</td>
          </tr>
       </tbody>
    </table>

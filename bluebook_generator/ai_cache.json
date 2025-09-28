@@ -168,5 +168,85 @@
     "unit_of_measure": "The unit of measure for Ethylene Yield % is expressed as a percentage.",
     "reporting_source": "The reporting source for this KPI typically includes production data from manufacturing systems and quality control reports.",
     "comments": "Monitoring Ethylene Yield % is crucial for maintaining product quality and maximizing profitability in ethylene production operations."
+  },
+  "6826d6736473782089ecd356115d40152951d76e": {
+    "description": "The Steam-to-Ethylene Ratio is a key performance indicator that measures the amount of steam used in the production of ethylene. It provides insight into the efficiency of the steam utilization in the ethylene production process.",
+    "objective": "The objective of monitoring the Steam-to-Ethylene Ratio is to optimize the use of steam in ethylene production, thereby improving energy efficiency and reducing operational costs.",
+    "formula_description": "The ratio is calculated by dividing the volume of steam used by the volume of ethylene produced, ensuring that the ethylene value is not zero to avoid division errors.",
+    "used_in_kpis": "This KPI is used in evaluating the efficiency of ethylene production processes and can inform decisions related to process optimization and resource allocation.",
+    "input_measure": "The input measures for this KPI are the volumes of steam and ethylene produced during the manufacturing process.",
+    "unit_of_measure": "The unit of measure for the Steam-to-Ethylene Ratio is dimensionless, as it is a ratio of two volumetric quantities.",
+    "reporting_source": "The data for this KPI is typically sourced from production reports and operational data collected during the ethylene manufacturing process.",
+    "comments": "A higher Steam-to-Ethylene Ratio may indicate excessive steam usage, which could lead to increased costs and reduced efficiency, while a lower ratio suggests better steam utilization."
+  },
+  "23d1f20f5229604d9e5b652cde70ea276a7abdb3": {
+    "description": "Reactor Conversion % measures the efficiency of a chemical reactor by calculating the percentage of feed material that has been converted into product.",
+    "objective": "The objective of monitoring Reactor Conversion % is to optimize reactor performance, enhance yield, and minimize waste in the production process.",
+    "formula_description": "The formula for Reactor Conversion % is derived by dividing the amount of converted material by the total feed amount, then multiplying by 100 to express it as a percentage.",
+    "used_in_kpis": "Reactor Conversion % is utilized in key performance indicators related to production efficiency, yield optimization, and process effectiveness.",
+    "input_measure": "The input measures for this KPI include the total feed amount and the quantity of material that has been converted during the reaction.",
+    "unit_of_measure": "The unit of measure for Reactor Conversion % is percentage.",
+    "reporting_source": "The reporting source for this KPI is typically derived from operational data collected during the chemical reaction process.",
+    "comments": "A high Reactor Conversion % indicates effective reactor operation, while a low percentage may signal issues such as incomplete reactions or suboptimal conditions."
+  },
+  "1337b955254e631866c912083a21fd09e9f80514": {
+    "description": "Production Loss measures the difference between the planned output and the actual output in a production process. It highlights inefficiencies and areas where production targets are not met.",
+    "objective": "The objective of tracking Production Loss is to identify gaps between expected and actual production levels, enabling organizations to implement corrective actions and improve overall operational efficiency.",
+    "formula_description": "Production Loss is calculated by subtracting the total actual output from the total planned output over a specified period.",
+    "used_in_kpis": "Production Loss is utilized in various KPIs related to operational efficiency, production performance, and resource management.",
+    "input_measure": "The input measures for this KPI include both planned output and actual output from production activities.",
+    "unit_of_measure": "The unit of measure for Production Loss is typically expressed in units of output, such as barrels for oil and gas production or tons for petrochemical production.",
+    "reporting_source": "The reporting source for this KPI is derived from production data collected during operational reporting cycles.",
+    "comments": "Monitoring Production Loss is crucial for continuous improvement initiatives and can significantly impact profitability and resource allocation."
+  },
+  "6b3265ce7b746f5027cab658664bfdb088e35a3c": {
+    "description": "Reactor Selectivity % measures the efficiency of a chemical reactor in producing the desired product relative to undesired byproducts. It is a critical performance indicator in petrochemical processes, reflecting the effectiveness of the reaction conditions and catalyst used.",
+    "objective": "The objective of monitoring Reactor Selectivity % is to optimize the production process, enhance yield, and minimize waste by ensuring that the reactor operates under conditions that favor the formation of the desired product.",
+    "formula_description": "Reactor Selectivity % is calculated by comparing the amount of desired product produced to the total amount of products formed, including both desired and undesired products.",
+    "used_in_kpis": "This KPI is used in conjunction with other performance indicators such as conversion rates and yield to provide a comprehensive assessment of reactor performance.",
+    "input_measure": "The input measures for Reactor Selectivity % include the quantities of desired and undesired products generated during the reaction process.",
+    "unit_of_measure": "The unit of measure for Reactor Selectivity % is expressed as a percentage.",
+    "reporting_source": "Data for Reactor Selectivity % is typically sourced from process control systems and laboratory analyses that monitor product outputs from the reactor.",
+    "comments": "Improving Reactor Selectivity % can lead to significant cost savings and environmental benefits by reducing the need for downstream processing and waste management."
+  },
+  "6eb4105ad7b5d2ec3c471e55b33c77a754bf9b98": {
+    "description": "Hydrogen Utilization % measures the efficiency of hydrogen usage in a process by comparing the amount of hydrogen consumed to the amount supplied.",
+    "objective": "The objective of this KPI is to assess how effectively hydrogen is being utilized in operations, which can help identify areas for improvement in efficiency and resource management.",
+    "formula_description": "The KPI is calculated by dividing the amount of hydrogen consumed by the amount supplied, then multiplying the result by 100 to express it as a percentage.",
+    "used_in_kpis": "This KPI is used in performance assessments related to hydrogen production and consumption, as well as in sustainability initiatives aimed at reducing waste and optimizing resource use.",
+    "input_measure": "The input measures for this KPI are the quantities of hydrogen consumed and supplied.",
+    "unit_of_measure": "The unit of measure for Hydrogen Utilization % is percentage.",
+    "reporting_source": "The reporting source for this KPI is typically operational data collected from hydrogen supply and consumption metrics.",
+    "comments": "A high Hydrogen Utilization % indicates efficient use of hydrogen, while a low percentage may suggest inefficiencies or losses in the system."
+  },
+  "0bab72368b844fcb493356900cbe3d5186b204ed": {
+    "description": "Flare Reduction % is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of Flare Reduction % is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "%",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "f85c5456cd9fc0fe665ee90de5dc8844ae15436b": {
+    "description": "Dehydrogenation Selectivity % is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of Dehydrogenation Selectivity % is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "%",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "8f8de9a95577ecd29f511698bb01929baf0336f4": {
+    "description": "Propylene Yield % is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of Propylene Yield % is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "%",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
   }
 }

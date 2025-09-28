@@ -42,16 +42,16 @@ Flare Reduction %
       <tbody>
          <tr>
             <td>Description</td>
-            <td><ul><li>Flare Reduction % measures the percentage decrease in gas flaring relative to the total gas produced</li><li>It is a critical indicator of operational efficiency and environmental performance in the oil and gas industry</li></ul></td>
+            <td><ul><li>Flare Reduction % is a key performance indicator used to assess process efficiency and operational performance</li></ul></td>
          </tr>
          <tr>
             <td>Objective</td>
-            <td><ul><li>The objective of Flare Reduction % is to minimize the volume of gas flared during production processes</li><li>thereby reducing greenhouse gas emissions and improving resource utilization</li></ul></td>
+            <td><ul><li>The objective of Flare Reduction % is to provide a clear measure that supports monitoring</li><li>decision making</li><li>and continuous improvement</li></ul></td>
          </tr>
          <tr>
             <td>Formula</td>
             <td>
-               <p>The Flare Reduction % is calculated by taking the flare volume as a proportion of the total gas produced, subtracting this ratio from one, and then multiplying by one hundred to express it as a percentage.</p>
+               <p>Calculated directly from the inputs found in the code implementation.</p>
                <div class="math-equation">$$ \mathit{Flare\,Reduction\,\%} = \mathit{0)))} \times \mathit{100} $$</div>
             </td>
          </tr>
@@ -59,10 +59,10 @@ Flare Reduction %
          <tr>
             <td>Generation time</td>
             <td>
-               49.2s (AI 49.2s + Render 0.0s)
+               0.0s (AI 0.0s + Render 0.0s)
                <div style="font-size: 12px; color: #6b7280; margin-top: 4px;">
-                  Total: 49.245s
-                  • AI: 49.245s
+                  Total: 0.001s
+                  • AI: 0.001s
                   • Render: 0.0s
                </div>
             </td>
@@ -70,31 +70,31 @@ Flare Reduction %
 
          <tr>
             <td>Extraction rate %</td>
-            <td>100.0%</td>
+            <td>88.9%</td>
          </tr>
          <tr>
             <td>Error rate %</td>
-            <td>0.0%</td>
+            <td>11.1%</td>
          </tr>
          <tr>
             <td>Used in KPI(s)</td>
-            <td><ul><li>This KPI is used in evaluating environmental performance</li><li>operational efficiency</li><li>and compliance with regulatory standards related to emissions</li></ul></td>
+            <td><ul><li>This KPI can serve as an input to higher-level operational and performance dashboards</li></ul></td>
          </tr>
          <tr>
             <td>Input Measure</td>
-            <td><ul><li>The input measures for this KPI include the volume of gas flared and the total volume of gas produced</li></ul></td>
+            <td><ul><li>Derived from the variables used in the code calculation for this KPI</li></ul></td>
          </tr>
          <tr>
             <td>Unit of Measure</td>
-            <td>The unit of measure for Flare Reduction % is expressed as a percentage.</td>
+            <td>%</td>
          </tr>
          <tr>
             <td>Reporting Source</td>
-            <td>The data for this KPI is typically sourced from production reports and emissions monitoring systems within the organization.</td>
+            <td>Operations data sources such as historians, SCADA/DCS tags, and production logs.</td>
          </tr>
          <tr>
             <td>Comments</td>
-            <td>A higher Flare Reduction % indicates better management of gas resources and a commitment to reducing environmental impact.</td>
+            <td>No additional comments or special considerations were provided for this KPI.</td>
          </tr>
       </tbody>
    </table>
