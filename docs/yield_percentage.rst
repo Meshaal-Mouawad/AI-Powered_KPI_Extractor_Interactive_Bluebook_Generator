@@ -42,7 +42,7 @@ Yield Percentage (%
       <tbody>
          <tr>
             <td>Description</td>
-            <td><ul><li>Yield Percentage measures the efficiency of a production process by calculating the ratio of the desired product output to the total input used in the process</li><li>Proportion of desired product produced relative to total input</li><li>indicating conversion efficiency</li></ul></td>
+            <td><ul><li>Yield Percentage is a key performance indicator that measures the efficiency of a production process by comparing the amount of desired product obtained to the total input used in the process</li><li>Proportion of desired product produced relative to total input</li><li>indicating conversion efficiency</li></ul></td>
          </tr>
          <tr>
             <td>Objective</td>
@@ -51,17 +51,38 @@ Yield Percentage (%
          <tr>
             <td>Formula</td>
             <td>
-               <p>The Yield Percentage is calculated by dividing the amount of desired product produced by the total input used, then multiplying the result by 100 to express it as a percentage.</p>
+               <p>The Yield Percentage is calculated by dividing the quantity of desired product produced by the total input used, then multiplying the result by 100 to express it as a percentage.</p>
                <div class="math-equation">$$ \mathrm{Yield\,\%} = \frac{\mathrm{Desired\,Product}}{\mathrm{Total\,Input}} \times 100 $$</div>
             </td>
          </tr>
+
+         <tr>
+            <td>Generation time</td>
+            <td>
+               0.0s (AI 0.0s + Render 0.0s)
+               <div style="font-size: 12px; color: #6b7280; margin-top: 4px;">
+                  Total: 0.002s
+                  • AI: 0.0s
+                  • Render: 0.001s
+               </div>
+            </td>
+         </tr>
+
+         <tr>
+            <td>Extraction rate %</td>
+            <td>100.0%</td>
+         </tr>
+         <tr>
+            <td>Error rate %</td>
+            <td>0.0%</td>
+         </tr>
          <tr>
             <td>Used in KPI(s)</td>
-            <td><ul><li>Yield Percentage is commonly used in key performance indicators related to production efficiency</li><li>resource utilization</li><li>and operational effectiveness in the oil</li><li>gas</li><li>and petrochemical industries</li></ul></td>
+            <td><ul><li>Yield Percentage is commonly used in various KPIs related to production efficiency</li><li>resource utilization</li><li>and operational performance in the oil</li><li>gas</li><li>and petrochemical industries</li></ul></td>
          </tr>
          <tr>
             <td>Input Measure</td>
-            <td><ul><li>The input measure consists of the total quantity of raw materials or resources consumed in the production process</li><li>Desired product output and corresponding input over the measurement period</li></ul></td>
+            <td><ul><li>The input measure consists of the total quantity of raw materials or resources utilized in the production process</li><li>Desired product output and corresponding input over the measurement period</li></ul></td>
          </tr>
          <tr>
             <td>Unit of Measure</td>
@@ -69,11 +90,11 @@ Yield Percentage (%
          </tr>
          <tr>
             <td>Reporting Source</td>
-            <td>Data for Yield Percentage is typically sourced from production reports, operational databases, and performance monitoring systems.</td>
+            <td>Data for Yield Percentage is typically sourced from production reports, operational databases, and quality control assessments.</td>
          </tr>
          <tr>
             <td>Comments</td>
-            <td>A higher Yield Percentage indicates a more efficient production process, while a lower percentage may signal issues such as waste, inefficiencies, or suboptimal resource allocation.</td>
+            <td>Monitoring Yield Percentage is crucial for identifying areas for improvement in production processes and can lead to cost savings and enhanced profitability.</td>
          </tr>
       </tbody>
    </table>

@@ -23,8 +23,8 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Yield Percentage (%" href="yield_percentage.html" />
-    <link rel="prev" title="Propylene to Ethylene (P/E) Ratio" href="propylene_to_ethylene_pe_ratio.html" /> 
+    <link rel="next" title="On-Spec Rate (%" href="onspec_rate.html" />
+    <link rel="prev" title="Yield Percentage (%" href="yield_percentage.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -48,18 +48,18 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Key Performance Indicators:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="kpi_flare_recovery_pct.html">kpi flare recovery pct</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sox_emissions_concentration_kgm3.html">SOx Emissions Concentration (kg/m3</a></li>
-<li class="toctree-l1"><a class="reference internal" href="propylene_to_ethylene_pe_ratio.html">Propylene to Ethylene (P/E) Ratio</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Cooling Water Delta-T (°C</a></li>
 <li class="toctree-l1"><a class="reference internal" href="yield_percentage.html">Yield Percentage (%</a></li>
-<li class="toctree-l1"><a class="reference internal" href="mean_time_between_failures_mtbf.html">Mean Time Between Failures (MTBF</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Cooling Water Delta-T (°C</a></li>
 <li class="toctree-l1"><a class="reference internal" href="onspec_rate.html">On-Spec Rate (%</a></li>
-<li class="toctree-l1"><a class="reference internal" href="polymer_melt_flow_index_mfi_variance.html">Polymer Melt Flow Index (MFI) Variance</a></li>
-<li class="toctree-l1"><a class="reference internal" href="maintenance_to_operating_cost_ratio.html">Maintenance to Operating Cost Ratio</a></li>
-<li class="toctree-l1"><a class="reference internal" href="daily_feedstock_throughput_tonsday.html">Daily Feedstock Throughput (tons/day</a></li>
+<li class="toctree-l1"><a class="reference internal" href="propylene_to_ethylene_pe_ratio.html">Propylene to Ethylene (P/E) Ratio</a></li>
+<li class="toctree-l1"><a class="reference internal" href="kpi_flare_recovery_pct.html">kpi flare recovery pct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mean_time_between_failures_mtbf.html">Mean Time Between Failures (MTBF</a></li>
 <li class="toctree-l1"><a class="reference internal" href="oee.html">OEE %</a></li>
 <li class="toctree-l1"><a class="reference internal" href="specific_catalyst_cost_ton.html">Specific Catalyst Cost ($/ton</a></li>
+<li class="toctree-l1"><a class="reference internal" href="polymer_melt_flow_index_mfi_variance.html">Polymer Melt Flow Index (MFI) Variance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="daily_feedstock_throughput_tonsday.html">Daily Feedstock Throughput (tons/day</a></li>
+<li class="toctree-l1"><a class="reference internal" href="maintenance_to_operating_cost_ratio.html">Maintenance to Operating Cost Ratio</a></li>
 </ul>
 
         </div>
@@ -129,7 +129,7 @@
       </tr>
       <tr>
          <td>Objective</td>
-         <td><ul><li>The objective of monitoring Cooling Water Delta-T is to ensure optimal cooling system performance</li><li>which is crucial for maintaining equipment efficiency and preventing overheating</li></ul></td>
+         <td><ul><li>The objective of monitoring Cooling Water Delta-T is to ensure optimal cooling system performance</li><li>enhance energy efficiency</li><li>and prevent overheating of equipment</li></ul></td>
       </tr>
       <tr>
          <td>Formula</td>
@@ -138,17 +138,38 @@
             <div class="math-equation">$$ \mathit{Result} = \mathit{Outlet\,C} - \mathit{Inlet\,C;\,\}\,\}} $$</div>
          </td>
       </tr>
+
+      <tr>
+         <td>Generation time</td>
+         <td>
+            7.4s (AI 7.4s + Render 0.0s)
+            <div style="font-size: 12px; color: #6b7280; margin-top: 4px;">
+               Total: 7.438s
+               • AI: 7.437s
+               • Render: 0.001s
+            </div>
+         </td>
+      </tr>
+
+      <tr>
+         <td>Extraction rate %</td>
+         <td>100.0%</td>
+      </tr>
+      <tr>
+         <td>Error rate %</td>
+         <td>0.0%</td>
+      </tr>
       <tr>
          <td>Used in KPI(s)</td>
-         <td><ul><li>This KPI is used in various performance indicators related to cooling system efficiency and thermal management in oil</li><li>gas</li><li>and petrochemical operations</li></ul></td>
+         <td><ul><li>This KPI is used in various performance indicators related to cooling system efficiency and thermal management</li></ul></td>
       </tr>
       <tr>
          <td>Input Measure</td>
-         <td><ul><li>The input measures for this KPI are the inlet and outlet temperatures of the cooling water</li></ul></td>
+         <td><ul><li>The input measures for this KPI are the temperatures of the cooling water at the inlet and outlet points</li></ul></td>
       </tr>
       <tr>
          <td>Unit of Measure</td>
-         <td>The unit of measure for Cooling Water Delta-T is degrees Celsius.</td>
+         <td>The unit of measure for Cooling Water Delta-T is degrees Celsius (°C).</td>
       </tr>
       <tr>
          <td>Reporting Source</td>
@@ -156,7 +177,7 @@
       </tr>
       <tr>
          <td>Comments</td>
-         <td>Monitoring Cooling Water Delta-T is essential for identifying potential issues in cooling systems, such as fouling or inadequate flow rates, which can impact overall operational efficiency.</td>
+         <td>Regular monitoring of Cooling Water Delta-T can help identify potential issues in cooling systems, such as fouling or inadequate flow rates, which can lead to operational inefficiencies.</td>
       </tr>
    </tbody>
 </table><div class="dropdown admonition">
@@ -183,8 +204,8 @@ return outlet_c - inlet_c;</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="propylene_to_ethylene_pe_ratio.html" class="btn btn-neutral float-left" title="Propylene to Ethylene (P/E) Ratio" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="yield_percentage.html" class="btn btn-neutral float-right" title="Yield Percentage (%" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="yield_percentage.html" class="btn btn-neutral float-left" title="Yield Percentage (%" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="onspec_rate.html" class="btn btn-neutral float-right" title="On-Spec Rate (%" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

@@ -42,7 +42,7 @@ Polymer Melt Flow Index (MFI) Variance
       <tbody>
          <tr>
             <td>Description</td>
-            <td><ul><li>The Polymer Melt Flow Index (MFI) Variance measures the variability in the flow characteristics of polymer materials</li><li>which is crucial for assessing their processing behavior and end-use performance</li><li>The Polymer Melt Flow Index (MFI) Variance measures the variability in the melt flow index of polymer samples and indicates how easily the polymer flows when melted</li></ul></td>
+            <td><ul><li>The Polymer Melt Flow Index (MFI) Variance measures the variability in the flow characteristics of polymer materials</li><li>which is critical for assessing their processing behavior and end-use performance</li><li>The Polymer Melt Flow Index (MFI) Variance measures the variability in the melt flow index of polymer samples and indicates how easily the polymer flows when melted</li></ul></td>
          </tr>
          <tr>
             <td>Objective</td>
@@ -51,9 +51,30 @@ Polymer Melt Flow Index (MFI) Variance
          <tr>
             <td>Formula</td>
             <td>
-               <p>The MFI Variance is calculated by determining the average of the squared differences between each MFI measurement and the overall average MFI, divided by the number of measurements.</p>
+               <p>The MFI Variance is calculated by determining the average of the squared differences between each individual MFI measurement and the overall mean MFI value, divided by the number of measurements.</p>
                <div class="math-equation">$$ \mathrm{MFI\ Variance} = \frac{\sum (x_i - \bar{x})^2}{n} $$</div>
             </td>
+         </tr>
+
+         <tr>
+            <td>Generation time</td>
+            <td>
+               49.7s (AI 49.7s + Render 0.0s)
+               <div style="font-size: 12px; color: #6b7280; margin-top: 4px;">
+                  Total: 49.657s
+                  • AI: 49.657s
+                  • Render: 0.0s
+               </div>
+            </td>
+         </tr>
+
+         <tr>
+            <td>Extraction rate %</td>
+            <td>88.9%</td>
+         </tr>
+         <tr>
+            <td>Error rate %</td>
+            <td>11.1%</td>
          </tr>
          <tr>
             <td>Used in KPI(s)</td>
@@ -61,19 +82,19 @@ Polymer Melt Flow Index (MFI) Variance
          </tr>
          <tr>
             <td>Input Measure</td>
-            <td><ul><li>The input measures for calculating MFI Variance include individual Melt Flow Index values obtained from polymer samples</li><li>Melt Flow Index test results from polymer samples collected during production or laboratory testing</li></ul></td>
+            <td><ul><li>The input measures for calculating MFI Variance include individual MFI values obtained from testing polymer samples</li><li>Melt Flow Index test results from polymer samples collected during production or laboratory testing</li></ul></td>
          </tr>
          <tr>
             <td>Unit of Measure</td>
-            <td>The unit of measure for MFI Variance is dimensionless, as it represents a statistical measure of variability.</td>
+            <td>The unit of measure for MFI Variance is typically expressed in cubic centimeters per 10 minutes (cc/10 min), reflecting the flow rate of the polymer.</td>
          </tr>
          <tr>
             <td>Reporting Source</td>
-            <td>Data for MFI Variance is typically sourced from laboratory testing results and quality assurance processes in polymer manufacturing facilities.</td>
+            <td>Data for MFI Variance is sourced from laboratory testing results and quality assurance reports generated during the polymer production process.</td>
          </tr>
          <tr>
             <td>Comments</td>
-            <td>Monitoring MFI Variance is essential for maintaining product quality and ensuring that polymers meet industry standards and customer requirements. Tracking MFI variance is essential for maintaining product quality and ensuring products meet required specifications for intended applications.</td>
+            <td>Monitoring MFI Variance is essential for maintaining product consistency and meeting industry standards, as significant variance may indicate issues in the polymerization process or raw material quality. Tracking MFI variance is essential for maintaining product quality and ensuring products meet required specifications for intended applications.</td>
          </tr>
       </tbody>
    </table>

@@ -42,26 +42,47 @@ SOx Emissions Concentration (kg/m3
       <tbody>
          <tr>
             <td>Description</td>
-            <td><ul><li>SOx Emissions Concentration measures the concentration of sulfur oxides in a given volume of gas</li><li>expressed in kilograms per cubic meter</li><li>This KPI is crucial for monitoring air quality and compliance with environmental regulations</li></ul></td>
+            <td><ul><li>SOx Emissions Concentration measures the concentration of sulfur oxides in a given volume of gas</li><li>expressed in kilograms per cubic meter</li><li>This KPI is critical for assessing the environmental impact of emissions from industrial processes</li></ul></td>
          </tr>
          <tr>
             <td>Objective</td>
-            <td><ul><li>The objective of tracking SOx Emissions Concentration is to ensure that emissions are kept within permissible limits</li><li>thereby minimizing environmental impact and adhering to regulatory standards</li></ul></td>
+            <td><ul><li>The objective of monitoring SOx Emissions Concentration is to ensure compliance with environmental regulations and to minimize the release of harmful pollutants into the atmosphere</li></ul></td>
          </tr>
          <tr>
             <td>Formula</td>
             <td>
-               <p>The concentration is calculated by dividing the mass flow of sulfur oxides by the volumetric flow rate of the gas stream, providing a direct measure of pollutant concentration.</p>
+               <p>The concentration is calculated by dividing the mass flow of sulfur oxides by the volumetric flow rate of the gas stream, providing a direct measure of emissions intensity.</p>
                <div class="math-equation">$$ \mathit{Sox\,Conc} = \mathit{15\,2;\,(} \times \mathit{Pretend\,This\,Comes\,From\,An\,Analyzer\,Tag} \times \mathit{)} $$</div>
             </td>
          </tr>
+
+         <tr>
+            <td>Generation time</td>
+            <td>
+               0.0s (AI 0.0s + Render 0.0s)
+               <div style="font-size: 12px; color: #6b7280; margin-top: 4px;">
+                  Total: 0.007s
+                  • AI: 0.001s
+                  • Render: 0.006s
+               </div>
+            </td>
+         </tr>
+
+         <tr>
+            <td>Extraction rate %</td>
+            <td>100.0%</td>
+         </tr>
+         <tr>
+            <td>Error rate %</td>
+            <td>0.0%</td>
+         </tr>
          <tr>
             <td>Used in KPI(s)</td>
-            <td><ul><li>This KPI is utilized in various environmental performance assessments and compliance reporting frameworks to evaluate the effectiveness of emission control strategies</li></ul></td>
+            <td><ul><li>This KPI is used in various environmental performance indicators and regulatory compliance assessments to track and manage sulfur oxide emissions</li></ul></td>
          </tr>
          <tr>
             <td>Input Measure</td>
-            <td><ul><li>The primary input measures for this KPI include the mass flow rate of sulfur oxides and the volumetric flow rate of the gas being analyzed</li></ul></td>
+            <td><ul><li>The input measures for this KPI include the mass flow rate of sulfur oxides and the volumetric flow rate of the gas being analyzed</li></ul></td>
          </tr>
          <tr>
             <td>Unit of Measure</td>
@@ -69,11 +90,11 @@ SOx Emissions Concentration (kg/m3
          </tr>
          <tr>
             <td>Reporting Source</td>
-            <td>Data for this KPI is typically sourced from continuous emissions monitoring systems (CEMS) or gas analyzers that provide real-time measurements of SOx emissions.</td>
+            <td>Data for this KPI is typically sourced from emissions analyzers and monitoring systems installed in industrial facilities.</td>
          </tr>
          <tr>
             <td>Comments</td>
-            <td>Regular monitoring of SOx Emissions Concentration is essential for identifying trends, ensuring compliance with environmental regulations, and implementing necessary corrective actions to reduce emissions.</td>
+            <td>Regular monitoring of SOx Emissions Concentration is essential for identifying trends in emissions and implementing strategies for reduction, thereby contributing to improved air quality and regulatory compliance.</td>
          </tr>
       </tbody>
    </table>

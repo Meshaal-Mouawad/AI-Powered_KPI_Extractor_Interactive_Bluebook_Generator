@@ -42,11 +42,11 @@ kpi flare recovery pct
       <tbody>
          <tr>
             <td>Description</td>
-            <td><ul><li>The flare recovery percentage measures the efficiency of gas recovery from flaring operations</li><li>indicating the proportion of gas that is successfully captured and reused rather than being burned off</li><li>Share of total gas that is recovered instead of flared</li><li>indicating the effectiveness of recovery systems</li></ul></td>
+            <td><ul><li>The flare recovery percentage measures the efficiency of gas recovery from flaring operations</li><li>indicating the proportion of gas that is successfully captured and reused rather than being released into the atmosphere</li><li>Share of total gas that is recovered instead of flared</li><li>indicating the effectiveness of recovery systems</li></ul></td>
          </tr>
          <tr>
             <td>Objective</td>
-            <td><ul><li>The objective of this KPI is to maximize the recovery of gas during flaring events</li><li>thereby minimizing environmental impact and improving resource utilization</li><li>Reduce flaring and emissions by improving recovery system reliability and operation</li></ul></td>
+            <td><ul><li>The objective of this KPI is to minimize environmental impact and maximize resource utilization by ensuring a higher percentage of gas is recovered during flaring events</li><li>Reduce flaring and emissions by improving recovery system reliability and operation</li></ul></td>
          </tr>
          <tr>
             <td>Formula</td>
@@ -55,13 +55,34 @@ kpi flare recovery pct
                <div class="math-equation">$$ \mathit{Kpi\,Flare\,Recovery\,Pct} = \frac{\mathit{Recovered\,Gas\,M3}}{\mathit{Nullif(Total\,Gas\,M3,0)}} $$</div>
             </td>
          </tr>
+
+         <tr>
+            <td>Generation time</td>
+            <td>
+               8.5s (AI 8.5s + Render 0.0s)
+               <div style="font-size: 12px; color: #6b7280; margin-top: 4px;">
+                  Total: 8.486s
+                  • AI: 8.486s
+                  • Render: 0.0s
+               </div>
+            </td>
+         </tr>
+
+         <tr>
+            <td>Extraction rate %</td>
+            <td>100.0%</td>
+         </tr>
+         <tr>
+            <td>Error rate %</td>
+            <td>0.0%</td>
+         </tr>
          <tr>
             <td>Used in KPI(s)</td>
-            <td><ul><li>This KPI is utilized in performance assessments related to environmental compliance</li><li>operational efficiency</li><li>and sustainability initiatives within the oil and gas sector</li></ul></td>
+            <td><ul><li>This KPI is used in evaluating operational efficiency and environmental performance within the oil and gas sector</li></ul></td>
          </tr>
          <tr>
             <td>Input Measure</td>
-            <td><ul><li>The input measures for this KPI include the volume of recovered gas in cubic meters and the total volume of gas flared in cubic meters</li><li>Gas flared volume and gas recovered volume over the measurement period</li></ul></td>
+            <td><ul><li>The input measures for this KPI include the volume of recovered gas and the total volume of gas flared</li><li>Gas flared volume and gas recovered volume over the measurement period</li></ul></td>
          </tr>
          <tr>
             <td>Unit of Measure</td>
@@ -69,11 +90,11 @@ kpi flare recovery pct
          </tr>
          <tr>
             <td>Reporting Source</td>
-            <td>Data for this KPI is typically sourced from operational reports and gas recovery system monitoring tools.</td>
+            <td>Data for this KPI is typically sourced from operational reports and gas recovery systems within production facilities.</td>
          </tr>
          <tr>
             <td>Comments</td>
-            <td>A higher flare recovery percentage indicates better performance in gas management and reflects a commitment to reducing flaring and its associated emissions.</td>
+            <td>A higher flare recovery percentage indicates better performance in gas management and compliance with environmental regulations.</td>
          </tr>
       </tbody>
    </table>

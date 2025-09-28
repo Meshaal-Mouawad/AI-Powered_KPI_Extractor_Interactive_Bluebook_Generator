@@ -42,26 +42,47 @@ Maintenance to Operating Cost Ratio
       <tbody>
          <tr>
             <td>Description</td>
-            <td><ul><li>The Maintenance to Operating Cost Ratio measures the proportion of maintenance costs relative to total operating costs</li><li>providing insight into the efficiency of maintenance expenditures in relation to overall operational spending</li></ul></td>
+            <td><ul><li>The Maintenance to Operating Cost Ratio measures the proportion of maintenance costs relative to total operating costs within an organization</li><li>It provides insight into how effectively maintenance expenditures are managed in relation to overall operational expenses</li></ul></td>
          </tr>
          <tr>
             <td>Objective</td>
-            <td><ul><li>The objective of this KPI is to evaluate the effectiveness of maintenance strategies and identify opportunities for cost optimization within the operational budget</li></ul></td>
+            <td><ul><li>The objective of this KPI is to evaluate the efficiency of maintenance spending and its impact on overall operational performance</li><li>enabling organizations to identify areas for cost optimization</li></ul></td>
          </tr>
          <tr>
             <td>Formula</td>
             <td>
-               <p>This ratio is calculated by taking the percentage of maintenance costs that are on specification compared to the total operating costs, expressed as a percentage.</p>
+               <p>This ratio is calculated by taking the maintenance costs that are on specification and dividing them by the total operating costs, then multiplying by 100 to express it as a percentage.</p>
                <div class="math-equation">$$ \mathit{Maintenance\,To\,Operating\,Cost\,Ratio} = 100 \times \frac{\mathit{On\,Spec}}{\mathit{Total}} $$</div><ul><li><i>On Spec:</i> The numerator of the fraction.</li><li><i>Total:</i> The denominator of the fraction.</li></ul>
             </td>
          </tr>
+
+         <tr>
+            <td>Generation time</td>
+            <td>
+               49.3s (AI 49.3s + Render 0.0s)
+               <div style="font-size: 12px; color: #6b7280; margin-top: 4px;">
+                  Total: 49.301s
+                  • AI: 49.301s
+                  • Render: 0.0s
+               </div>
+            </td>
+         </tr>
+
+         <tr>
+            <td>Extraction rate %</td>
+            <td>100.0%</td>
+         </tr>
+         <tr>
+            <td>Error rate %</td>
+            <td>0.0%</td>
+         </tr>
          <tr>
             <td>Used in KPI(s)</td>
-            <td><ul><li>This KPI is utilized in performance assessments to gauge maintenance efficiency and its impact on overall operational costs</li></ul></td>
+            <td><ul><li>This KPI is utilized in performance assessments</li><li>budgeting processes</li><li>and operational efficiency evaluations within the oil</li><li>gas</li><li>and petrochemical sectors</li></ul></td>
          </tr>
          <tr>
             <td>Input Measure</td>
-            <td><ul><li>The input measures for this KPI include the total maintenance costs and the total operating costs incurred during a specific period</li></ul></td>
+            <td><ul><li>The primary input measures for this KPI include the total maintenance costs incurred and the total operating costs of the organization</li></ul></td>
          </tr>
          <tr>
             <td>Unit of Measure</td>
@@ -69,11 +90,11 @@ Maintenance to Operating Cost Ratio
          </tr>
          <tr>
             <td>Reporting Source</td>
-            <td>The reporting source for this KPI typically includes financial reports and maintenance logs that detail both maintenance and operational expenditures.</td>
+            <td>Data for this KPI is typically sourced from financial reports, maintenance management systems, and operational cost analyses.</td>
          </tr>
          <tr>
             <td>Comments</td>
-            <td>A higher Maintenance to Operating Cost Ratio indicates a more efficient allocation of resources towards maintenance, while a lower ratio may suggest potential inefficiencies or areas for improvement in maintenance practices.</td>
+            <td>A higher Maintenance to Operating Cost Ratio may indicate effective maintenance practices, while a lower ratio could suggest potential inefficiencies or excessive operational costs.</td>
          </tr>
       </tbody>
    </table>

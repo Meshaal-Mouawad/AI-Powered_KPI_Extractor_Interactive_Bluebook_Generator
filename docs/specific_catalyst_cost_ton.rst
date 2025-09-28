@@ -42,11 +42,11 @@ Specific Catalyst Cost ($/ton
       <tbody>
          <tr>
             <td>Description</td>
-            <td><ul><li>Specific Catalyst Cost measures the cost of catalysts used in production</li><li>expressed in dollars per ton of product produced</li><li>This KPI provides insight into the efficiency and economic impact of catalyst usage in the manufacturing process</li><li>Cost of catalyst consumed per ton of product</li><li>used to monitor and optimize catalyst usage</li></ul></td>
+            <td><ul><li>Specific Catalyst Cost measures the cost of catalysts used in production on a per-ton basis</li><li>providing insight into the efficiency and economic impact of catalyst usage in the manufacturing process</li><li>Cost of catalyst consumed per ton of product</li><li>used to monitor and optimize catalyst usage</li></ul></td>
          </tr>
          <tr>
             <td>Objective</td>
-            <td><ul><li>The objective of tracking Specific Catalyst Cost is to optimize catalyst expenditures and enhance overall production profitability by identifying cost-effective catalyst options and minimizing waste</li><li>Control catalyst spend while maintaining performance and product quality</li></ul></td>
+            <td><ul><li>The objective of tracking Specific Catalyst Cost is to optimize catalyst expenditures</li><li>enhance cost management strategies</li><li>and improve overall profitability in production operations</li><li>Control catalyst spend while maintaining performance and product quality</li></ul></td>
          </tr>
          <tr>
             <td>Formula</td>
@@ -55,25 +55,46 @@ Specific Catalyst Cost ($/ton
                <div class="math-equation">$$ \mathrm{Catalyst\,Cost\,per\,Ton} = \frac{\mathrm{Catalyst\,Cost}}{\mathrm{Product\,Tons}} $$</div>
             </td>
          </tr>
+
+         <tr>
+            <td>Generation time</td>
+            <td>
+               0.0s (AI 0.0s + Render 0.0s)
+               <div style="font-size: 12px; color: #6b7280; margin-top: 4px;">
+                  Total: 0.0s
+                  • AI: 0.0s
+                  • Render: 0.0s
+               </div>
+            </td>
+         </tr>
+
+         <tr>
+            <td>Extraction rate %</td>
+            <td>88.9%</td>
+         </tr>
+         <tr>
+            <td>Error rate %</td>
+            <td>11.1%</td>
+         </tr>
          <tr>
             <td>Used in KPI(s)</td>
-            <td><ul><li>This KPI is utilized in various performance assessments related to production efficiency</li><li>cost management</li><li>and operational effectiveness within the oil</li><li>gas</li><li>and petrochemical sectors</li></ul></td>
+            <td><ul><li>This KPI is utilized in various performance metrics related to production efficiency</li><li>cost control</li><li>and resource allocation within the oil</li><li>gas</li><li>and petrochemical sectors</li></ul></td>
          </tr>
          <tr>
             <td>Input Measure</td>
-            <td><ul><li>The input measures for this KPI include the total catalyst cost incurred during production and the total tons of product produced during the same period</li><li>Catalyst cost used and product tons over the measurement period</li></ul></td>
+            <td><ul><li>The input measures for this KPI include the total catalyst cost incurred during production and the total tons of product produced</li><li>Catalyst cost used and product tons over the measurement period</li></ul></td>
          </tr>
          <tr>
             <td>Unit of Measure</td>
-            <td>The unit of measure for Specific Catalyst Cost is dollars per ton.</td>
+            <td>The unit of measure for Specific Catalyst Cost is expressed in dollars per ton.</td>
          </tr>
          <tr>
             <td>Reporting Source</td>
-            <td>The reporting source for this KPI typically includes financial records, production reports, and inventory management systems that track catalyst usage and product output.</td>
+            <td>Data for this KPI is typically sourced from financial records and production reports that detail catalyst expenditures and product output.</td>
          </tr>
          <tr>
             <td>Comments</td>
-            <td>Monitoring Specific Catalyst Cost is crucial for maintaining competitive pricing and ensuring that catalyst investments yield optimal returns in production efficiency.</td>
+            <td>Monitoring Specific Catalyst Cost is crucial for identifying trends in catalyst efficiency and cost-effectiveness, which can lead to informed decision-making regarding catalyst selection and usage strategies.</td>
          </tr>
       </tbody>
    </table>

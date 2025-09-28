@@ -42,26 +42,47 @@ On-Spec Rate (%
       <tbody>
          <tr>
             <td>Description</td>
-            <td><ul><li>The On-Spec Rate measures the percentage of production batches that meet the specified quality standards within a given timeframe</li><li>It is a critical indicator of operational efficiency and product quality in the oil</li><li>gas</li><li>and petrochemical industries</li><li>This KPI expresses the proportion of production that meets all quality standards relative to total batches</li></ul></td>
+            <td><ul><li>The On-Spec Rate (%) measures the percentage of production batches that meet quality specifications compared to the total number of batches produced</li><li>This KPI expresses the proportion of production that meets all quality standards relative to total batches</li></ul></td>
          </tr>
          <tr>
             <td>Objective</td>
-            <td><ul><li>The objective of tracking the On-Spec Rate is to ensure that the majority of production batches conform to quality specifications</li><li>thereby minimizing waste</li><li>reducing rework</li><li>and enhancing customer satisfaction</li><li>Improve first-pass quality and reduce rework or off-spec material by monitoring on-spec performance over time</li></ul></td>
+            <td><ul><li>The objective of tracking the On-Spec Rate is to ensure product quality and compliance with industry standards</li><li>thereby minimizing rework and enhancing customer satisfaction</li><li>Improve first-pass quality and reduce rework or off-spec material by monitoring on-spec performance over time</li></ul></td>
          </tr>
          <tr>
             <td>Formula</td>
             <td>
-               <p>The On-Spec Rate is calculated by dividing the number of on-spec batches by the total number of batches produced, then multiplying the result by 100 to express it as a percentage.</p>
+               <p>The On-Spec Rate is calculated by dividing the number of on-spec batches by the total number of batches, then multiplying the result by 100 to express it as a percentage.</p>
                <div class="math-equation">$$ \mathrm{On\text{-}Spec\,\%} = \frac{\mathrm{On\text{-}Spec\,Batches}}{\mathrm{Total\,Batches}} \times 100 $$</div>
             </td>
          </tr>
+
+         <tr>
+            <td>Generation time</td>
+            <td>
+               0.0s (AI 0.0s + Render 0.0s)
+               <div style="font-size: 12px; color: #6b7280; margin-top: 4px;">
+                  Total: 0.001s
+                  • AI: 0.001s
+                  • Render: 0.001s
+               </div>
+            </td>
+         </tr>
+
+         <tr>
+            <td>Extraction rate %</td>
+            <td>88.9%</td>
+         </tr>
+         <tr>
+            <td>Error rate %</td>
+            <td>11.1%</td>
+         </tr>
          <tr>
             <td>Used in KPI(s)</td>
-            <td><ul><li>This KPI is used in conjunction with other quality and performance metrics to assess overall production effectiveness and compliance with industry standards</li></ul></td>
+            <td><ul><li>This KPI is utilized in quality control assessments</li><li>production efficiency evaluations</li><li>and overall operational performance metrics</li></ul></td>
          </tr>
          <tr>
             <td>Input Measure</td>
-            <td><ul><li>The input measures for this KPI include the count of on-spec batches and the total count of batches produced during the reporting period</li><li>Counts of on-spec batches and total batches in the measurement period</li></ul></td>
+            <td><ul><li>The input measures for this KPI include the count of on-spec batches and the total count of batches produced during a specific time frame</li><li>Counts of on-spec batches and total batches in the measurement period</li></ul></td>
          </tr>
          <tr>
             <td>Unit of Measure</td>

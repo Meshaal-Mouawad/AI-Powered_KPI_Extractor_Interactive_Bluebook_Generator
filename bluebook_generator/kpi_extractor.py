@@ -1,6 +1,12 @@
 import os
 import re
 from typing import List, Dict, Tuple
+# Scanner performance knobs
+IGNORE_DIRS = {".git", ".hg", ".svn", "node_modules", "dist", "build", "__pycache__", ".venv", "venv", ".mypy_cache", ".pytest_cache"}
+ALLOWED_EXTS = {".py", ".sql", ".ps1", ".dax", ".cs", ".vb", ".abap", ".st", 
+                 ".hdbview", ".hdbprocedure", ".hdbfunction", ".hdbtablefunction", ".sqlscript",
+                 ".tsql", ".pks", ".pkb", ".pls", ".txt", ".csv"}
+MAX_FILE_MB = float(os.environ.get("KPI_MAX_FILE_MB", "2"))  # default 2 MB
 
 # Optional formula extraction from comments like "Formula: ..."
 try:
@@ -547,20 +553,26 @@ def find_kpis_in_directory(root_path: str) -> List[Dict]:
             return results
     except Exception:
         return results
+    for dirpath, dirnames, filenames in os.walk(base):  # FIX: use `base` (not base_path)
+        # prune directories in-place
+        dirnames[:] = [d for d in dirnames if d not in IGNORE_DIRS and not d.startswith('.')]
 
-    for dirpath, _, filenames in os.walk(base):
         for fn in filenames:
+            ext = os.path.splitext(fn)[1].lower()
+            if ALLOWED_EXTS and ext not in ALLOWED_EXTS:
+                continue
+
             path = os.path.join(dirpath, fn)
+
+            # size filter
+            try:
+                if os.path.getsize(path) > MAX_FILE_MB * 1024 * 1024:
+                    continue
+            except OSError:
+                continue
+
+            # Detect language (FIX: define p_lower before using it)
             p_lower = path.lower()
-
-            # Skip hidden/system/binaries
-            if os.path.basename(p_lower).startswith("."):  # .DS_Store etc.
-                continue
-            ext = os.path.splitext(p_lower)[1]
-            if ext in {".dll", ".exe", ".so", ".pbix", ".xlsx", ".xlsm", ".pdf", ".png", ".jpg", ".jpeg", ".gif", ".zip"}:
-                continue
-
-            # Detect language
             lang = _detect_language_by_extension(p_lower)
 
             # Read file safely
@@ -589,11 +601,11 @@ def find_kpis_in_directory(root_path: str) -> List[Dict]:
             if not file_kpis:
                 continue
 
-            # Pick a single best KPI per file
+            # Pick a single best KPI per file (FIX: define `human`)
             def rank(item: Dict) -> Tuple[int, int]:
                 r = int(item.get("_rank", 0))
                 n = item.get("name") or ""
-                human = 1 if (" " in n or "(" in n or ")" in n) else 0
+                human = 1 if re.search(r"[ ()\[\]]", n) else 0  # prefer names with spaces/paren/brackets
                 return (r, human)
 
             best = max(file_kpis, key=rank)

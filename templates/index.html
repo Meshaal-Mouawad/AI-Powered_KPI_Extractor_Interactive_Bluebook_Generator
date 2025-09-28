@@ -68,7 +68,9 @@
                 submitBtn.disabled = false;
                 submitBtn.textContent = 'Generate Bluebook';
                 // Also show link when Sphinx build completes successfully
-                if (data.output.includes("Complete!") || data.output.includes("Sphinx build successful.")) {
+                if (data.output.includes("Complete!") ||
+                    data.output.includes("Sphinx build successful.") ||
+                    data.output.includes("Skipped sphinx-build")) {
                     resultLink.classList.remove('hidden');
                 }
             }

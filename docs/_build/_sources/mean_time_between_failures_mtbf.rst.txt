@@ -42,38 +42,59 @@ Mean Time Between Failures (MTBF
       <tbody>
          <tr>
             <td>Description</td>
-            <td><ul><li>Mean Time Between Failures (MTBF) is a key performance indicator that measures the average time elapsed between failures of a system or equipment during its operational period</li></ul></td>
+            <td><ul><li>Mean Time Between Failures (MTBF) is a key performance indicator that measures the average time elapsed between failures of a system during its operational period</li><li>It is a critical metric for assessing the reliability and performance of equipment in the oil</li><li>gas</li><li>and petrochemical industries</li></ul></td>
          </tr>
          <tr>
             <td>Objective</td>
-            <td><ul><li>The objective of tracking MTBF is to assess the reliability and performance of equipment</li><li>enabling organizations to identify areas for improvement and reduce downtime</li></ul></td>
+            <td><ul><li>The objective of tracking MTBF is to enhance equipment reliability</li><li>minimize downtime</li><li>and improve overall operational efficiency by identifying and addressing failure patterns</li></ul></td>
          </tr>
          <tr>
             <td>Formula</td>
             <td>
-               <p>MTBF is calculated by dividing the total operating hours by the number of failures that occur within that timeframe.</p>
+               <p>MTBF is calculated by dividing the total operating hours by the number of failures that occur within that time frame. If there are no failures, the MTBF is equal to the total operating hours.</p>
                <div class="math-equation">$$ \mathrm{MTBF} = \frac{\mathrm{Operating\ Hours}}{\mathrm{Number\ of\ Failures}} $$</div>
             </td>
          </tr>
+
+         <tr>
+            <td>Generation time</td>
+            <td>
+               9.1s (AI 9.1s + Render 0.0s)
+               <div style="font-size: 12px; color: #6b7280; margin-top: 4px;">
+                  Total: 9.062s
+                  • AI: 9.062s
+                  • Render: 0.0s
+               </div>
+            </td>
+         </tr>
+
+         <tr>
+            <td>Extraction rate %</td>
+            <td>88.9%</td>
+         </tr>
+         <tr>
+            <td>Error rate %</td>
+            <td>11.1%</td>
+         </tr>
          <tr>
             <td>Used in KPI(s)</td>
-            <td><ul><li>MTBF is commonly used in maintenance management</li><li>reliability engineering</li><li>and operational efficiency assessments</li></ul></td>
+            <td><ul><li>MTBF is commonly used in conjunction with other reliability metrics such as Mean Time to Repair (MTTR) and Overall Equipment Effectiveness (OEE) to provide a comprehensive view of equipment performance</li></ul></td>
          </tr>
          <tr>
             <td>Input Measure</td>
-            <td><ul><li>The primary inputs for calculating MTBF are the total operating hours of the equipment and the total number of failures experienced</li></ul></td>
+            <td><ul><li>The primary inputs for calculating MTBF are the total operating hours of the equipment and the total number of failures experienced during that period</li></ul></td>
          </tr>
          <tr>
             <td>Unit of Measure</td>
-            <td>MTBF is typically expressed in hours.</td>
+            <td>MTBF is typically expressed in hours, representing the average duration between failures.</td>
          </tr>
          <tr>
             <td>Reporting Source</td>
-            <td>Data for MTBF calculations is usually sourced from maintenance logs, operational records, and failure reports.</td>
+            <td>Data for MTBF calculations is usually sourced from maintenance logs, operational reports, and equipment monitoring systems.</td>
          </tr>
          <tr>
             <td>Comments</td>
-            <td>A higher MTBF indicates better reliability and performance of equipment, while a lower MTBF suggests frequent failures and potential issues in maintenance practices.</td>
+            <td>A higher MTBF indicates better reliability and performance of equipment, while a lower MTBF may signal the need for maintenance improvements or equipment upgrades.</td>
          </tr>
       </tbody>
    </table>

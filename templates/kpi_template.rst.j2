@@ -55,6 +55,27 @@
                {{ details.formula_html | safe }}
             </td>
          </tr>
+
+         <tr>
+            <td>Generation time</td>
+            <td>
+               {{ details.generation_time_display }}
+               <div style="font-size: 12px; color: #6b7280; margin-top: 4px;">
+                  Total: {{ details.total_kpi_time_seconds }}s
+                  • AI: {{ details.ai_time_seconds }}s
+                  • Render: {{ details.render_time_seconds }}s
+               </div>
+            </td>
+         </tr>
+
+         <tr>
+            <td>Extraction rate %</td>
+            <td>{{ details.extraction_rate_pct }}%</td>
+         </tr>
+         <tr>
+            <td>Error rate %</td>
+            <td>{{ details.error_rate_pct }}%</td>
+         </tr>
          <tr>
             <td>Used in KPI(s)</td>
             <td>{{ details.used_in_kpis_html }}</td>

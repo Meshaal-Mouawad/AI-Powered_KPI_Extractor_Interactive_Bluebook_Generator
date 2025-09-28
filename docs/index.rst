@@ -6,16 +6,16 @@ KPI Bluebook
    :caption: Key Performance Indicators:
    :glob:
 
-   kpi_flare_recovery_pct
    sox_emissions_concentration_kgm3
-   propylene_to_ethylene_pe_ratio
-   cooling_water_deltat_c
    yield_percentage
-   mean_time_between_failures_mtbf
+   cooling_water_deltat_c
    onspec_rate
-   polymer_melt_flow_index_mfi_variance
-   maintenance_to_operating_cost_ratio
-   daily_feedstock_throughput_tonsday
+   propylene_to_ethylene_pe_ratio
+   kpi_flare_recovery_pct
+   mean_time_between_failures_mtbf
    oee
    specific_catalyst_cost_ton
+   polymer_melt_flow_index_mfi_variance
+   daily_feedstock_throughput_tonsday
+   maintenance_to_operating_cost_ratio
    *

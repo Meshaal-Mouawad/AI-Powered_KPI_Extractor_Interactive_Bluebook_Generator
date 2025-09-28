@@ -42,22 +42,43 @@ OEE %
       <tbody>
          <tr>
             <td>Description</td>
-            <td><ul><li>Overall Equipment Effectiveness (OEE) is a key performance indicator that measures the efficiency and effectiveness of manufacturing equipment</li><li>It takes into account the availability</li><li>performance</li><li>and quality of the equipment in operation</li><li>Overall Equipment Effectiveness combines Availability</li><li>Performance</li><li>and Quality into a single effectiveness score</li></ul></td>
+            <td><ul><li>Overall Equipment Effectiveness (OEE) is a key performance indicator that measures the efficiency and effectiveness of manufacturing operations</li><li>It combines the metrics of availability</li><li>performance</li><li>and quality to provide a comprehensive view of equipment productivity</li><li>Overall Equipment Effectiveness combines Availability</li><li>Performance</li><li>and Quality into a single effectiveness score</li></ul></td>
          </tr>
          <tr>
             <td>Objective</td>
-            <td><ul><li>The objective of OEE is to provide a comprehensive view of how effectively a manufacturing operation is utilized</li><li>helping to identify areas for improvement and optimize production processes</li><li>Increase effective productive time by reducing downtime</li><li>speed losses</li><li>and quality losses</li></ul></td>
+            <td><ul><li>The objective of OEE is to identify the percentage of manufacturing time that is truly productive</li><li>helping organizations to pinpoint areas for improvement and optimize their operations</li><li>Increase effective productive time by reducing downtime</li><li>speed losses</li><li>and quality losses</li></ul></td>
          </tr>
          <tr>
             <td>Formula</td>
             <td>
-               <p>OEE is calculated by multiplying the availability, performance, and quality rates of the equipment, expressed as a percentage.</p>
+               <p>OEE is calculated by multiplying the availability, performance, and quality rates, which are expressed as percentages. This calculation provides a single percentage that reflects the overall effectiveness of the equipment.</p>
                <div class="math-equation">$$ \mathit{Oee\,\%} = \mathit{(Availability} \times \mathit{Performance} \times \mathit{Quality)} \times \mathit{100} $$</div>
             </td>
          </tr>
+
+         <tr>
+            <td>Generation time</td>
+            <td>
+               0.0s (AI 0.0s + Render 0.0s)
+               <div style="font-size: 12px; color: #6b7280; margin-top: 4px;">
+                  Total: 0.001s
+                  • AI: 0.0s
+                  • Render: 0.0s
+               </div>
+            </td>
+         </tr>
+
+         <tr>
+            <td>Extraction rate %</td>
+            <td>100.0%</td>
+         </tr>
+         <tr>
+            <td>Error rate %</td>
+            <td>0.0%</td>
+         </tr>
          <tr>
             <td>Used in KPI(s)</td>
-            <td><ul><li>OEE is commonly used in various KPIs related to production efficiency</li><li>equipment utilization</li><li>and operational performance in the oil</li><li>gas</li><li>and petrochemical industries</li></ul></td>
+            <td><ul><li>OEE is commonly used in various KPIs related to manufacturing efficiency</li><li>production optimization</li><li>and operational performance assessment</li></ul></td>
          </tr>
          <tr>
             <td>Input Measure</td>
@@ -65,11 +86,11 @@ OEE %
          </tr>
          <tr>
             <td>Unit of Measure</td>
-            <td>OEE is expressed as a percentage, indicating the proportion of manufacturing time that is truly productive.</td>
+            <td>The unit of measure for OEE is expressed as a percentage.</td>
          </tr>
          <tr>
             <td>Reporting Source</td>
-            <td>Data for OEE is typically sourced from production monitoring systems, equipment logs, and quality control reports.</td>
+            <td>OEE data is typically sourced from production monitoring systems, equipment logs, and quality control reports.</td>
          </tr>
          <tr>
             <td>Comments</td>

@@ -571,10 +571,14 @@ def generate_formula_from_code(code_context: str) -> dict:
 
     return formula_data
 
-def create_rst_file(kpi_data: dict, details: dict, template: jinja2.Template):
+ # add `ai_time_seconds` param
+def create_rst_file(kpi_data: dict, details: dict, template: jinja2.Template, ai_time_seconds: float | None = None):
     """Generates and saves a .rst file for a single KPI (all languages)."""
     from html import escape
     import os
+    import time  # NEW
+
+    render_start = time.perf_counter()  # NEW: start render timing
 
     # 1) Find the KPI marker line within the provided code context (for line highlighting)
     kpi_line_in_context = 0
@@ -618,6 +622,64 @@ def create_rst_file(kpi_data: dict, details: dict, template: jinja2.Template):
         **(programmatic_formula or {}),
     }
 
+    # --- Compute extraction/error rates ---
+    # Fields we expect from AI text generation
+    fields_to_check = [
+        "description_html",
+        "objective_html",
+        "formula_description",
+        "used_in_kpis_html",
+        "input_measure_html",
+        "unit_of_measure",
+        "reporting_source",
+        "comments",
+    ]
+
+    # Helper: consider a field populated if it has a non-trivial value after stripping
+    import re as _re
+
+    def _non_empty(val: str | None) -> bool:
+        if not isinstance(val, str):
+            return False
+        s = val.strip()
+        if len(s) <= 2:
+            return False
+        return not _re.fullmatch(r"[\s\W_]*", s)
+
+    filled = sum(1 for k in fields_to_check if _non_empty(final_details.get(k)))
+
+    # Formula counts as filled only if we didn’t fall back to the generic placeholder
+    formula_html = (final_details.get("formula_html") or "")
+    formula_is_specific = bool(formula_html) and ("See code context" not in formula_html)
+    filled_total = filled + (1 if formula_is_specific else 0)
+    possible_total = len(fields_to_check) + 1  # +1 for formula
+
+    extraction_rate_pct = round(100.0 * filled_total / possible_total, 1)
+    error_rate_pct = round(100.0 - extraction_rate_pct, 1)
+
+    final_details["extraction_rate_pct"] = extraction_rate_pct
+    final_details["error_rate_pct"] = error_rate_pct
+    # --- end metrics ---
+
+    # NEW: attach timing metrics
+    def _fmt_seconds(s: float) -> str:
+        s = max(0.0, float(s))
+        if s < 60:
+            return f"{s:.1f}s"
+        m = int(s // 60)
+        r = int(round(s - m * 60))
+        return f"{m}m {r}s"
+
+    render_time_seconds = time.perf_counter() - render_start
+    total_kpi_time_seconds = (ai_time_seconds or 0.0) + render_time_seconds
+
+    final_details["ai_time_seconds"] = round(ai_time_seconds or 0.0, 3)
+    final_details["render_time_seconds"] = round(render_time_seconds, 3)
+    final_details["total_kpi_time_seconds"] = round(total_kpi_time_seconds, 3)
+    final_details["generation_time_display"] = (
+        f"{_fmt_seconds(total_kpi_time_seconds)} "
+        f"(AI {_fmt_seconds(ai_time_seconds or 0.0)} + Render {_fmt_seconds(render_time_seconds)})"
+    )
     # If an explicit LaTeX formula was provided in kpi_data, prefer it
     explicit_formula = kpi_data.get("formula")
     if explicit_formula:
@@ -632,9 +694,9 @@ def create_rst_file(kpi_data: dict, details: dict, template: jinja2.Template):
     output_path.parent.mkdir(parents=True, exist_ok=True)
     with open(output_path, 'w', encoding='utf-8') as f:
         f.write(content)
-
     return filename
-# ------------- Minimal index.rst writer -------------
+
+    #------------- Minimal index.rst writer -------------
 def update_index_rst(page_filenames):
     """
     Write docs/index.rst with a toctree listing for the generated KPI pages.
@@ -685,18 +747,20 @@ def generate_bluebook(source_code_path: str):
       4) Update index.rst
       5) Try sphinx-build (non-fatal if missing)
     """
+    run_start = time.perf_counter()  # measure total wall time
+
     # 1) Remove old generated .rst files (keep index.rst if present)
     for item in DOCS_SOURCE_DIR.glob("*.rst"):
         if item.is_file() and item.name != "index.rst":
             item.unlink()
     yield "Cleaned old documentation files."
 
-    # 2) Remove previous HTML build
+    # 2) Optionally remove previous HTML build (clean build on demand)
     build_dir = DOCS_SOURCE_DIR / "_build"
-    if build_dir.exists():
+    if os.environ.get("CLEAN_BUILD") and build_dir.exists():
         import shutil
         shutil.rmtree(build_dir, ignore_errors=True)
-        yield "Removed previous Sphinx _build directory."
+        yield "Removed previous Sphinx _build directory (CLEAN_BUILD set)."
 
     yield f"Scanning for KPIs in: {source_code_path}"
     kpis = find_kpis_in_directory(source_code_path)
@@ -720,16 +784,34 @@ def generate_bluebook(source_code_path: str):
             "      {{ kpi.code_context | e }}\n"
         )
 
-    page_files = []
-    for idx, k in enumerate(kpis, start=1):
-        name = k.get("name") or f"KPI {idx}"
-        yield f"Processing KPI: '{name}'..."
+    # Phase A: run AI generation in parallel
+    from concurrent.futures import ThreadPoolExecutor, as_completed
 
-        # AI narrative (safe fallback on error)
+    def _trim_context(kpi: dict, max_lines: int = 120, around: int = 60) -> str:
+        ctx = kpi.get("code_context", "")
+        line_no = int(kpi.get("file_line") or 0)
+        lines = ctx.splitlines()
+        if not lines:
+            return ctx
+        if 1 <= line_no <= len(lines):
+            start = max(0, line_no - around - 1)
+            end = min(len(lines), line_no + around)
+            return "\n".join(lines[start:end])
+        # fallback: cap total lines
+        return "\n".join(lines[:max_lines])
+
+    def _ai_task(k):
+        name = k.get("name") or "KPI"
+        t0 = time.perf_counter()
         try:
-            details = generate_kpi_details(name, k.get("code_context", ""))
+            trimmed = _trim_context(k)
+            if len(trimmed) > 6000:
+                trimmed = trimmed[:3000] + "\n...\n" + trimmed[-3000:]
+            details = generate_kpi_details(name, trimmed)
+            ai_time = time.perf_counter() - t0
+            return (k, details, ai_time, None)
         except Exception as e:
-            details = {
+            fallback = {
                 "description": f"{name} description unavailable.",
                 "objective": "",
                 "formula_description": "",
@@ -739,17 +821,48 @@ def generate_bluebook(source_code_path: str):
                 "reporting_source": "",
                 "comments": "",
             }
-            yield f"AI details generation failed for '{name}': {e}"
+            return (k, fallback, 0.0, e)
 
-        # Render page
+    max_workers = int(os.environ.get("KPI_AI_WORKERS", "4"))
+    results = []  # (k, details, ai_time)
+
+    yield f"AI phase: processing {len(kpis)} KPIs with {max_workers} workers..."
+    ai_phase_start = time.perf_counter()
+    with ThreadPoolExecutor(max_workers=max_workers) as ex:
+        future_map = {ex.submit(_ai_task, k): k for k in kpis}
+        for fut in as_completed(future_map):
+            k, details, ai_time, err = fut.result()
+            name = k.get("name") or "KPI"
+            if err:
+                yield f"AI details generation failed for '{name}': {err}"
+            else:
+                yield f"AI ready for '{name}' (AI {ai_time:.2f}s)."
+            results.append((k, details, ai_time))
+    ai_wall = time.perf_counter() - ai_phase_start
+
+    # Phase B: render & collect filenames
+    page_files = []
+    for k, details, ai_time in results:
+        name = k.get("name") or "KPI"
         try:
-            page = create_rst_file(k, details, template)
+            page = create_rst_file(k, details, template, ai_time_seconds=ai_time)
             page_files.append(page)
-            yield f"Generated documentation for '{name}'."
+            yield f"Rendered '{name}'."
         except Exception as e:
             yield f"Failed to render page for '{name}': {e}"
 
-        time.sleep(0.05)  # gentle pacing
+    # Brief timing summary — distinguish wall time from summed model latency
+    if results:
+        total_ai = sum(ai for _, _, ai in results)
+        avg_ai = total_ai / len(results)
+        avg_wall_per_kpi = ai_wall / len(results)
+        yield (
+            f"AI phase wall time: {ai_wall:.2f}s for {len(results)} KPIs with {max_workers} workers."
+        )
+        yield (
+            f"Model latency (sum across KPIs): {total_ai:.2f}s; avg per KPI latency: {avg_ai:.2f}s; "
+            f"avg wall time per KPI (wall/num): {avg_wall_per_kpi:.2f}s"
+        )
 
     # Update index.rst
     try:
@@ -758,12 +871,27 @@ def generate_bluebook(source_code_path: str):
     except Exception as e:
         yield f"Failed to update index.rst: {e}"
 
-    # Try sphinx-build; do not fail pipeline if missing
+    # Run Sphinx (parallel), optional skip via env var
     try:
-        subprocess.run(
-            ["sphinx-build", "-b", "html", str(DOCS_SOURCE_DIR), str(DOCS_SOURCE_DIR / "_build")],
-            check=False, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-        )
-        yield "Triggered sphinx-build (if available)."
+        if os.environ.get("SKIP_SPHINX"):
+            yield "Skipped sphinx-build (SKIP_SPHINX set)."
+        else:
+            jobs = os.environ.get("SPHINX_JOBS", "auto")
+            cp = subprocess.run(
+                [
+                    "sphinx-build", "-j", jobs,
+                    "-b", "html", str(DOCS_SOURCE_DIR), str(DOCS_SOURCE_DIR / "_build")
+                ],
+                check=False, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+            )
+            if cp.returncode == 0:
+                yield "Sphinx build successful."
+            else:
+                err = (cp.stderr or b"").decode("utf-8", errors="ignore")
+                yield f"Sphinx build finished with code {cp.returncode}.\n{err[:500]}"
     except Exception as e:
         yield f"sphinx-build not run: {e}"
+
+    # Final total wall time
+    total_wall = time.perf_counter() - run_start
+    yield f"Total wall time: {total_wall:.2f}s"

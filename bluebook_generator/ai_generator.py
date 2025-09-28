@@ -1,3 +1,53 @@
+# Optimize the time
+import os, json, time
+from typing import Any, Dict, List, Tuple
+from pathlib import Path
+import hashlib
+from openai import OpenAI
+from dotenv import load_dotenv
+
+load_dotenv()
+
+# Single OpenAI client reused across calls
+_API_KEY = os.environ.get("OPENAI_API_KEY")
+if not _API_KEY:
+    raise ValueError("OPENAI_API_KEY not found in environment.")
+_client = OpenAI(api_key=_API_KEY)
+
+# Toggle domain KB usage (0 disables)
+USE_KB = os.environ.get("AI_USE_KB", "1") not in {"0", "false", "False"}
+
+# Simple on-disk response cache
+CACHE_PATH = Path(__file__).parent / "ai_cache.json"
+
+def _cache_load() -> dict:
+    if CACHE_PATH.exists():
+        try:
+            return json.load(open(CACHE_PATH, "r", encoding="utf-8"))
+        except Exception:
+            return {}
+    return {}
+
+def _cache_save(cache: dict) -> None:
+    try:
+        json.dump(cache, open(CACHE_PATH, "w", encoding="utf-8"), ensure_ascii=False, indent=2)
+    except Exception:
+        pass
+
+def _cache_key(text_a: str, text_b: str = "") -> str:
+    h = hashlib.sha1()
+    h.update(text_a.encode("utf-8", errors="ignore"))
+    if text_b:
+        h.update(b"\n---\n")
+        h.update(text_b.encode("utf-8", errors="ignore"))
+    return h.hexdigest()
+
+def _mtime_str(p: Path) -> str:
+    try:
+        return str(int(p.stat().st_mtime))
+    except Exception:
+        return "0"
+
 import os
 import json
 import time
@@ -386,19 +436,28 @@ def _fill_comments_if_empty(text: str | None) -> str:
 
 def generate_kpi_details(kpi_name: str, code_context: str) -> Dict[str, Any]:
     """Uses OpenAI's GPT model to generate plain text descriptions ONLY."""
-    api_key = os.environ.get("OPENAI_API_KEY")
-    if not api_key:
-        raise ValueError("OPENAI_API_KEY not found in .env file.")
+    client = _client
 
-    client = OpenAI(api_key=api_key)
+    # Cache key includes KB/overrides mtimes so user edits are respected
+    kb_path = Path(_kb_file_path())
+    ovr_path = Path(_overrides_file_path())
+    kb_m = _mtime_str(kb_path)
+    ovr_m = _mtime_str(ovr_path)
+
+    cache = _cache_load()
+    cache_key_text = f"{kpi_name}\n{code_context}\nKB:{kb_m}\nOVR:{ovr_m}"
+    key = _cache_key(cache_key_text, "")
+
+    if os.environ.get("AI_CACHE_BUST") not in {"1", "true", "True"}:
+        if key in cache:
+            return cache[key]
 
     # 1) Retrieval: domain KB + user overrides as few-shot guidance
-    kb_examples = _retrieve_kb_examples(client, kpi_name, top_k=3)
     user_overrides = _load_user_overrides_for(kpi_name)
+    kb_examples: List[Dict[str, Any]] = _retrieve_kb_examples(client, kpi_name, top_k=3) if USE_KB else []
 
     kb_block = ""
     if kb_examples:
-        # Provide compact JSON snippets as guidance (not mandatory)
         kb_block = "Domain Knowledge (Petrochemical KPI examples):\n" + json.dumps(kb_examples, ensure_ascii=False)
 
     overrides_block = ""
@@ -429,8 +488,9 @@ def generate_kpi_details(kpi_name: str, code_context: str) -> Dict[str, Any]:
     "input_measure", "unit_of_measure", "reporting_source", "comments".
     """
 
-    retries = 8
-    delay = 8
+    # Single short retry loop
+    retries = 2
+    base_delay = 1
     result: Dict[str, Any] | None = None
 
     for i in range(retries):
@@ -440,6 +500,7 @@ def generate_kpi_details(kpi_name: str, code_context: str) -> Dict[str, Any]:
                 messages=[{"role": "user", "content": prompt}],
                 response_format={"type": "json_object"},
                 temperature=0.1,
+                timeout=15,
             )
             content = getattr(getattr(response, "choices", [None])[0], "message", None)
             content_text = getattr(content, "content", None)
@@ -450,41 +511,42 @@ def generate_kpi_details(kpi_name: str, code_context: str) -> Dict[str, Any]:
                 raise ValueError("Model response is not a JSON object.")
             result = parsed
             break
-        except Exception:
-            if i < retries - 1:
-                time.sleep(delay)
-                delay = min(delay * 2, 60)
-                continue
-            result = {
-                "description": f"{kpi_name} is a key performance indicator used to assess process efficiency and operational performance.",
-                "objective": f"The objective of {kpi_name} is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
-                "formula_description": "Calculated directly from the inputs found in the code implementation.",
-                "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
-                "input_measure": "Derived from the variables used in the code calculation for this KPI.",
-                "unit_of_measure": "See calculation and context for the most appropriate unit.",
-                "reporting_source": "Typically sourced from process historians, production logs, or execution systems.",
-                "comments": "No additional comments or special considerations were provided for this KPI."
-            }
+        except Exception as e:
+            is_last = (i == retries - 1)
+            transient = any(s in str(e).lower() for s in [
+                "rate limit", "timeout", "overloaded", "temporarily unavailable", "connection"
+            ])
+            if not transient or is_last:
+                result = {
+                    "description": f"{kpi_name} is a key performance indicator used to assess process efficiency and operational performance.",
+                    "objective": f"The objective of {kpi_name} is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+                    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+                    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+                    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+                    "unit_of_measure": "See calculation and context for the most appropriate unit.",
+                    "reporting_source": "Typically sourced from process historians, production logs, or execution systems.",
+                    "comments": "No additional comments or special considerations were provided for this KPI.",
+                }
+                break
+            time.sleep(min(base_delay * (2 ** i), 4))
 
     # Ensure all required keys exist
-    for key in ("description", "objective", "formula_description", "used_in_kpis",
-                "input_measure", "unit_of_measure", "reporting_source", "comments"):
-        result.setdefault(key, "")
+    assert result is not None
+    for key_name in (
+        "description", "objective", "formula_description", "used_in_kpis",
+        "input_measure", "unit_of_measure", "reporting_source", "comments"
+    ):
+        result.setdefault(key_name, "")
 
-    # Apply safeguards
+    # Apply safeguards and enrichment
     result["unit_of_measure"] = _infer_unit_of_measure(kpi_name, code_context, result.get("unit_of_measure"))
     result["reporting_source"] = _infer_reporting_source(code_context, result.get("reporting_source"))
     result["comments"] = _fill_comments_if_empty(result.get("comments"))
-
-    # Domain enrichment (petrochemicals only, controlled by feature flag and strict classifier)
     result = _enrich_with_domain_hints(kpi_name, code_context, result)
 
-    # Finally merge explicit user overrides (user takes precedence)
-    if user_overrides:
-        for k, v in user_overrides.items():
-            if v:
-                result[k] = v
-
+    # Save to cache and return
+    cache[key] = result
+    _cache_save(cache)
     return result
 
 # ... existing code ...

@@ -1,0 +1,82 @@
+{
+  "comments": {
+    "description": "Specific Catalyst Cost measures the cost of catalyst used in the production process, expressed in dollars per ton of product produced. This KPI provides insight into the efficiency and economic viability of catalyst usage in manufacturing. Cost of catalyst consumed per ton of product, used to monitor and optimize catalyst usage.",
+    "objective": "The objective of tracking Specific Catalyst Cost is to optimize catalyst expenditures and improve overall production cost efficiency, thereby enhancing profitability in the oil, gas, and petrochemical sectors. Control catalyst spend while maintaining performance and product quality.",
+    "formula_description": "The formula for Specific Catalyst Cost is derived by dividing the total catalyst cost by the total product tons produced, ensuring that the cost is accurately reflected per unit of output.",
+    "used_in_kpis": "This KPI is utilized in various performance assessments related to production efficiency, cost management, and resource allocation within the manufacturing process.",
+    "input_measure": "The input measures for this KPI include the total catalyst cost incurred during production and the total tons of product produced during the same period. Catalyst cost used and product tons over the measurement period.",
+    "unit_of_measure": "The unit of measure for Specific Catalyst Cost is dollars per ton.",
+    "reporting_source": "The reporting source for this KPI typically includes financial records and production data from manufacturing operations.",
+    "comments": "Monitoring Specific Catalyst Cost is crucial for identifying trends in catalyst efficiency and cost-effectiveness, allowing for informed decision-making regarding catalyst selection and usage strategies."
+  },
+  "a79884cede3f19fefaed6be1534726530f8b8c99": {
+    "description": "SOx Emissions Concentration measures the concentration of sulfur oxides in a given volume of gas, expressed in kilograms per cubic meter. This KPI is critical for assessing the environmental impact of emissions from industrial processes.",
+    "objective": "The objective of monitoring SOx Emissions Concentration is to ensure compliance with environmental regulations and to minimize the release of harmful pollutants into the atmosphere.",
+    "formula_description": "The concentration is calculated by dividing the mass flow of sulfur oxides by the volumetric flow rate of the gas stream, providing a direct measure of emissions intensity.",
+    "used_in_kpis": "This KPI is used in various environmental performance indicators and regulatory compliance assessments to track and manage sulfur oxide emissions.",
+    "input_measure": "The input measures for this KPI include the mass flow rate of sulfur oxides and the volumetric flow rate of the gas being analyzed.",
+    "unit_of_measure": "The unit of measure for SOx Emissions Concentration is kilograms per cubic meter (kg/m3).",
+    "reporting_source": "Data for this KPI is typically sourced from emissions analyzers and monitoring systems installed in industrial facilities.",
+    "comments": "Regular monitoring of SOx Emissions Concentration is essential for identifying trends in emissions and implementing strategies for reduction, thereby contributing to improved air quality and regulatory compliance."
+  },
+  "cdc58a5c088cc56a429fafda9c30165000b6a0c8": {
+    "description": "Overall Equipment Effectiveness (OEE) is a key performance indicator that measures the efficiency and effectiveness of manufacturing operations. It combines the metrics of availability, performance, and quality to provide a comprehensive view of equipment productivity. Overall Equipment Effectiveness combines Availability, Performance, and Quality into a single effectiveness score.",
+    "objective": "The objective of OEE is to identify the percentage of manufacturing time that is truly productive, helping organizations to pinpoint areas for improvement and optimize their operations. Increase effective productive time by reducing downtime, speed losses, and quality losses.",
+    "formula_description": "OEE is calculated by multiplying the availability, performance, and quality rates, which are expressed as percentages. This calculation provides a single percentage that reflects the overall effectiveness of the equipment.",
+    "used_in_kpis": "OEE is commonly used in various KPIs related to manufacturing efficiency, production optimization, and operational performance assessment.",
+    "input_measure": "The input measures for OEE include availability, performance, and quality rates, which are derived from operational data. Availability, performance, and quality factors calculated for the asset or line.",
+    "unit_of_measure": "The unit of measure for OEE is expressed as a percentage.",
+    "reporting_source": "OEE data is typically sourced from production monitoring systems, equipment logs, and quality control reports.",
+    "comments": "A high OEE percentage indicates that equipment is being used effectively, while a low percentage suggests potential inefficiencies that need to be addressed."
+  },
+  "3476498fb3993fe753839d1cd96524df86c9e4a1": {
+    "description": "Yield Percentage is a key performance indicator that measures the efficiency of a production process by comparing the amount of desired product obtained to the total input used in the process. Proportion of desired product produced relative to total input, indicating conversion efficiency.",
+    "objective": "The objective of tracking Yield Percentage is to assess and optimize production efficiency, ensuring that resources are utilized effectively to maximize output. Improve conversion efficiency and identify losses or off-spec production by trending yield over time.",
+    "formula_description": "The Yield Percentage is calculated by dividing the quantity of desired product produced by the total input used, then multiplying the result by 100 to express it as a percentage.",
+    "used_in_kpis": "Yield Percentage is commonly used in various KPIs related to production efficiency, resource utilization, and operational performance in the oil, gas, and petrochemical industries.",
+    "input_measure": "The input measure consists of the total quantity of raw materials or resources utilized in the production process. Desired product output and corresponding input over the measurement period.",
+    "unit_of_measure": "The unit of measure for Yield Percentage is expressed as a percentage (%).",
+    "reporting_source": "Data for Yield Percentage is typically sourced from production reports, operational databases, and quality control assessments.",
+    "comments": "Monitoring Yield Percentage is crucial for identifying areas for improvement in production processes and can lead to cost savings and enhanced profitability."
+  },
+  "980dd690ff56f50119b361f8dea6c9b55921dc15": {
+    "description": "The On-Spec Rate (%) measures the percentage of production batches that meet quality specifications compared to the total number of batches produced. This KPI expresses the proportion of production that meets all quality standards relative to total batches.",
+    "objective": "The objective of tracking the On-Spec Rate is to ensure product quality and compliance with industry standards, thereby minimizing rework and enhancing customer satisfaction. Improve first-pass quality and reduce rework or off-spec material by monitoring on-spec performance over time.",
+    "formula_description": "The On-Spec Rate is calculated by dividing the number of on-spec batches by the total number of batches, then multiplying the result by 100 to express it as a percentage.",
+    "used_in_kpis": "This KPI is utilized in quality control assessments, production efficiency evaluations, and overall operational performance metrics.",
+    "input_measure": "The input measures for this KPI include the count of on-spec batches and the total count of batches produced during a specific time frame. Counts of on-spec batches and total batches in the measurement period.",
+    "unit_of_measure": "The unit of measure for the On-Spec Rate is expressed as a percentage.",
+    "reporting_source": "The data for this KPI is sourced from the batch quality summary, which aggregates quality metrics from production records.",
+    "comments": "A high On-Spec Rate indicates effective quality control processes, while a low rate may signal issues in production or quality assurance that need to be addressed."
+  },
+  "7ed89bf52bdcf94ff266bd53575eca23298153d7": {
+    "description": "Specific Catalyst Cost measures the cost of catalysts used in production on a per-ton basis, providing insight into the efficiency and economic impact of catalyst usage in the manufacturing process. Cost of catalyst consumed per ton of product, used to monitor and optimize catalyst usage.",
+    "objective": "The objective of tracking Specific Catalyst Cost is to optimize catalyst expenditures, enhance cost management strategies, and improve overall profitability in production operations. Control catalyst spend while maintaining performance and product quality.",
+    "formula_description": "The formula for Specific Catalyst Cost is derived by dividing the total catalyst cost by the total product tons produced, ensuring that the cost is accurately reflected per unit of output.",
+    "used_in_kpis": "This KPI is utilized in various performance metrics related to production efficiency, cost control, and resource allocation within the oil, gas, and petrochemical sectors.",
+    "input_measure": "The input measures for this KPI include the total catalyst cost incurred during production and the total tons of product produced. Catalyst cost used and product tons over the measurement period.",
+    "unit_of_measure": "The unit of measure for Specific Catalyst Cost is expressed in dollars per ton.",
+    "reporting_source": "Data for this KPI is typically sourced from financial records and production reports that detail catalyst expenditures and product output.",
+    "comments": "Monitoring Specific Catalyst Cost is crucial for identifying trends in catalyst efficiency and cost-effectiveness, which can lead to informed decision-making regarding catalyst selection and usage strategies."
+  },
+  "0e8b5d3ce73fea5a16450c6c7f2bfb79e6f78c44": {
+    "description": "The Propylene to Ethylene (P/E) Ratio measures the relative production of propylene compared to ethylene within a given process. The ratio of propylene to ethylene production volumes, used to assess the balance of the product slate.",
+    "objective": "The objective of this KPI is to assess the efficiency of propylene production in relation to ethylene output, which is crucial for optimizing feedstock utilization and maximizing profitability. Align production strategy with market demand and margins by monitoring relative propylene versus ethylene output.",
+    "formula_description": "The P/E Ratio is calculated by dividing the total tons of propylene produced by the total tons of ethylene produced.",
+    "used_in_kpis": "This KPI is utilized in performance evaluations and operational assessments within petrochemical production facilities.",
+    "input_measure": "The input measures for this KPI are the total tons of propylene and ethylene produced during a specified time period. Total propylene produced and total ethylene produced in the measurement period.",
+    "unit_of_measure": "The unit of measure for the P/E Ratio is a dimensionless ratio, expressed as tons of propylene per ton of ethylene.",
+    "reporting_source": "Data for this KPI is sourced from production reports and operational databases within the petrochemical facility.",
+    "comments": "Integrating processes like olefin cracking or metathesis units can increase the overall propylene yield and thus the P/E ratio."
+  },
+  "e5c5d0286ef9ddd249496621a1ad2a19bec83dec": {
+    "description": "The Maintenance to Operating Cost Ratio measures the proportion of maintenance costs relative to total operating costs within an organization. It provides insight into how effectively maintenance expenditures are managed in relation to overall operational expenses.",
+    "objective": "The objective of this KPI is to evaluate the efficiency of maintenance spending and its impact on overall operational performance, enabling organizations to identify areas for cost optimization.",
+    "formula_description": "This ratio is calculated by taking the maintenance costs that are on specification and dividing them by the total operating costs, then multiplying by 100 to express it as a percentage.",
+    "used_in_kpis": "This KPI is utilized in performance assessments, budgeting processes, and operational efficiency evaluations within the oil, gas, and petrochemical sectors.",
+    "input_measure": "The primary input measures for this KPI include the total maintenance costs incurred and the total operating costs of the organization.",
+    "unit_of_measure": "The unit of measure for this KPI is expressed as a percentage.",
+    "reporting_source": "Data for this KPI is typically sourced from financial reports, maintenance management systems, and operational cost analyses.",
+    "comments": "A higher Maintenance to Operating Cost Ratio may indicate effective maintenance practices, while a lower ratio could suggest potential inefficiencies or excessive operational costs."
+  }
+}
