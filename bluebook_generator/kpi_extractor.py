@@ -485,11 +485,22 @@ def _extract_generic(text: str) -> List[Dict]:
     out += _extract_by_comment_tag(lines, re.compile(r"#\s*KPI\s*:\s*(?P<name>.+)$", re.I), "generic")
     out += _extract_by_comment_tag(lines, re.compile(r"//\s*KPI\s*:\s*(?P<name>.+)$", re.I), "generic")
     out += _extract_by_comment_tag(lines, re.compile(r"--\s*KPI\s*:\s*(?P<name>.+)$", re.I), "generic")
+    # Also allow bare lines: "KPI: ..." with no comment marker
+    bare_pat = re.compile(r"^\s*KPI\s*:\s*(?P<name>.+)$", re.I)
     for i, line in enumerate(lines):
         m = re.search(r"/\*\s*KPI\s*:\s*(?P<name>[^*]+)\*/", line, re.I)
         if m:
             out.append({
                 "name": _normalize_name(m.group("name")),
+                "language": "generic",
+                "file_line": i + 1,
+                "code_context": _window(lines, i),
+            })
+            continue
+        mb = bare_pat.search(line)
+        if mb:
+            out.append({
+                "name": _normalize_name(mb.group("name")),
                 "language": "generic",
                 "file_line": i + 1,
                 "code_context": _window(lines, i),
@@ -559,10 +570,12 @@ def find_kpis_in_directory(root_path: str) -> List[Dict]:
 
         for fn in filenames:
             ext = os.path.splitext(fn)[1].lower()
-            if ALLOWED_EXTS and ext not in ALLOWED_EXTS:
-                continue
-
             path = os.path.join(dirpath, fn)
+
+            # Extension filter (allow bypass via env KPI_SCAN_ALL=1)
+            scan_all = os.environ.get("KPI_SCAN_ALL") in {"1", "true", "True"}
+            if ALLOWED_EXTS and (ext not in ALLOWED_EXTS) and not scan_all:
+                continue
 
             # size filter
             try:
@@ -580,9 +593,13 @@ def find_kpis_in_directory(root_path: str) -> List[Dict]:
             if not text:
                 continue
 
-            # Extract KPIs for this file
+            # Extract KPIs for this file; if extension was not allowed but KPI_SCAN_ALL is on,
+            # still attempt generic extraction as a fallback
             try:
-                file_kpis = _extract_from_text(text, lang) or []
+                if (ALLOWED_EXTS and ext not in ALLOWED_EXTS) and scan_all:
+                    file_kpis = _extract_generic(text) or []
+                else:
+                    file_kpis = _extract_from_text(text, lang) or []
             except Exception:
                 file_kpis = []
 

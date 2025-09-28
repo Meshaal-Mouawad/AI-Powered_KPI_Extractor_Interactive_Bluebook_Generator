@@ -79,9 +79,39 @@
     "reporting_source": "Data for this KPI is typically sourced from financial reports, maintenance management systems, and operational cost analyses.",
     "comments": "A higher Maintenance to Operating Cost Ratio may indicate effective maintenance practices, while a lower ratio could suggest potential inefficiencies or excessive operational costs."
   },
-  "6b3265ce7b746f5027cab658664bfdb088e35a3c": {
-    "description": "Reactor Selectivity % is a key performance indicator used to assess process efficiency and operational performance.",
-    "objective": "The objective of Reactor Selectivity % is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+  "642ba32f630687de92688c99aaec5ebc7d323741": {
+    "description": "Furnace Efficiency % is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of Furnace Efficiency % is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "%",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "d4a9fb6261c305ee0ba557308db0b6ce12f1a152": {
+    "description": "Benzene Purity % measures the concentration of benzene in a given sample, expressed as a percentage. This KPI is crucial for assessing the quality of benzene produced in petrochemical processes.",
+    "objective": "The objective of monitoring Benzene Purity % is to ensure that the benzene produced meets industry standards and specifications, thereby maintaining product quality and safety.",
+    "formula_description": "The Benzene Purity % is derived from the measurement of benzene concentration in a sample, represented as a percentage of the total volume.",
+    "used_in_kpis": "Benzene Purity % is utilized in various KPIs related to product quality, process efficiency, and compliance with regulatory standards in the petrochemical industry.",
+    "input_measure": "The input measure for calculating Benzene Purity % is the volume of benzene present in the sample compared to the total volume of the sample.",
+    "unit_of_measure": "The unit of measure for Benzene Purity % is percentage (%).",
+    "reporting_source": "The reporting source for Benzene Purity % is typically derived from laboratory analysis and quality control assessments conducted during the production process.",
+    "comments": "Maintaining high Benzene Purity % is essential for meeting customer requirements and regulatory compliance, as impurities can affect the performance and safety of benzene in various applications."
+  },
+  "3c3143fa74610f0f6eaec55b571d7c9f552f669a": {
+    "description": "Reactor Selectivity % measures the efficiency of a chemical reactor in producing the desired product relative to undesired byproducts during a chemical reaction.",
+    "objective": "The objective of monitoring Reactor Selectivity % is to optimize the reaction conditions to maximize the yield of the desired product while minimizing the formation of byproducts.",
+    "formula_description": "Reactor Selectivity % is calculated by comparing the amount of desired product produced to the total amount of products formed, expressed as a percentage.",
+    "used_in_kpis": "This KPI is used in performance assessments of chemical reactors and in the evaluation of process efficiency in petrochemical production.",
+    "input_measure": "The input measure for Reactor Selectivity % includes the quantities of desired and undesired products generated during the reaction.",
+    "unit_of_measure": "The unit of measure for Reactor Selectivity % is a percentage.",
+    "reporting_source": "The reporting source for this KPI typically includes data from process control systems and laboratory analyses of product samples.",
+    "comments": "High Reactor Selectivity % indicates effective reaction conditions and process optimization, while low selectivity may signal the need for adjustments in operating parameters."
+  },
+  "18fcba2591136ff4d9fe2ee412cffa7f0dcc54de": {
+    "description": "Aromatics Recovery % is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of Aromatics Recovery % is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
     "formula_description": "Calculated directly from the inputs found in the code implementation.",
     "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
     "input_measure": "Derived from the variables used in the code calculation for this KPI.",
@@ -89,24 +119,54 @@
     "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
     "comments": "No additional comments or special considerations were provided for this KPI."
   },
-  "6826d6736473782089ecd356115d40152951d76e": {
-    "description": "Steam-to-Ethylene Ratio is a key performance indicator used to assess process efficiency and operational performance.",
-    "objective": "The objective of Steam-to-Ethylene Ratio is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+  "6386569661af8e52446f538446c6d31f9b28e24f": {
+    "description": "Compressor Availability % measures the percentage of time that a compressor is operational and available for use compared to the total time it could potentially be operational.",
+    "objective": "The objective of this KPI is to assess the reliability and efficiency of compressor systems, ensuring they are available to meet production demands.",
+    "formula_description": "The formula calculates the availability percentage by dividing the total uptime hours by the sum of uptime and downtime hours, then multiplying by 100 to express it as a percentage.",
+    "used_in_kpis": "This KPI is used in performance monitoring and maintenance planning for compressor systems within oil, gas, and petrochemical operations.",
+    "input_measure": "The input measures for this KPI are the total uptime hours and total downtime hours of the compressor.",
+    "unit_of_measure": "The unit of measure for Compressor Availability % is a percentage.",
+    "reporting_source": "The reporting source for this KPI typically includes operational logs and maintenance records from compressor systems.",
+    "comments": "High compressor availability is crucial for maintaining production efficiency and minimizing operational costs."
+  },
+  "e69e0d8b36e44830d4824ec7ce5a02847950a98c": {
+    "description": "The flare recovery percentage measures the efficiency of gas recovery from flaring operations, indicating the proportion of gas that is successfully captured and reused compared to the total gas flared. Share of total gas that is recovered instead of flared, indicating the effectiveness of recovery systems.",
+    "objective": "The objective of this KPI is to minimize gas flaring by maximizing the recovery of gas, thereby enhancing operational efficiency and reducing environmental impact. Reduce flaring and emissions by improving recovery system reliability and operation.",
+    "formula_description": "This KPI is calculated by dividing the volume of recovered gas by the total volume of gas flared, with the result expressed as a percentage.",
+    "used_in_kpis": "This KPI is utilized in performance assessments related to environmental compliance, operational efficiency, and sustainability initiatives within the oil and gas sector.",
+    "input_measure": "The input measures for this KPI include the volume of recovered gas in cubic meters and the total volume of gas flared in cubic meters. Gas flared volume and gas recovered volume over the measurement period.",
+    "unit_of_measure": "The unit of measure for this KPI is percentage.",
+    "reporting_source": "Data for this KPI is typically sourced from operational reports and gas recovery system monitoring.",
+    "comments": "A higher flare recovery percentage indicates better performance in gas management and contributes to reduced greenhouse gas emissions."
+  },
+  "a61f7ffaa01f7142e1bd105abf415f7fe2cee5f1": {
+    "description": "Cooling Water Delta-T (°C is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of Cooling Water Delta-T (°C is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
     "formula_description": "Calculated directly from the inputs found in the code implementation.",
     "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
     "input_measure": "Derived from the variables used in the code calculation for this KPI.",
-    "unit_of_measure": "ratio (dimensionless)",
+    "unit_of_measure": "See calculation and context for the most appropriate unit.",
     "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
     "comments": "No additional comments or special considerations were provided for this KPI."
   },
-  "23d1f20f5229604d9e5b652cde70ea276a7abdb3": {
-    "description": "Reactor Conversion % measures the efficiency of a chemical reactor by calculating the percentage of feed material that has been converted into product.",
-    "objective": "The objective of monitoring Reactor Conversion % is to optimize reactor performance, enhance yield, and minimize waste in the production process.",
-    "formula_description": "The formula for Reactor Conversion % is derived by dividing the amount of converted material by the total feed amount, then multiplying by 100 to express it as a percentage.",
-    "used_in_kpis": "This KPI is utilized in performance assessments of chemical processes and is critical for evaluating the effectiveness of reactor operations.",
-    "input_measure": "The input measures for this KPI include the total feed amount and the quantity of material that has been converted.",
-    "unit_of_measure": "The unit of measure for Reactor Conversion % is percentage (%).",
-    "reporting_source": "The reporting source for this KPI is typically derived from operational data collected during the chemical reaction process.",
-    "comments": "A high Reactor Conversion % indicates effective reactor operation, while a low percentage may signal issues such as incomplete reactions or suboptimal conditions."
+  "38fad141279539656512b129449a1011910178d9": {
+    "description": "The Catalyst Activity Index measures the proportion of active catalytic sites relative to the total available catalytic sites within a catalyst system. This index is crucial for assessing the efficiency and effectiveness of catalysts used in various chemical processes.",
+    "objective": "The objective of the Catalyst Activity Index is to provide a quantitative assessment of catalyst performance, enabling operators to optimize reaction conditions and improve overall process efficiency.",
+    "formula_description": "The Catalyst Activity Index is calculated by dividing the number of active catalytic sites by the total number of catalytic sites, ensuring that division by zero is avoided.",
+    "used_in_kpis": "This KPI is used in performance evaluations of catalytic processes, helping to identify potential improvements in catalyst utilization and longevity.",
+    "input_measure": "The input measures for this KPI include the count of active catalytic sites and the total count of catalytic sites.",
+    "unit_of_measure": "The unit of measure for the Catalyst Activity Index is a dimensionless ratio, expressed as a fraction or percentage.",
+    "reporting_source": "The reporting source for this KPI typically comes from laboratory analyses or real-time monitoring systems that assess catalyst performance in operational settings.",
+    "comments": "A higher Catalyst Activity Index indicates better catalyst performance, while a lower index may suggest deactivation or inefficiencies that require further investigation."
+  },
+  "5677a1319342c471ed18322f923686335882417b": {
+    "description": "Ethylene Yield % measures the efficiency of ethylene production by calculating the percentage of good product obtained from the total product produced.",
+    "objective": "The objective of this KPI is to assess the effectiveness of the ethylene production process, enabling operators to identify areas for improvement and optimize production efficiency.",
+    "formula_description": "The formula for Ethylene Yield % is derived by dividing the quantity of good ethylene produced by the total quantity of ethylene produced, then multiplying by 100 to express it as a percentage.",
+    "used_in_kpis": "This KPI is used in performance evaluations, production efficiency assessments, and operational benchmarking within the petrochemical industry.",
+    "input_measure": "The input measures for this KPI include the quantity of good ethylene produced and the total quantity of ethylene produced during a specific time frame.",
+    "unit_of_measure": "The unit of measure for Ethylene Yield % is expressed as a percentage.",
+    "reporting_source": "The reporting source for this KPI typically includes production data from manufacturing systems and quality control reports.",
+    "comments": "Monitoring Ethylene Yield % is crucial for maintaining product quality and maximizing profitability in ethylene production operations."
   }
 }
