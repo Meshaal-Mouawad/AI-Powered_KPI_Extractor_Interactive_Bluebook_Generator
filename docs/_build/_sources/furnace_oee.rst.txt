@@ -33,8 +33,8 @@ Furnace OEE %
 
    <div style="margin-bottom: 1.5em; display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
       <span style="font-size: 13px; font-weight: 500; color: #4a5568;">Open in:</span>
-      <a href="vscode://file//Users/meshaalmouawad/AI-Powered_KPI_Extractor_Interactive_Bluebook_Generator/sample_project_50/plsql_kpi_02.pks:1" target="_blank" class="btn btn-vscode">VS Code</a>
-      <a href="pycharm://open?file=/Users/meshaalmouawad/AI-Powered_KPI_Extractor_Interactive_Bluebook_Generator/sample_project_50/plsql_kpi_02.pks&line=1" target="_blank" class="btn btn-pycharm">PyCharm</a>
+      <a href="vscode://file//Users/meshaalmouawad/AI-Powered_KPI_Extractor_Interactive_Bluebook_Generator/sample_project_50/plsql_kpi_02.pkb:1" target="_blank" class="btn btn-vscode">VS Code</a>
+      <a href="pycharm://open?file=/Users/meshaalmouawad/AI-Powered_KPI_Extractor_Interactive_Bluebook_Generator/sample_project_50/plsql_kpi_02.pkb&line=1" target="_blank" class="btn btn-pycharm">PyCharm</a>
       <a href="/edit?kpi=Furnace%20OEE%20%25" target="_blank" class="btn btn-edit">Edit</a>
    </div>
 
@@ -52,17 +52,17 @@ Furnace OEE %
             <td>Formula</td>
             <td>
                <p>Calculated directly from the inputs found in the code implementation.</p>
-               <div class="math-equation">$$ \mathit{Function} = \mathit{} - \mathit{-\,Kpi\,Furnace\,Oee\,\%\,Create\,Or\,Replace\,Package\,Kpi\,Furnace} $$</div>
+               <div class="math-equation">$$ \mathit{Function} = \mathit{} - \mathit{-\,Kpi\,Furnace\,Oee\,\%\,Create\,Or\,Replace\,Package\,Body\,Kpi\,Furnace} $$</div>
             </td>
          </tr>
 
          <tr>
             <td>Generation time</td>
             <td>
-               47.9s (AI 47.9s + Render 0.0s)
+               1m 6s (AI 1m 6s + Render 0.0s)
                <div style="font-size: 12px; color: #6b7280; margin-top: 4px;">
-                  Total: 47.909s
-                  • AI: 47.909s
+                  Total: 66.459s
+                  • AI: 66.458s
                   • Render: 0.0s
                </div>
             </td>
@@ -113,5 +113,6 @@ Furnace OEE %
    
 
       -- KPI: Furnace OEE %
-   CREATE OR REPLACE PACKAGE kpi_furnace AS
-     FUNCTION furnace_oee RETURN NUMBER;
+   CREATE OR REPLACE PACKAGE BODY kpi_furnace AS
+     FUNCTION furnace_oee RETURN NUMBER IS
+       availability NUMBER := 0.92;

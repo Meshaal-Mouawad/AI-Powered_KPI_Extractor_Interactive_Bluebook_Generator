@@ -604,6 +604,20 @@ def find_kpis_in_directory(root_path: str) -> List[Dict]:
             # Read file safely
             text = _read_text_file_safe(path)
             if not text:
+                # If file is unreadable or empty, synthesize a KPI from filename as a last resort
+                try:
+                    base_name = os.path.basename(path)
+                    name_stem = os.path.splitext(base_name)[0]
+                    synth_name = _normalize_name(name_stem)
+                    results.append({
+                        "name": synth_name or "KPI",
+                        "language": lang,
+                        "file_line": 1,
+                        "code_context": "",
+                        "file_path": path
+                    })
+                except Exception:
+                    pass
                 continue
 
             # Extract KPIs for this file; if extension was not allowed but KPI_SCAN_ALL is on,
@@ -654,7 +668,26 @@ def find_kpis_in_directory(root_path: str) -> List[Dict]:
                 except Exception:
                     pass
                 if not file_kpis:
-                    continue
+                    # Final safety net: synthesize one KPI per file using the filename if all else failed.
+                    try:
+                        base_name = os.path.basename(path)
+                        name_stem = os.path.splitext(base_name)[0]
+                        synth_name = _normalize_name(name_stem)
+                        ctx = text
+                        if len(ctx) > 8000:
+                            ctx = ctx[:4000] + "\n...\n" + ctx[-4000:]
+                        file_kpis = [{
+                            "name": synth_name or "KPI",
+                            "language": lang,
+                            "file_line": 1,
+                            "code_context": ctx,
+                            "_rank": -1,
+                            "_kind": "forced_fallback"
+                        }]
+                    except Exception:
+                        pass
+                    if not file_kpis:
+                        continue
 
             # Pick a single best KPI per file (FIX: define `human`)
             def rank(item: Dict) -> Tuple[int, int]:

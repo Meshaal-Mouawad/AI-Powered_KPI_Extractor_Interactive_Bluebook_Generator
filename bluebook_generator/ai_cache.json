@@ -248,5 +248,105 @@
     "unit_of_measure": "%",
     "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
     "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "01800d6074ea5585d468389eaa130b531781c994": {
+    "description": "KPI183 is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of KPI183 is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "See calculation and context for the most appropriate unit.",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "ba191ab2c4ce75198258e1d4a484e52b737281d5": {
+    "description": "KPI084 is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of KPI084 is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "See calculation and context for the most appropriate unit.",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "683735fffcbeacebe31610b9a2a7ad34ec852563": {
+    "description": "KPI184 is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of KPI184 is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "See calculation and context for the most appropriate unit.",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "b618a9ee12bcaad7a5a7b7f91f48cfc70bb310a5": {
+    "description": "KPI003 is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of KPI003 is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "See calculation and context for the most appropriate unit.",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "01171816a85663496dee458ed87b5cf0033089cd": {
+    "description": "KPI169 is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of KPI169 is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "%",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "b13f5327b06c7dc90c4395c1646db3e2c6931809": {
+    "description": "Polymerization Conversion % is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of Polymerization Conversion % is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "%",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "235968bc8ef1a2a28bd855d8f89e65d5a8177cba": {
+    "description": "KPI070 is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of KPI070 is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "%",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "67958b8dabda445e544e704afdc94f509139ac7d": {
+    "description": "KPI160 is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of KPI160 is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "%",
+    "reporting_source": "REST API from plant or MES systems.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "7996c3f16eaa48024577bee36bbdf5dd6b79168d": {
+    "description": "KPI008 measures the percentage of customers who have ceased to engage with the company, indicating the rate at which customers are lost over a specific period.",
+    "objective": "The objective of this KPI is to assess customer retention and identify potential issues in customer satisfaction or service delivery that may lead to churn.",
+    "formula_description": "The churn rate is calculated by dividing the number of lost customers by the total number of customers, then multiplying the result by 100 to express it as a percentage.",
+    "used_in_kpis": "This KPI is utilized in evaluating customer loyalty, service effectiveness, and overall business health.",
+    "input_measure": "The input measures for this KPI include the count of inactive customers and the total customer base.",
+    "unit_of_measure": "The unit of measure for this KPI is a percentage.",
+    "reporting_source": "The data for this KPI is sourced from the customer database, specifically the status of customers recorded in the system.",
+    "comments": "Monitoring the customer churn rate is crucial for developing strategies to improve customer retention and enhance service offerings."
+  },
+  "8f4fa7d108280f621eecc02106a13f3f54b30fa5": {
+    "description": "Days of Working Capital measures the number of days a company can operate using its working capital, which is calculated as the difference between current assets and current liabilities, relative to sales revenue.",
+    "objective": "The objective of KPI022 is to assess the efficiency of a company's working capital management and its ability to cover short-term liabilities with short-term assets.",
+    "formula_description": "The formula for Days of Working Capital involves taking the difference between current assets and current liabilities, dividing that figure by sales revenue, and then multiplying by 365 to express the result in days.",
+    "used_in_kpis": "KPI022 is utilized in financial performance assessments and liquidity analysis to provide insights into operational efficiency and cash flow management.",
+    "input_measure": "Current Assets, Current Liabilities, Sales Revenue",
+    "unit_of_measure": "Days",
+    "reporting_source": "Finance Department",
+    "comments": "A lower number of days indicates more efficient working capital management, while a higher number may suggest potential liquidity issues."
   }
 }
