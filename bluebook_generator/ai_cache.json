@@ -319,34 +319,64 @@
     "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
     "comments": "No additional comments or special considerations were provided for this KPI."
   },
-  "67958b8dabda445e544e704afdc94f509139ac7d": {
-    "description": "KPI160 is a key performance indicator used to assess process efficiency and operational performance.",
-    "objective": "The objective of KPI160 is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+  "237c6e459c7c2cf9e01405be1947e782b73dffbf": {
+    "description": "Furnace OEE % measures the overall equipment effectiveness of the furnace, reflecting its performance in terms of availability, performance efficiency, and quality output. Overall Equipment Effectiveness combines Availability, Performance, and Quality into a single effectiveness score.",
+    "objective": "The objective of monitoring Furnace OEE % is to identify areas for improvement in furnace operations, enhance productivity, and minimize downtime. Increase effective productive time by reducing downtime, speed losses, and quality losses.",
+    "formula_description": "The calculation of Furnace OEE % involves assessing the total time the furnace is operational, the speed at which it operates compared to its maximum capacity, and the quality of the output produced.",
+    "used_in_kpis": "Furnace OEE % is utilized in various KPIs related to operational efficiency, maintenance effectiveness, and production quality within the oil, gas, and petrochemical sectors.",
+    "input_measure": "The input measures for calculating Furnace OEE % include operational time, production speed, and the number of defective products. Availability, performance, and quality factors calculated for the asset or line.",
+    "unit_of_measure": "The unit of measure for Furnace OEE % is expressed as a percentage.",
+    "reporting_source": "The reporting source for Furnace OEE % typically includes data from production monitoring systems and maintenance logs.",
+    "comments": "Regular analysis of Furnace OEE % can lead to actionable insights that drive continuous improvement initiatives in furnace operations."
+  },
+  "f3cfd0e4843966eea4469af7c7c5a10c19c9f9d2": {
+    "description": "KPI176 is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of KPI176 is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
     "formula_description": "Calculated directly from the inputs found in the code implementation.",
     "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
     "input_measure": "Derived from the variables used in the code calculation for this KPI.",
     "unit_of_measure": "%",
-    "reporting_source": "REST API from plant or MES systems.",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
     "comments": "No additional comments or special considerations were provided for this KPI."
   },
-  "7996c3f16eaa48024577bee36bbdf5dd6b79168d": {
-    "description": "KPI008 measures the percentage of customers who have ceased to engage with the company, indicating the rate at which customers are lost over a specific period.",
-    "objective": "The objective of this KPI is to assess customer retention and identify potential issues in customer satisfaction or service delivery that may lead to churn.",
-    "formula_description": "The churn rate is calculated by dividing the number of lost customers by the total number of customers, then multiplying the result by 100 to express it as a percentage.",
-    "used_in_kpis": "This KPI is utilized in evaluating customer loyalty, service effectiveness, and overall business health.",
-    "input_measure": "The input measures for this KPI include the count of inactive customers and the total customer base.",
-    "unit_of_measure": "The unit of measure for this KPI is a percentage.",
-    "reporting_source": "The data for this KPI is sourced from the customer database, specifically the status of customers recorded in the system.",
-    "comments": "Monitoring the customer churn rate is crucial for developing strategies to improve customer retention and enhance service offerings."
+  "9ff7db1bacecc948d7b05afc8648bd885b0ac162": {
+    "description": "KPI021 is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of KPI021 is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "See calculation and context for the most appropriate unit.",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
   },
-  "8f4fa7d108280f621eecc02106a13f3f54b30fa5": {
-    "description": "Days of Working Capital measures the number of days a company can operate using its working capital, which is calculated as the difference between current assets and current liabilities, relative to sales revenue.",
-    "objective": "The objective of KPI022 is to assess the efficiency of a company's working capital management and its ability to cover short-term liabilities with short-term assets.",
-    "formula_description": "The formula for Days of Working Capital involves taking the difference between current assets and current liabilities, dividing that figure by sales revenue, and then multiplying by 365 to express the result in days.",
-    "used_in_kpis": "KPI022 is utilized in financial performance assessments and liquidity analysis to provide insights into operational efficiency and cash flow management.",
-    "input_measure": "Current Assets, Current Liabilities, Sales Revenue",
-    "unit_of_measure": "Days",
-    "reporting_source": "Finance Department",
-    "comments": "A lower number of days indicates more efficient working capital management, while a higher number may suggest potential liquidity issues."
+  "2b9d41b0f92b42d0e692c8295d659d66f07f6a9d": {
+    "description": "KPI006 measures the average response time in days for addressing complaints received by the organization. It reflects the efficiency of the complaint resolution process.",
+    "objective": "The objective of this KPI is to minimize the average response time to complaints, thereby enhancing customer satisfaction and improving service quality.",
+    "formula_description": "The average response time is calculated by determining the difference in days between the date a complaint is opened and the date it is closed, and then averaging these differences across all complaints.",
+    "used_in_kpis": "This KPI is utilized in performance assessments related to customer service and operational efficiency.",
+    "input_measure": "The input measure for this KPI is the date range of complaints, specifically the open and close dates.",
+    "unit_of_measure": "The unit of measure for this KPI is days.",
+    "reporting_source": "The data for this KPI is sourced from the complaints database, which tracks all complaints and their resolution timelines.",
+    "comments": "Monitoring this KPI is crucial for identifying trends in complaint handling and for implementing improvements in customer service processes."
+  },
+  "9c7f22aa39d18a18a29a88d10da05ce886a40622": {
+    "description": "KPI005 measures the total number of customer complaints that are currently open and unresolved.",
+    "objective": "The objective of this KPI is to monitor and manage customer satisfaction by tracking the volume of outstanding complaints, enabling timely resolution and improved service quality.",
+    "formula_description": "This KPI is calculated by counting all entries in the complaints database where the status is marked as 'OPEN'.",
+    "used_in_kpis": "This KPI is utilized in customer service performance evaluations and quality assurance assessments.",
+    "input_measure": "The input measure for this KPI is the status of customer complaints recorded in the complaints database.",
+    "unit_of_measure": "The unit of measure for this KPI is the count of open customer complaints.",
+    "reporting_source": "The reporting source for this KPI is the complaints database maintained by the customer service department.",
+    "comments": "Monitoring open customer complaints is crucial for identifying trends in customer dissatisfaction and implementing corrective actions to enhance overall service delivery."
+  },
+  "438089342b00772e56d38cc9894df4736b5bc7f5": {
+    "description": "KPI077 is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of KPI077 is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "%",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
   }
 }

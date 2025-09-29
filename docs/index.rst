@@ -6,53 +6,53 @@ KPI Bluebook
    :caption: Key Performance Indicators:
    :glob:
 
-   kpi160
    kpi183
-   distillation_column_efficiency
+   furnace_oee
+   kpi084
    reactor_selectivity
    furnace_efficiency
-   kpi069
-   kpi182
+   distillation_column_efficiency
+   kpi160
    kpi_flare_recovery_pct
-   furnace_oee
-   kpi176
-   kpi084
+   kpi069
+   kpi008
+   kpi184
    propylene_to_ethylene_pe_ratio
    cooling_water_deltat_c
    benzene_purity
-   kpi008
-   kpi022
+   kpi182
+   kpi176
    steamtoethylene_ratio
+   kpi022
    kpi100
-   kpi184
+   kpi003
+   kpi002
    kpi001
    kpi021
-   kpi002
-   furnace_oee
    maintenance_to_operating_cost_ratio
-   kpi003
-   kpi006
+   furnace_oee
+   kpi169
    reactor_selectivity
-   kpi007
+   kpi006
    reactor_conversion
-   kpi213
+   kpi007
    oee
    aromatics_recovery
    hydrogen_utilization
    dehydrogenation_selectivity
    flare_reduction
    catalyst_activity_index
-   kpi169
-   kpi004
+   kpi213
+   polymerization_conversion
    compressor_availability
    productionloss
    propylene_yield
    kpi005
-   kpi066
-   polymerization_conversion
+   kpi004
+   kpi067
    ethylene_yield
+   kpi070
+   kpi066
    kpi071
    kpi077
-   kpi067
-   kpi070
    *
