@@ -59,10 +59,10 @@ KPI002
          <tr>
             <td>Generation time</td>
             <td>
-               47.1s (AI 47.1s + Render 0.0s)
+               1m 25s (AI 1m 25s + Render 0.0s)
                <div style="font-size: 12px; color: #6b7280; margin-top: 4px;">
-                  Total: 47.1s
-                  • AI: 47.1s
+                  Total: 85.252s
+                  • AI: 85.252s
                   • Render: 0.0s
                </div>
             </td>

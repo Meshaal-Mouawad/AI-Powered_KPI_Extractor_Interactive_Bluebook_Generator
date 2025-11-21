@@ -1,0 +1,133 @@
+@startuml Enterprise Startup Model
+
+package "Workforce Sector" {
+  [Workers] as Workers
+  [Worker Hire Rate] as HireRate
+}
+
+package "Production Sector" {
+  [Production Rate] as ProdRate
+  [Actual Productivity per Worker] as ActualProd
+  [Capped Base Productivity] as CappedProd
+  [Base Productivity per Worker] as BaseProd
+  [Inventory Effect on Productivity] as InvEffect
+}
+
+package "Inventory & Demand Sector" {
+  [Inventory] as Inventory
+  [Sales Rate] as SalesRate
+  [Demand Rate] as DemandRate
+  [Base Daily Demand] as BaseDemand
+  [Demand Ramp 1] as Ramp1
+  [Demand Ramp 2] as Ramp2
+  [Seasonal Factor] as Seasonal
+}
+
+package "Finance Sector" {
+  [Total Profit] as TotalProfit
+  [Profit Rate] as ProfitRate
+  [Revenue Rate] as RevenueRate
+  [Labor Cost Rate] as LaborCost
+  [Selling Price] as Price
+}
+
+' Workforce flows
+HireRate --> Workers : hires
+
+' Production flows
+Workers --> ProdRate : inputs
+BaseProd --> CappedProd : caps at 5
+CappedProd --> ActualProd : base input
+InvEffect --> ActualProd : multiplier
+ActualProd --> ProdRate : per worker rate
+
+' Inventory flows
+ProdRate --> Inventory : produces
+SalesRate --> Inventory : sells
+Inventory --> InvEffect : affects productivity
+
+' Demand flows
+Ramp1 --> BaseDemand : adds growth
+Ramp2 --> BaseDemand : adds growth
+BaseDemand --> DemandRate : base input
+Seasonal --> DemandRate : multiplier
+DemandRate --> SalesRate : potential sales
+Inventory --> SalesRate : available stock
+
+' Finance flows
+SalesRate --> RevenueRate : units sold
+Price --> RevenueRate : price per unit
+Workers --> LaborCost : cost basis
+RevenueRate --> ProfitRate : income
+LaborCost --> ProfitRate : expense
+ProfitRate --> TotalProfit : accumulates
+
+note right of Workers
+  INTEG(HireRate, 5)
+  Initial: 5 workers
+end note
+
+note right of HireRate
+  PULSE TRAIN(5, 5, 25, 365)
+  Adds 1 worker every 5 days
+  until 10 workers total
+end note
+
+note right of BaseProd
+  4 + (1/30)*Time
+  Grows from 4 to 5 over
+  30 days
+end note
+
+note right of InvEffect
+  IF THEN ELSE(Inventory > 100, 0.9,
+  IF THEN ELSE(Inventory < 20, 1.1, 1))
+  Slows if high inventory,
+  boosts if low inventory
+end note
+
+note right of Inventory
+  INTEG(ProdRate - SalesRate, 50)
+  Initial: 50 units
+end note
+
+note right of Ramp1
+  RAMP(2, 0, 10)
+  +2/day for first 10 days
+end note
+
+note right of Ramp2
+  RAMP(1, 20, 30)
+  +1/day from day 20-30
+end note
+
+note right of Seasonal
+  Q1 (0-90): 1.0
+  Q2 (91-180): 1.25
+  Q3 (181-270): 1.0
+  Q4 (271-365): 0.75
+end note
+
+note right of SalesRate
+  MIN(DemandRate, Inventory)
+  Cannot sell more than
+  available inventory
+end note
+
+note right of Price
+  IF THEN ELSE(Time < 40, 30,
+  IF THEN ELSE(Time < 80, 31, 32))
+  Increases over time
+end note
+
+note right of LaborCost
+  Workers * 150
+  $150/day per worker
+end note
+
+note right of TotalProfit
+  INTEG(ProfitRate, 0)
+  Cumulative profit
+end note
+
+@enduml

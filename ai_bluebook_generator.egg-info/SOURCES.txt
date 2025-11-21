@@ -1,0 +1,16 @@
+README.md
+pyproject.toml
+setup.cfg
+ai_bluebook_generator.egg-info/PKG-INFO
+ai_bluebook_generator.egg-info/SOURCES.txt
+ai_bluebook_generator.egg-info/dependency_links.txt
+ai_bluebook_generator.egg-info/entry_points.txt
+ai_bluebook_generator.egg-info/requires.txt
+ai_bluebook_generator.egg-info/top_level.txt
+bluebook_generator/__init__.py
+bluebook_generator/__main__.py
+bluebook_generator/ai_generator.py
+bluebook_generator/cli.py
+bluebook_generator/kpi_extractor.py
+bluebook_generator/main.py
+bluebook_generator/parser.py

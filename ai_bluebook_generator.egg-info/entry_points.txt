@@ -1,0 +1,2 @@
+[console_scripts]
+bluebook = bluebook_generator.cli:main

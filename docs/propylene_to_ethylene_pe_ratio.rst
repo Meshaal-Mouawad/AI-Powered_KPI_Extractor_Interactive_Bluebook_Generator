@@ -33,8 +33,8 @@ Propylene to Ethylene (P/E) Ratio
 
    <div style="margin-bottom: 1.5em; display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
       <span style="font-size: 13px; font-weight: 500; color: #4a5568;">Open in:</span>
-      <a href="vscode://file//Users/meshaalmouawad/AI-Powered_KPI_Extractor_Interactive_Bluebook_Generator/sample_project_50/dotnet_kpi.cs:0" target="_blank" class="btn btn-vscode">VS Code</a>
-      <a href="pycharm://open?file=/Users/meshaalmouawad/AI-Powered_KPI_Extractor_Interactive_Bluebook_Generator/sample_project_50/dotnet_kpi.cs&line=0" target="_blank" class="btn btn-pycharm">PyCharm</a>
+      <a href="vscode://file//Users/meshaalmouawad/AI-Powered_KPI_Extractor_Interactive_Bluebook_Generator/sample_project/dotnet_kpi.cs:0" target="_blank" class="btn btn-vscode">VS Code</a>
+      <a href="pycharm://open?file=/Users/meshaalmouawad/AI-Powered_KPI_Extractor_Interactive_Bluebook_Generator/sample_project/dotnet_kpi.cs&line=0" target="_blank" class="btn btn-pycharm">PyCharm</a>
       <a href="/edit?kpi=Propylene%20to%20Ethylene%20%28P/E%29%20Ratio" target="_blank" class="btn btn-edit">Edit</a>
    </div>
 
@@ -42,16 +42,16 @@ Propylene to Ethylene (P/E) Ratio
       <tbody>
          <tr>
             <td>Description</td>
-            <td><ul><li>The Propylene to Ethylene (P/E) Ratio measures the relative production of propylene compared to ethylene within a given process</li><li>The ratio of propylene to ethylene production volumes</li><li>used to assess the balance of the product slate</li></ul></td>
+            <td><ul><li>The ratio of propylene to ethylene production volumes</li><li>used to assess the balance of the product slate</li></ul></td>
          </tr>
          <tr>
             <td>Objective</td>
-            <td><ul><li>The objective of this KPI is to assess the efficiency of propylene production in relation to ethylene output</li><li>which is crucial for optimizing feedstock utilization and maximizing profitability</li><li>Align production strategy with market demand and margins by monitoring relative propylene versus ethylene output</li></ul></td>
+            <td><ul><li>Align production strategy with market demand and margins by monitoring relative propylene versus ethylene output</li></ul></td>
          </tr>
          <tr>
             <td>Formula</td>
             <td>
-               <p>The P/E Ratio is calculated by dividing the total tons of propylene produced by the total tons of ethylene produced.</p>
+               <p>Calculated directly from the inputs found in the code implementation.</p>
                <div class="math-equation">$$ \mathit{Result} = \frac{\mathit{0\,0;\,Return\,Propylene\,Produced\,Tons}}{\mathit{Ethylene\,Produced\,Tons;\,\}\,\}}} $$</div>
             </td>
          </tr>
@@ -61,9 +61,9 @@ Propylene to Ethylene (P/E) Ratio
             <td>
                0.0s (AI 0.0s + Render 0.0s)
                <div style="font-size: 12px; color: #6b7280; margin-top: 4px;">
-                  Total: 0.003s
+                  Total: 0.002s
                   • AI: 0.001s
-                  • Render: 0.002s
+                  • Render: 0.001s
                </div>
             </td>
          </tr>
@@ -78,23 +78,23 @@ Propylene to Ethylene (P/E) Ratio
          </tr>
          <tr>
             <td>Used in KPI(s)</td>
-            <td><ul><li>This KPI is utilized in performance evaluations and operational assessments within petrochemical production facilities</li></ul></td>
+            <td><ul><li>This KPI can serve as an input to higher-level operational and performance dashboards</li></ul></td>
          </tr>
          <tr>
             <td>Input Measure</td>
-            <td><ul><li>The input measures for this KPI are the total tons of propylene and ethylene produced during a specified time period</li><li>Total propylene produced and total ethylene produced in the measurement period</li></ul></td>
+            <td><ul><li>Total propylene produced and total ethylene produced in the measurement period</li></ul></td>
          </tr>
          <tr>
             <td>Unit of Measure</td>
-            <td>The unit of measure for the P/E Ratio is a dimensionless ratio, expressed as tons of propylene per ton of ethylene.</td>
+            <td>ratio (dimensionless)</td>
          </tr>
          <tr>
             <td>Reporting Source</td>
-            <td>Data for this KPI is sourced from production reports and operational databases within the petrochemical facility.</td>
+            <td>Operations data sources such as historians, SCADA/DCS tags, and production logs.</td>
          </tr>
          <tr>
             <td>Comments</td>
-            <td>Integrating processes like olefin cracking or metathesis units can increase the overall propylene yield and thus the P/E ratio.</td>
+            <td>No additional comments or special considerations were provided for this KPI.</td>
          </tr>
       </tbody>
    </table>

@@ -59,10 +59,10 @@ Furnace Efficiency %
          <tr>
             <td>Generation time</td>
             <td>
-               0.0s (AI 0.0s + Render 0.0s)
+               1m 25s (AI 1m 25s + Render 0.0s)
                <div style="font-size: 12px; color: #6b7280; margin-top: 4px;">
-                  Total: 0.0s
-                  • AI: 0.0s
+                  Total: 84.791s
+                  • AI: 84.791s
                   • Render: 0.0s
                </div>
             </td>

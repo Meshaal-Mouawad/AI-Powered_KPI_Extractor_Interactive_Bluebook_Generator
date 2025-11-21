@@ -33,8 +33,8 @@ Maintenance to Operating Cost Ratio
 
    <div style="margin-bottom: 1.5em; display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
       <span style="font-size: 13px; font-weight: 500; color: #4a5568;">Open in:</span>
-      <a href="vscode://file//Users/meshaalmouawad/AI-Powered_KPI_Extractor_Interactive_Bluebook_Generator/sample_project_50/generic_kpi.txt:1" target="_blank" class="btn btn-vscode">VS Code</a>
-      <a href="pycharm://open?file=/Users/meshaalmouawad/AI-Powered_KPI_Extractor_Interactive_Bluebook_Generator/sample_project_50/generic_kpi.txt&line=1" target="_blank" class="btn btn-pycharm">PyCharm</a>
+      <a href="vscode://file//Users/meshaalmouawad/AI-Powered_KPI_Extractor_Interactive_Bluebook_Generator/sample_project/generic_kpi.txt:1" target="_blank" class="btn btn-vscode">VS Code</a>
+      <a href="pycharm://open?file=/Users/meshaalmouawad/AI-Powered_KPI_Extractor_Interactive_Bluebook_Generator/sample_project/generic_kpi.txt&line=1" target="_blank" class="btn btn-pycharm">PyCharm</a>
       <a href="/edit?kpi=Maintenance%20to%20Operating%20Cost%20Ratio" target="_blank" class="btn btn-edit">Edit</a>
    </div>
 
@@ -42,16 +42,16 @@ Maintenance to Operating Cost Ratio
       <tbody>
          <tr>
             <td>Description</td>
-            <td><ul><li>The Maintenance to Operating Cost Ratio measures the proportion of maintenance costs relative to total operating costs within an organization</li><li>It provides insight into how effectively maintenance expenditures are managed in relation to overall operational expenses</li></ul></td>
+            <td><ul><li>Maintenance to Operating Cost Ratio is a key performance indicator used to assess process efficiency and operational performance</li></ul></td>
          </tr>
          <tr>
             <td>Objective</td>
-            <td><ul><li>The objective of this KPI is to evaluate the efficiency of maintenance spending and its impact on overall operational performance</li><li>enabling organizations to identify areas for cost optimization</li></ul></td>
+            <td><ul><li>The objective of Maintenance to Operating Cost Ratio is to provide a clear measure that supports monitoring</li><li>decision making</li><li>and continuous improvement</li></ul></td>
          </tr>
          <tr>
             <td>Formula</td>
             <td>
-               <p>This ratio is calculated by taking the maintenance costs that are on specification and dividing them by the total operating costs, then multiplying by 100 to express it as a percentage.</p>
+               <p>Calculated directly from the inputs found in the code implementation.</p>
                <div class="math-equation">$$ \mathit{Maintenance\,To\,Operating\,Cost\,Ratio} = 100 \times \frac{\mathit{On\,Spec}}{\mathit{Total}} $$</div><ul><li><i>On Spec:</i> The numerator of the fraction.</li><li><i>Total:</i> The denominator of the fraction.</li></ul>
             </td>
          </tr>
@@ -59,10 +59,10 @@ Maintenance to Operating Cost Ratio
          <tr>
             <td>Generation time</td>
             <td>
-               0.0s (AI 0.0s + Render 0.0s)
+               1m 26s (AI 1m 26s + Render 0.0s)
                <div style="font-size: 12px; color: #6b7280; margin-top: 4px;">
-                  Total: 0.001s
-                  • AI: 0.001s
+                  Total: 86.332s
+                  • AI: 86.332s
                   • Render: 0.0s
                </div>
             </td>
@@ -78,23 +78,23 @@ Maintenance to Operating Cost Ratio
          </tr>
          <tr>
             <td>Used in KPI(s)</td>
-            <td><ul><li>This KPI is utilized in performance assessments</li><li>budgeting processes</li><li>and operational efficiency evaluations within the oil</li><li>gas</li><li>and petrochemical sectors</li></ul></td>
+            <td><ul><li>This KPI can serve as an input to higher-level operational and performance dashboards</li></ul></td>
          </tr>
          <tr>
             <td>Input Measure</td>
-            <td><ul><li>The primary input measures for this KPI include the total maintenance costs incurred and the total operating costs of the organization</li></ul></td>
+            <td><ul><li>Derived from the variables used in the code calculation for this KPI</li></ul></td>
          </tr>
          <tr>
             <td>Unit of Measure</td>
-            <td>The unit of measure for this KPI is expressed as a percentage.</td>
+            <td>ratio (dimensionless)</td>
          </tr>
          <tr>
             <td>Reporting Source</td>
-            <td>Data for this KPI is typically sourced from financial reports, maintenance management systems, and operational cost analyses.</td>
+            <td>Operations data sources such as historians, SCADA/DCS tags, and production logs.</td>
          </tr>
          <tr>
             <td>Comments</td>
-            <td>A higher Maintenance to Operating Cost Ratio may indicate effective maintenance practices, while a lower ratio could suggest potential inefficiencies or excessive operational costs.</td>
+            <td>No additional comments or special considerations were provided for this KPI.</td>
          </tr>
       </tbody>
    </table>

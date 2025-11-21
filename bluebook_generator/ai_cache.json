@@ -378,5 +378,935 @@
     "unit_of_measure": "%",
     "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
     "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "c876019e22ccccbd817e9a88fe036437636c67d4": {
+    "description": "KPI069 is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of KPI069 is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "%",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "6f8ac4c4d641b12d815ce840a9e8e9839dfa00bf": {
+    "description": "KPI084 is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of KPI084 is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "See calculation and context for the most appropriate unit.",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "18823d0b17eef4f0227ffbc910678ea9a7a31a82": {
+    "description": "KPI182 is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of KPI182 is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "See calculation and context for the most appropriate unit.",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "6b2c7762bbe5f6a2bc232426ff8ae582a4c0b727": {
+    "description": "The ratio of propylene to ethylene production volumes, used to assess the balance of the product slate.",
+    "objective": "Align production strategy with market demand and margins by monitoring relative propylene versus ethylene output.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Total propylene produced and total ethylene produced in the measurement period.",
+    "unit_of_measure": "ratio (dimensionless)",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "601aef24d070fb537864111d9f7183640f8682d6": {
+    "description": "KPI022 is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of KPI022 is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "See calculation and context for the most appropriate unit.",
+    "reporting_source": "REST API from plant or MES systems.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "2824f892370a9855b09f30ada895c1a7587bd553": {
+    "description": "KPI002 is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of KPI002 is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "See calculation and context for the most appropriate unit.",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "3f869d6f4d2bd9f05659a8cd0e7203dab3703241": {
+    "description": "KPI213 is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of KPI213 is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "%",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "e0514ddbb8afe1eaafb0ae8395e98ce93a318449": {
+    "description": "Reactor Selectivity % is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of Reactor Selectivity % is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "See calculation and context for the most appropriate unit.",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "cfc28b57925ac1645a6054f68bed93f777105f9e": {
+    "description": "KPI005 is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of KPI005 is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "See calculation and context for the most appropriate unit.",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "69431b098492d1e62f6b1a8d96f7f59ffef98c43": {
+    "description": "Flare Reduction % is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of Flare Reduction % is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "%",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "d1253f71dd22f0e0029eac4c525be452508aa2f4": {
+    "description": "Compressor Availability % is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of Compressor Availability % is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "%",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "c2008d4b6f97e7d1217ee542693a3c11cee6f766": {
+    "description": "KPI067 is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of KPI067 is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "See calculation and context for the most appropriate unit.",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "e56942b68c11f8ca392ed99ab392b835bc30fb7b": {
+    "description": "KPI070 is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of KPI070 is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "%",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "a5b52d5a5d042adade9ab4aa61da7f7eb150801b": {
+    "description": "The 'comparsion' KPI evaluates the relative performance of various operational metrics within the oil, gas, and petrochemical sectors. It provides insights into how different processes or units compare against each other, facilitating informed decision-making.",
+    "objective": "The primary objective of this KPI is to identify performance discrepancies and areas for improvement by comparing key operational metrics across different units or time periods.",
+    "formula_description": "The calculation for this KPI involves comparing selected metrics to determine their relative performance, though specific formulas are not provided in this context.",
+    "used_in_kpis": "This KPI is utilized in various performance management frameworks to benchmark operations, optimize processes, and enhance overall efficiency.",
+    "input_measure": "The input measures for this KPI typically include operational data such as production rates, efficiency percentages, and cost metrics from different units or time frames.",
+    "unit_of_measure": "The unit of measure for this KPI can vary depending on the specific metrics being compared, but it often includes percentages, ratios, or absolute values.",
+    "reporting_source": "Data for this KPI is sourced from operational reports, performance dashboards, and other analytical tools used within the organization.",
+    "comments": "Regular monitoring of the 'comparsion' KPI is essential for continuous improvement and strategic planning in the oil, gas, and petrochemical industries."
+  },
+  "86e3b199be3b5751b6428801e5c2d767279c6282": {
+    "description": "flow high is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of flow high is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "See calculation and context for the most appropriate unit.",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "78eedb0f82a6a6277873eb0f68f8f925dc5f3b9a": {
+    "description": "Low level Diagram Flowchart-Programmatic Formula Extraction Low Level flowchart  is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of Low level Diagram Flowchart-Programmatic Formula Extraction Low Level flowchart  is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "See calculation and context for the most appropriate unit.",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "32df583728e9e9f76d8fb2e0ee7ccbd3ed75f5a9": {
+    "description": "Overall Equipment Effectiveness combines Availability, Performance, and Quality into a single effectiveness score.",
+    "objective": "Increase effective productive time by reducing downtime, speed losses, and quality losses.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Availability, performance, and quality factors calculated for the asset or line.",
+    "unit_of_measure": "%",
+    "reporting_source": "REST API from plant or MES systems.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "03a069cd3fc150555b03f7b26528791797674a82": {
+    "description": "KPI-Dashboard-Professional-PowerPoint-Template is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of KPI-Dashboard-Professional-PowerPoint-Template is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "See calculation and context for the most appropriate unit.",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "814172700284fbd5f0bdb5db8d159c7cda425e51": {
+    "description": "As-Is-KPIgenerating is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of As-Is-KPIgenerating is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "See calculation and context for the most appropriate unit.",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "8f0c44bf0a1107efee5cdfdaf89cc959ddbc2300": {
+    "description": "hq720 is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of hq720 is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "See calculation and context for the most appropriate unit.",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "4630ce664ed285015ab96a32f133d34ddf7f6076": {
+    "description": "TotalTimeVSKPIConut is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of TotalTimeVSKPIConut is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "See calculation and context for the most appropriate unit.",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "c885e1139818a7ed09f7a15e3a5b16148f8d8171": {
+    "description": "Interactive Bluebook Activity-AI Powered KPI Extractor Interactive Bluebook Activity Diagram is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of Interactive Bluebook Activity-AI Powered KPI Extractor Interactive Bluebook Activity Diagram is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "See calculation and context for the most appropriate unit.",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "0ab6b18098ed63b53c15ed7e134570e6c682e131": {
+    "description": "diagram showing the main files and functions responsible for legacy KPI integration and Bluebook construction in your tool is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of diagram showing the main files and functions responsible for legacy KPI integration and Bluebook construction in your tool is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "ratio (dimensionless)",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "9dd6e42472e6a3aec5b0caba3a27bab4c2b38d03": {
+    "description": "diagram showing the main files and functions responsible for legacy KPI integration and Bluebook construction in your tool is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of diagram showing the main files and functions responsible for legacy KPI integration and Bluebook construction in your tool is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "ratio (dimensionless)",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "9c7e963c86e3296fe2982e4669ba15d2fb3037c2": {
+    "description": "high-level activity diagram is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of high-level activity diagram is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "See calculation and context for the most appropriate unit.",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "3255a5ad1e3c951bd01932b0b81c11a4020220bc": {
+    "description": "KPI Inrctive Bluebook is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of KPI Inrctive Bluebook is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "See calculation and context for the most appropriate unit.",
+    "reporting_source": "SCADA/DCS via OPC/PLC tags.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "a91617aa9316b0ab8cb890d84214992b98b296d5": {
+    "description": "SOx Emissions Concentration (kg:m3 — KPI Bluebook documentation is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of SOx Emissions Concentration (kg:m3 — KPI Bluebook documentation is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "ratio (dimensionless)",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "3b724e96fea0aad8d160d87030b0e1ce9b26e5ff": {
+    "description": "Average processing rate of material over the measurement period, typically normalized to daily capacity.",
+    "objective": "Maximize utilization while respecting equipment and constraint limits.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Total feedstock processed and the number of operating hours in the measurement period.",
+    "unit_of_measure": "See calculation and context for the most appropriate unit.",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "fdbb0839976a6d33bbffd5f47b913828efd8899f": {
+    "description": "Specific Steam Consumption (ton:ton — KPI Bluebook documentation is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of Specific Steam Consumption (ton:ton — KPI Bluebook documentation is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "See calculation and context for the most appropriate unit.",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "f37265860bb92bdd7977acdd9ee6171f17caf37b": {
+    "description": "custom is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of custom is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "See calculation and context for the most appropriate unit.",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "ceccd4c04c8987fff062d1794c5cb08c1d39b687": {
+    "description": "Share of total gas that is recovered instead of flared, indicating the effectiveness of recovery systems.",
+    "objective": "Reduce flaring and emissions by improving recovery system reliability and operation.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Gas flared volume and gas recovered volume over the measurement period.",
+    "unit_of_measure": "See calculation and context for the most appropriate unit.",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "edd35f4a2f5841d3eaa7321ed425e579bcfcbe94": {
+    "description": "Dehydrogenation Selectivity %</span> is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of Dehydrogenation Selectivity %</span> is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "%",
+    "reporting_source": "Manufacturing database or data warehouse (SQL-backed).",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "0970298c5a52ab56d982f29698e5d636910e2128": {
+    "description": "index is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of index is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "See calculation and context for the most appropriate unit.",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "def11964152341eef6be02857b051d4b416db3e8": {
+    "description": "kpi213 is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of kpi213 is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "See calculation and context for the most appropriate unit.",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "7e197d31759a0937d9c879762a94873af0195ca0": {
+    "description": "This KPI expresses the proportion of production that meets all quality standards relative to total batches.",
+    "objective": "Improve first-pass quality and reduce rework or off-spec material by monitoring on-spec performance over time.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Counts of on-spec batches and total batches in the measurement period.",
+    "unit_of_measure": "See calculation and context for the most appropriate unit.",
+    "reporting_source": "Manufacturing database or data warehouse (SQL-backed).",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "bc794d6f68f36b93eba6204d912167b6a633fa39": {
+    "description": "kpi002 is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of kpi002 is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "See calculation and context for the most appropriate unit.",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "186f7dd81bedd228c74e9e5c821b07e06c1b6aeb": {
+    "description": "Overall Equipment Effectiveness combines Availability, Performance, and Quality into a single effectiveness score.",
+    "objective": "Increase effective productive time by reducing downtime, speed losses, and quality losses.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Availability, performance, and quality factors calculated for the asset or line.",
+    "unit_of_measure": "%",
+    "reporting_source": "Manufacturing database or data warehouse (SQL-backed).",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "d587096d0bda6751786341557568dc7c853e970d": {
+    "description": "The ratio of propylene to ethylene production volumes, used to assess the balance of the product slate.",
+    "objective": "Align production strategy with market demand and margins by monitoring relative propylene versus ethylene output.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Total propylene produced and total ethylene produced in the measurement period.",
+    "unit_of_measure": "ratio (dimensionless)",
+    "reporting_source": "Process historian (e.g., AVEVA PI System) and control system archives.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "04c9760bfeec6efd265d58a6fd0f9a2dec1b5f85": {
+    "description": "productionloss is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of productionloss is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "See calculation and context for the most appropriate unit.",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "17cc073bc7d3a0eec0c0ff7f6205c9ad617f6bef": {
+    "description": "Compressor Availability %</span> is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of Compressor Availability %</span> is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "%",
+    "reporting_source": "Manufacturing database or data warehouse (SQL-backed).",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "6ccbd6b93fd05611bc5e74be3cf024001a8eb7a9": {
+    "description": "Propylene Yield %</span> is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of Propylene Yield %</span> is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "%",
+    "reporting_source": "Manufacturing database or data warehouse (SQL-backed).",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "0d8cc885f43dd118fa1e444b36c05e98664eca8e": {
+    "description": "Proportion of desired product produced relative to total input, indicating conversion efficiency.",
+    "objective": "Improve conversion efficiency and identify losses or off-spec production by trending yield over time.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Desired product output and corresponding input over the measurement period.",
+    "unit_of_measure": "%",
+    "reporting_source": "Manufacturing database or data warehouse (SQL-backed).",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "172967fabe4d5acee6b7457dc10336e330a9dfd5": {
+    "description": "kpi066 is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of kpi066 is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "See calculation and context for the most appropriate unit.",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "33f2ed9761a4e3cc621fab9fbfb666ccd7101e7a": {
+    "description": "kpi071 is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of kpi071 is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "See calculation and context for the most appropriate unit.",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "887bf01960920a42ccf42480619958dc38b886bf": {
+    "description": "kpi084 is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of kpi084 is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "See calculation and context for the most appropriate unit.",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "723bb82635fc1fdd6421ca380cec819a4614e041": {
+    "description": "Ethylene Yield % is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of Ethylene Yield % is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "%",
+    "reporting_source": "Manufacturing database or data warehouse (SQL-backed).",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "ef0ef64c6755e0faee2926aca2a4654b42667763": {
+    "description": "Overall Equipment Effectiveness combines Availability, Performance, and Quality into a single effectiveness score.",
+    "objective": "Increase effective productive time by reducing downtime, speed losses, and quality losses.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Availability, performance, and quality factors calculated for the asset or line.",
+    "unit_of_measure": "%",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "1cc89af61672563578e947146a46bba6f3847e74": {
+    "description": "kpi002.rst is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of kpi002.rst is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "See calculation and context for the most appropriate unit.",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "871a7d2050200152d3322efbb61fcb8048465e9d": {
+    "description": "Distillation Column Efficiency % is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of Distillation Column Efficiency % is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "%",
+    "reporting_source": "Manufacturing database or data warehouse (SQL-backed).",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "67db537ef38adfb5d0c2c15aa0b87ef4b66026a9": {
+    "description": "kpi160.rst is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of kpi160.rst is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "See calculation and context for the most appropriate unit.",
+    "reporting_source": "REST API from plant or MES systems.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "f6b9bec67ae54d9d5533c298f9de315260da004d": {
+    "description": "kpi169.rst is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of kpi169.rst is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "See calculation and context for the most appropriate unit.",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "58a068d6542c2abd4c065f90f0d2f50e65ae4aba": {
+    "description": "kpi066.rst is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of kpi066.rst is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "See calculation and context for the most appropriate unit.",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "7bc994b3d185f265de36112c1ecf46f1a03f4f2b": {
+    "description": "kpi022.rst is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of kpi022.rst is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "See calculation and context for the most appropriate unit.",
+    "reporting_source": "REST API from plant or MES systems.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "ffc46a29fde5dff4a0049d07e52e0ab237ccebd0": {
+    "description": "Benzene Purity % is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of Benzene Purity % is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "See calculation and context for the most appropriate unit.",
+    "reporting_source": "Manufacturing database or data warehouse (SQL-backed).",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "31440800271cbc81e197603482183faf58110575": {
+    "description": "productionloss.rst is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of productionloss.rst is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "See calculation and context for the most appropriate unit.",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "ec658e99fa166865946d9920560ff8cf70b2f600": {
+    "description": "kpi067.rst is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of kpi067.rst is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "See calculation and context for the most appropriate unit.",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "b3706dfe681bc651a8a80b08469be7e96ecbe601": {
+    "description": "The ratio of propylene to ethylene production volumes, used to assess the balance of the product slate.",
+    "objective": "Align production strategy with market demand and margins by monitoring relative propylene versus ethylene output.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Total propylene produced and total ethylene produced in the measurement period.",
+    "unit_of_measure": "ratio (dimensionless)",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "592e19ed48a5eadf795dc0069217c9df44f51657": {
+    "description": "Steam-to-Ethylene Ratio is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of Steam-to-Ethylene Ratio is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "ratio (dimensionless)",
+    "reporting_source": "Manufacturing database or data warehouse (SQL-backed).",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "aa64ded720210cccf41a95c386693e4bfd508100": {
+    "description": "plus is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of plus is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "See calculation and context for the most appropriate unit.",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "74dd9e5dcf7ecde2a1e24d8087bf189e2a398cf1": {
+    "description": " sphinx javascript frameworks compat is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of  sphinx javascript frameworks compat is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "See calculation and context for the most appropriate unit.",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "a690c2d62458224354b6a320391906ad01f10c39": {
+    "description": "basic is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of basic is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "See calculation and context for the most appropriate unit.",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "df99ee242b04c943baca37676933939d51006cfe": {
+    "description": "jquery is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of jquery is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "See calculation and context for the most appropriate unit.",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "c35b0c91c5f4cf22c0d1d45169e459278239837f": {
+    "description": "Roboto-Slab-Bold is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of Roboto-Slab-Bold is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "See calculation and context for the most appropriate unit.",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "95806967a8cd7e3d3401985e10696c52f5fc5947": {
+    "description": "lato-bold-italic is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of lato-bold-italic is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "See calculation and context for the most appropriate unit.",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "069a56d4dfd79af0200543be9c4b6438240e57b2": {
+    "description": "fontawesome-webfont is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of fontawesome-webfont is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "See calculation and context for the most appropriate unit.",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "aac2c1e8d52b1b1bddb19ea7788b080794b44f2e": {
+    "description": "fontawesome-webfont is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of fontawesome-webfont is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "See calculation and context for the most appropriate unit.",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "f9eebc6deef0449658d3b93d643da8afc76b771e": {
+    "description": "theme is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of theme is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "See calculation and context for the most appropriate unit.",
+    "reporting_source": "Production execution logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "9160d83a2d6e68662a928f7fc4d2ee93bc368416": {
+    "description": "roboto-slab-v7-bold is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of roboto-slab-v7-bold is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "See calculation and context for the most appropriate unit.",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "ec72c05813ffc73e8e751cf12a37f9e47d11e4e0": {
+    "description": "roboto-slab-v7-bold is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of roboto-slab-v7-bold is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "See calculation and context for the most appropriate unit.",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "7846a14c45d8c4e832e63cfb4d9f68a2a1226bfd": {
+    "description": "lato-italic is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of lato-italic is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "See calculation and context for the most appropriate unit.",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "efca3eeeff6712b61c4515d92850774979682cfb": {
+    "description": "lato-italic is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of lato-italic is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "See calculation and context for the most appropriate unit.",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "8857a0df9813f26a226ea2ef5bba926571147f65": {
+    "description": "lato-bold is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of lato-bold is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "See calculation and context for the most appropriate unit.",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "ebec3f950b5bf2d369dc4010dde6e723a3fd0c1f": {
+    "description": "lato-regular is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of lato-regular is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "See calculation and context for the most appropriate unit.",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "0c4d6033102f8467e977bf69ae9f71f3f5c6c73c": {
+    "description": "Name is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of Name is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "variance (units^2)",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "19979b107476ebbef00a9bc2c19c6879f07d4226": {
+    "description": "classify kpi is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of classify kpi is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "variance (units^2)",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "497c0faeffdf3aa0861e41ed3ff918692aa37627": {
+    "description": "KPIs for Petrochemcals is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of KPIs for Petrochemcals is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "See calculation and context for the most appropriate unit.",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "6f17e64c566e3ec4af828d48dd5aec2e1c9cf3fe": {
+    "description": "KPI160 is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of KPI160 is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "%",
+    "reporting_source": "REST API from plant or MES systems.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "aadf152a3e8115e06520989abb502cb00bd687a6": {
+    "description": "KPI176 is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of KPI176 is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "%",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "fb36dd526dabf99425d16151a2f4c5657ff3e84a": {
+    "description": "KPI184 is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of KPI184 is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "See calculation and context for the most appropriate unit.",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "e296db7c4110504f00812cb66356464877652447": {
+    "description": "Steam-to-Ethylene Ratio is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of Steam-to-Ethylene Ratio is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "ratio (dimensionless)",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "3fe1593efe800180ac946eaffd8771c9a66a7f8a": {
+    "description": "KPI007 is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of KPI007 is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "See calculation and context for the most appropriate unit.",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "fdcde0921c8b30c0af372d0c702d5d362aa1db06": {
+    "description": "KPI004 is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of KPI004 is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "See calculation and context for the most appropriate unit.",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "f552e43309d2e03c63678d8c8c4e1a21bc9d52b9": {
+    "description": "Hydrogen Utilization % is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of Hydrogen Utilization % is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "%",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "726e0a7c1229726db2fcd1bb48d63a8c381445fe": {
+    "description": "Polymerization Conversion % is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of Polymerization Conversion % is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "%",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "d324ddc89dcb6504179090eaabaecaa4e64fd255": {
+    "description": "KPI071 is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of KPI071 is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "%",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "7b2c4e8b36664406477a41023444e2c92a1638d2": {
+    "description": "edit is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of edit is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "tons/day",
+    "reporting_source": "Process historian (e.g., AVEVA PI System) and control system archives.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "c2be23f0583d39ec9b5604f102db166a7f1003f9": {
+    "description": " init  is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of  init  is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "See calculation and context for the most appropriate unit.",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "febb6cc5e1765ad292f0782a94f8e16c4caa5607": {
+    "description": "The Polymer Melt Flow Index (MFI) Variance measures the variability in the melt flow index of polymer samples and indicates how easily the polymer flows when melted.",
+    "objective": "Monitoring MFI variance helps ensure consistent product quality and process stability; low variance suggests a stable process and adherence to quality standards.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "Used in quality control and assurance to evaluate polymer production performance and detect potential manufacturing issues.",
+    "input_measure": "Melt Flow Index test results from polymer samples collected during production or laboratory testing.",
+    "unit_of_measure": "dimensionless",
+    "reporting_source": "Laboratory test results of polymer samples taken during production.",
+    "comments": "Tracking MFI variance is essential for maintaining product quality and ensuring products meet required specifications for intended applications."
+  },
+  "c5afef9f3771daf20d4ce6cac8da1f444cc88570": {
+    "description": ".DS Store is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of .DS Store is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "See calculation and context for the most appropriate unit.",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "1c2c0529eb0f1fc42dee5d17cbbe94a8d9e89d93": {
+    "description": ".DS Store is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of .DS Store is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "See calculation and context for the most appropriate unit.",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "239daadc8c6b2757e0600fbdb1e3f31048fd5805": {
+    "description": "SOx Emissions Concentration measures the concentration of sulfur oxides in the emissions, expressed in kilograms per cubic meter. This KPI is critical for assessing the environmental impact of operations in the oil, gas, and petrochemical industries.",
+    "objective": "The objective of monitoring SOx Emissions Concentration is to ensure compliance with environmental regulations and to minimize the ecological footprint of industrial activities.",
+    "formula_description": "The concentration is calculated by dividing the mass flow of sulfur oxides by the volumetric flow rate of the emissions.",
+    "used_in_kpis": "This KPI is used in various environmental performance indicators to track emissions and ensure adherence to regulatory standards.",
+    "input_measure": "The input measures for this KPI include the mass flow of sulfur oxides and the volumetric flow rate of the emissions.",
+    "unit_of_measure": "The unit of measure for SOx Emissions Concentration is kilograms per cubic meter (kg/m3).",
+    "reporting_source": "The data for this KPI is typically sourced from emissions analyzers that continuously monitor and report the concentration of sulfur oxides in the exhaust streams.",
+    "comments": "Regular monitoring of SOx Emissions Concentration is essential for identifying trends, implementing corrective actions, and improving overall emissions management strategies."
+  },
+  "7e926be89a1c46d704d333691caa4eb69f3b3816": {
+    "description": "Maintenance to Operating Cost Ratio is a key performance indicator used to assess process efficiency and operational performance.",
+    "objective": "The objective of Maintenance to Operating Cost Ratio is to provide a clear measure that supports monitoring, decision making, and continuous improvement.",
+    "formula_description": "Calculated directly from the inputs found in the code implementation.",
+    "used_in_kpis": "This KPI can serve as an input to higher-level operational and performance dashboards.",
+    "input_measure": "Derived from the variables used in the code calculation for this KPI.",
+    "unit_of_measure": "ratio (dimensionless)",
+    "reporting_source": "Operations data sources such as historians, SCADA/DCS tags, and production logs.",
+    "comments": "No additional comments or special considerations were provided for this KPI."
+  },
+  "9cd1a56f205dab005a309004a89d52a84116fd90": {
+    "description": "Specific Catalyst Cost measures the cost of catalyst used per ton of product produced, providing insight into the efficiency and economic viability of the catalyst utilization in production processes. Cost of catalyst consumed per ton of product, used to monitor and optimize catalyst usage.",
+    "objective": "The objective of tracking Specific Catalyst Cost is to optimize catalyst usage and reduce overall production costs, thereby enhancing profitability and operational efficiency. Control catalyst spend while maintaining performance and product quality.",
+    "formula_description": "The formula for Specific Catalyst Cost is derived by dividing the total catalyst cost by the total product tons produced, ensuring that the cost is accurately allocated per unit of output.",
+    "used_in_kpis": "This KPI is utilized in performance assessments related to catalyst efficiency, cost management, and overall production economics.",
+    "input_measure": "The input measures for this KPI include the total catalyst cost incurred during production and the total tons of product produced. Catalyst cost used and product tons over the measurement period.",
+    "unit_of_measure": "The unit of measure for Specific Catalyst Cost is expressed in dollars per ton.",
+    "reporting_source": "The reporting source for this KPI typically includes financial records and production data from operational databases.",
+    "comments": "Monitoring Specific Catalyst Cost is crucial for identifying trends in catalyst expenses and making informed decisions regarding catalyst selection and usage strategies."
   }
 }

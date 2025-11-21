@@ -59,10 +59,10 @@ KPI071
          <tr>
             <td>Generation time</td>
             <td>
-               1m 6s (AI 1m 6s + Render 0.0s)
+               1m 25s (AI 1m 25s + Render 0.0s)
                <div style="font-size: 12px; color: #6b7280; margin-top: 4px;">
-                  Total: 65.972s
-                  • AI: 65.972s
+                  Total: 84.883s
+                  • AI: 84.883s
                   • Render: 0.0s
                </div>
             </td>

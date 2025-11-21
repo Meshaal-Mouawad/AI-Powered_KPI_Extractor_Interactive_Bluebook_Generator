@@ -1,0 +1,33 @@
+@startuml
+package "app.py" {
+  class FlaskApp {
+    +index()
+    +start_generation()
+    +get_status()
+    +serve_bluebook(filename)
+    +get_overrides(kpi_name)
+    +save_overrides()
+    +edit_page()
+    +debug_scan()
+    +debug_scan_deep()
+  }
+}
+
+package "bluebook_generator/main.py" {
+  class BluebookGenerator {
+    +generate_bluebook(path)
+  }
+}
+
+package "bluebook_generator/kpi_extractor.py" {
+  class KPIExtractor {
+    +find_kpis_in_directory(path)
+    +_detect_language_by_extension(filename)
+  }
+}
+
+FlaskApp --> BluebookGenerator : calls generate_bluebook
+FlaskApp --> KPIExtractor : calls find_kpis_in_directory
+FlaskApp --> FlaskApp : uses overrides.json for field overrides
+
+@enduml

@@ -33,8 +33,8 @@ kpi flare recovery pct
 
    <div style="margin-bottom: 1.5em; display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
       <span style="font-size: 13px; font-weight: 500; color: #4a5568;">Open in:</span>
-      <a href="vscode://file//Users/meshaalmouawad/AI-Powered_KPI_Extractor_Interactive_Bluebook_Generator/sample_project_50/ana_kpi.hdbview:0" target="_blank" class="btn btn-vscode">VS Code</a>
-      <a href="pycharm://open?file=/Users/meshaalmouawad/AI-Powered_KPI_Extractor_Interactive_Bluebook_Generator/sample_project_50/ana_kpi.hdbview&line=0" target="_blank" class="btn btn-pycharm">PyCharm</a>
+      <a href="vscode://file//Users/meshaalmouawad/AI-Powered_KPI_Extractor_Interactive_Bluebook_Generator/sample_project/ana_kpi.hdbview:0" target="_blank" class="btn btn-vscode">VS Code</a>
+      <a href="pycharm://open?file=/Users/meshaalmouawad/AI-Powered_KPI_Extractor_Interactive_Bluebook_Generator/sample_project/ana_kpi.hdbview&line=0" target="_blank" class="btn btn-pycharm">PyCharm</a>
       <a href="/edit?kpi=kpi%20flare%20recovery%20pct" target="_blank" class="btn btn-edit">Edit</a>
    </div>
 
@@ -46,7 +46,7 @@ kpi flare recovery pct
          </tr>
          <tr>
             <td>Objective</td>
-            <td><ul><li>The objective of this KPI is to minimize gas flaring by maximizing the recovery of gas</li><li>thereby enhancing operational efficiency and reducing environmental impact</li><li>Reduce flaring and emissions by improving recovery system reliability and operation</li></ul></td>
+            <td><ul><li>The objective of this KPI is to maximize the recovery of gas during flaring events</li><li>thereby minimizing waste and enhancing operational efficiency while reducing environmental impact</li><li>Reduce flaring and emissions by improving recovery system reliability and operation</li></ul></td>
          </tr>
          <tr>
             <td>Formula</td>
@@ -59,10 +59,10 @@ kpi flare recovery pct
          <tr>
             <td>Generation time</td>
             <td>
-               0.0s (AI 0.0s + Render 0.0s)
+               11.3s (AI 11.3s + Render 0.0s)
                <div style="font-size: 12px; color: #6b7280; margin-top: 4px;">
-                  Total: 0.001s
-                  • AI: 0.001s
+                  Total: 11.258s
+                  • AI: 11.258s
                   • Render: 0.0s
                </div>
             </td>
@@ -90,11 +90,11 @@ kpi flare recovery pct
          </tr>
          <tr>
             <td>Reporting Source</td>
-            <td>Data for this KPI is typically sourced from operational reports and gas recovery system monitoring.</td>
+            <td>Data for this KPI is typically sourced from operational reports and gas recovery system monitoring tools.</td>
          </tr>
          <tr>
             <td>Comments</td>
-            <td>A higher flare recovery percentage indicates better performance in gas management and contributes to reduced greenhouse gas emissions.</td>
+            <td>A higher flare recovery percentage indicates better performance in gas management and a commitment to reducing flaring, which is crucial for meeting regulatory requirements and corporate sustainability goals.</td>
          </tr>
       </tbody>
    </table>

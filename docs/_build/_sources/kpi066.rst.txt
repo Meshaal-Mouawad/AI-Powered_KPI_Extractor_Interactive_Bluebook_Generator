@@ -61,8 +61,8 @@ KPI066
             <td>
                1m 25s (AI 1m 25s + Render 0.0s)
                <div style="font-size: 12px; color: #6b7280; margin-top: 4px;">
-                  Total: 84.765s
-                  • AI: 84.765s
+                  Total: 84.565s
+                  • AI: 84.565s
                   • Render: 0.0s
                </div>
             </td>

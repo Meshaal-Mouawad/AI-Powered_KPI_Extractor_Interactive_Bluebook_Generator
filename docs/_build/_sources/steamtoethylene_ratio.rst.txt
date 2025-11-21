@@ -42,16 +42,16 @@ Steam-to-Ethylene Ratio
       <tbody>
          <tr>
             <td>Description</td>
-            <td><ul><li>The Steam-to-Ethylene Ratio is a key performance indicator that measures the amount of steam used in the production of ethylene</li><li>It provides insight into the efficiency of the steam utilization in the ethylene production process</li></ul></td>
+            <td><ul><li>Steam-to-Ethylene Ratio is a key performance indicator used to assess process efficiency and operational performance</li></ul></td>
          </tr>
          <tr>
             <td>Objective</td>
-            <td><ul><li>The objective of monitoring the Steam-to-Ethylene Ratio is to optimize the use of steam in ethylene production</li><li>thereby improving energy efficiency and reducing operational costs</li></ul></td>
+            <td><ul><li>The objective of Steam-to-Ethylene Ratio is to provide a clear measure that supports monitoring</li><li>decision making</li><li>and continuous improvement</li></ul></td>
          </tr>
          <tr>
             <td>Formula</td>
             <td>
-               <p>The ratio is calculated by dividing the volume of steam used by the volume of ethylene produced, ensuring that the ethylene value is not zero to avoid division errors.</p>
+               <p>Calculated directly from the inputs found in the code implementation.</p>
                <p>See code context for implementation details.</p>
             </td>
          </tr>
@@ -59,10 +59,10 @@ Steam-to-Ethylene Ratio
          <tr>
             <td>Generation time</td>
             <td>
-               0.0s (AI 0.0s + Render 0.0s)
+               1m 7s (AI 1m 7s + Render 0.0s)
                <div style="font-size: 12px; color: #6b7280; margin-top: 4px;">
-                  Total: 0.001s
-                  • AI: 0.001s
+                  Total: 66.595s
+                  • AI: 66.595s
                   • Render: 0.0s
                </div>
             </td>
@@ -78,23 +78,23 @@ Steam-to-Ethylene Ratio
          </tr>
          <tr>
             <td>Used in KPI(s)</td>
-            <td><ul><li>This KPI is used in evaluating the efficiency of ethylene production processes and can inform decisions related to process optimization and resource allocation</li></ul></td>
+            <td><ul><li>This KPI can serve as an input to higher-level operational and performance dashboards</li></ul></td>
          </tr>
          <tr>
             <td>Input Measure</td>
-            <td><ul><li>The input measures for this KPI are the volumes of steam and ethylene produced during the manufacturing process</li></ul></td>
+            <td><ul><li>Derived from the variables used in the code calculation for this KPI</li></ul></td>
          </tr>
          <tr>
             <td>Unit of Measure</td>
-            <td>The unit of measure for the Steam-to-Ethylene Ratio is dimensionless, as it is a ratio of two volumetric quantities.</td>
+            <td>ratio (dimensionless)</td>
          </tr>
          <tr>
             <td>Reporting Source</td>
-            <td>The data for this KPI is typically sourced from production reports and operational data collected during the ethylene manufacturing process.</td>
+            <td>Operations data sources such as historians, SCADA/DCS tags, and production logs.</td>
          </tr>
          <tr>
             <td>Comments</td>
-            <td>A higher Steam-to-Ethylene Ratio may indicate excessive steam usage, which could lead to increased costs and reduced efficiency, while a lower ratio suggests better steam utilization.</td>
+            <td>No additional comments or special considerations were provided for this KPI.</td>
          </tr>
       </tbody>
    </table>

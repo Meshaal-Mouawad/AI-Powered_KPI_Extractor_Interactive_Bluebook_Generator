@@ -59,10 +59,10 @@ KPI182
          <tr>
             <td>Generation time</td>
             <td>
-               1m 26s (AI 1m 26s + Render 0.0s)
+               1m 25s (AI 1m 25s + Render 0.0s)
                <div style="font-size: 12px; color: #6b7280; margin-top: 4px;">
-                  Total: 85.612s
-                  • AI: 85.612s
+                  Total: 84.953s
+                  • AI: 84.953s
                   • Render: 0.0s
                </div>
             </td>

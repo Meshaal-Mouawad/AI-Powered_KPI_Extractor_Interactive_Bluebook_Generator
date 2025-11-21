@@ -42,16 +42,16 @@ KPI069
       <tbody>
          <tr>
             <td>Description</td>
-            <td><ul><li>KPI069 measures the percentage of orders that are delivered on time relative to the total number of orders placed</li><li>This KPI provides insight into the efficiency and reliability of the service provided</li></ul></td>
+            <td><ul><li>KPI069 is a key performance indicator used to assess process efficiency and operational performance</li></ul></td>
          </tr>
          <tr>
             <td>Objective</td>
-            <td><ul><li>The objective of KPI069 is to enhance customer satisfaction by ensuring timely delivery of orders</li><li>thereby improving overall service quality</li></ul></td>
+            <td><ul><li>The objective of KPI069 is to provide a clear measure that supports monitoring</li><li>decision making</li><li>and continuous improvement</li></ul></td>
          </tr>
          <tr>
             <td>Formula</td>
             <td>
-               <p>The service factor is calculated by dividing the total number of on-time orders by the total number of orders, then multiplying the result by 100 to express it as a percentage.</p>
+               <p>Calculated directly from the inputs found in the code implementation.</p>
                <div class="math-equation">$$ \mathit{Service\,Factor} = \frac{\mathit{Sum(On\,Time\,Orders)}}{\mathit{Sum(Total\,Orders)}} \times 100 $$</div><ul><li><i>Sum(On Time Orders):</i> The numerator of the fraction.</li><li><i>Sum(Total Orders):</i> The denominator of the fraction.</li></ul>
             </td>
          </tr>
@@ -59,10 +59,10 @@ KPI069
          <tr>
             <td>Generation time</td>
             <td>
-               1m 14s (AI 1m 14s + Render 0.0s)
+               47.5s (AI 47.5s + Render 0.0s)
                <div style="font-size: 12px; color: #6b7280; margin-top: 4px;">
-                  Total: 74.032s
-                  • AI: 74.032s
+                  Total: 47.451s
+                  • AI: 47.45s
                   • Render: 0.0s
                </div>
             </td>
@@ -70,31 +70,31 @@ KPI069
 
          <tr>
             <td>Extraction rate %</td>
-            <td>100.0%</td>
+            <td>88.9%</td>
          </tr>
          <tr>
             <td>Error rate %</td>
-            <td>0.0%</td>
+            <td>11.1%</td>
          </tr>
          <tr>
             <td>Used in KPI(s)</td>
-            <td><ul><li>KPI069 is utilized in performance assessments related to order fulfillment and customer service metrics</li></ul></td>
+            <td><ul><li>This KPI can serve as an input to higher-level operational and performance dashboards</li></ul></td>
          </tr>
          <tr>
             <td>Input Measure</td>
-            <td><ul><li>The input measures for this KPI include the count of on-time orders and the total count of orders processed</li></ul></td>
+            <td><ul><li>Derived from the variables used in the code calculation for this KPI</li></ul></td>
          </tr>
          <tr>
             <td>Unit of Measure</td>
-            <td>The unit of measure for KPI069 is expressed as a percentage.</td>
+            <td>%</td>
          </tr>
          <tr>
             <td>Reporting Source</td>
-            <td>The data for KPI069 is sourced from the orders database, which tracks all order transactions and their respective delivery statuses.</td>
+            <td>Operations data sources such as historians, SCADA/DCS tags, and production logs.</td>
          </tr>
          <tr>
             <td>Comments</td>
-            <td>A higher percentage in KPI069 indicates better service performance, while a lower percentage may highlight areas needing improvement in logistics and order management.</td>
+            <td>No additional comments or special considerations were provided for this KPI.</td>
          </tr>
       </tbody>
    </table>
