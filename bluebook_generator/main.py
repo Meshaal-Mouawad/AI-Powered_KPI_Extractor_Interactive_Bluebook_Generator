@@ -5,6 +5,7 @@ import time
 import subprocess
 from pathlib import Path
 from .kpi_extractor import find_kpis_in_directory
+
 # Replace brittle name import with a robust module import
 try:
     from .ai_generator import generate_kpi_details
@@ -12,17 +13,21 @@ except Exception:
     # Fallback ensures the module loads even if symbol export is delayed,
     # and raises a clearer error if the function is truly missing.
     import importlib
+
     _ai = importlib.import_module(".ai_generator", package=__package__)
     if not hasattr(_ai, "generate_kpi_details"):
-        raise ImportError("bluebook_generator.ai_generator.generate_kpi_details is not defined.")
+        raise ImportError(
+            "bluebook_generator.ai_generator.generate_kpi_details is not defined."
+        )
     generate_kpi_details = getattr(_ai, "generate_kpi_details")
 
 # Public API from this module
 __all__ = ["generate_bluebook"]
 
 ROOT_DIR = Path(__file__).parent.parent
-DOCS_SOURCE_DIR = ROOT_DIR / 'docs'
-TEMPLATE_DIR = ROOT_DIR / 'templates'
+DOCS_SOURCE_DIR = ROOT_DIR / "docs"
+TEMPLATE_DIR = ROOT_DIR / "templates"
+
 
 def _sanitize_text(text: str) -> str:
     """
@@ -45,8 +50,9 @@ def _sanitize_text(text: str) -> str:
 
     return s
 
+
 # Public API from this module
-import json
+
 
 def format_text_as_html_list(text: str) -> str:
     """Takes plain text and formats it as an HTML <ul> list.
@@ -64,13 +70,14 @@ def format_text_as_html_list(text: str) -> str:
         return f"<p>{safe}</p>"
 
     # Split into short bullet items by sentence/phrase boundaries
-    items = re.split(r'[.;,]\s*', safe)
+    items = re.split(r"[.;,]\s*", safe)
     items = [i.strip() for i in items if i and len(i.strip()) > 1]
 
     if not items:
         return f"<p>{safe}</p>"
 
     return "<ul>" + "".join(f"<li>{i}</li>" for i in items) + "</ul>"
+
 
 def _extract_function_block(code_context: str, anchor_line_number: int):
     """
@@ -102,7 +109,7 @@ def _extract_function_block(code_context: str, anchor_line_number: int):
                     end = getattr(last, "end_lineno", getattr(last, "lineno", start))
                 if start <= anchor_line_number <= end:
                     # Slice exactly this function
-                    return "\n".join(lines[start - 1:end]), start - 1
+                    return "\n".join(lines[start - 1 : end]), start - 1
         # If no function covered anchor, fall back
     except Exception:
         pass
@@ -141,12 +148,15 @@ def _extract_function_block(code_context: str, anchor_line_number: int):
             break
 
         # Hard stop on common top-level constructs
-        if indent == 0 and (stripped.startswith("#") or stripped.startswith("if __name__")):
+        if indent == 0 and (
+            stripped.startswith("#") or stripped.startswith("if __name__")
+        ):
             end_idx = j
             break
 
     scoped = "\n".join(lines[start_idx:end_idx])
     return scoped, start_idx
+
 
 def generate_formula_from_code(code_context: str) -> dict:
     """
@@ -165,135 +175,20 @@ def generate_formula_from_code(code_context: str) -> dict:
     ctx = code_context
 
     # 0) Helpers
-    def latex_escape(s: str) -> str:
-        # Escape LaTeX special chars to prevent MathJax brace/parse errors
-        # Order matters: backslash first
-        repl = [
-            ('\\', r'\\'),
-            ('{', r'\{'),
-            ('}', r'\}'),
-            ('#', r'\#'),
-            ('$', r'\$'),
-            ('%', r'\%'),
-            ('&', r'\&'),
-            ('_', r'\_'),
-            ('^', r'\^'),
-            ('~', r'\~'),
-        ]
-        out = s
-        for a, b in repl:
-            out = out.replace(a, b)
-        return out
-
-    def sanitize_token(t: str) -> str:
-        t = t.strip()
-        t = re.sub(r'[:\.]+', ' ', t)                 # namespaces/members
-        t = re.sub(r'([a-z0-9])([A-Z])', r'\1 \2', t) # camelCase
-        t = t.replace('_', ' ')
-        t = re.sub(r'\s+', ' ', t).strip()
-        t = latex_escape(t)
-        return t.title()
-
-    def L(v: str) -> str:
-        return r'\mathit{{{}}}'.format(v.replace(' ', r'\,'))
-
-    def strip_inline_comments(line: str) -> str:
-        l = line
-        l = re.split(r"--", l, maxsplit=1)[0]
-        l = re.split(r"//", l, maxsplit=1)[0]
-        l = re.split(r"(?<!:)\s'", l, maxsplit=1)[0]
-        l = re.split(r"#", l, maxsplit=1)[0]
-        return l.rstrip(" ;\t")
-
-    # Remove outer SQL wrappers like CAST(...), COALESCE(...), NULLIF(...), parentheses
-    def unwrap_sql_expr(expr: str) -> str:
-        e = expr.strip()
-        # FIX: use the correct group name "inner" consistently
-        m = re.search(r"(?is)\bCAST\s*\(\s*(?P<inner>.+?)\s+AS\s+[^\)]+\)", e)
-        if m:
-            e = m.group("inner").strip()
-        m = re.search(r"(?is)\bCOALESCE\s*\(\s*(?P<inner>.+?)\s*,\s*.+?\)", e)
-        if m:
-            e = m.group("inner").strip()
-        m = re.search(r"(?is)\bNULLIF\s*\(\s*(?P<inner>.+?)\s*,\s*.+?\)", e)
-        if m:
-            e = m.group("inner").strip()
-        e = e.strip()
-        if e.startswith("(") and e.endswith(")"):
-            e = e[1:-1].strip()
-        return e
-    # Clean lines for single-line patterns
-    cleaned = []
-    for raw in ctx.splitlines():
-        s = raw.strip()
-        if not s:
-            continue
-        if s.startswith(("#", "--", "//", "/*", "*", "'")):
-            continue
-        cleaned.append(strip_inline_comments(raw).strip())
-
-    def build_html(result_var: str, expression: str, notes: list[str] | None = None) -> dict:
-        rv = sanitize_token(result_var)
-        expr = expression.strip().rstrip(";")
-
-        # CASE ... END → try to pull the mathy part
-        m_case = re.search(r"(?is)\bcase\b.*?\bend\b", expr)
-        if m_case:
-            inner = m_case.group(0)
-            m_inner = re.search(r"\((.*?)\s*/\s*(.*?)\)\s*\*\s*100", inner, flags=re.S)
-            if not m_inner:
-                m_inner = re.search(r"([A-Za-z0-9_().\s]+)\s*/\s*([A-Za-z0-9_().\s]+)", inner, flags=re.S)
-            if m_inner:
-                expr = m_inner.group(0)
-
-        expr = unwrap_sql_expr(expr)
-
-        latex_str = ""
-        notes = notes or []
-
-        # (a/b)*100 or 100*(a/b)
-        m = re.search(r"\((.*?)\s*/\s*(.*?)\)\s*\*\s*100", expr)
-        if m:
-            num, den = [sanitize_token(s) for s in m.groups()]
-            latex_str = r"{} = \frac{{{}}}{{{}}} \times 100".format(L(rv), L(num), L(den))
-            notes += [f"<i>{num}:</i> The numerator of the fraction.", f"<i>{den}:</i> The denominator of the fraction."]
-        elif re.search(r"100\s*\*\s*\((.*?)\s*/\s*(.*?)\)", expr):
-            m = re.search(r"100\s*\*\s*\((.*?)\s*/\s*(.*?)\)", expr)
-            num, den = [sanitize_token(s) for s in m.groups()]
-            latex_str = r"{} = 100 \times \frac{{{}}}{{{}}}".format(L(rv), L(num), L(den))
-            notes += [f"<i>{num}:</i> The numerator of the fraction.", f"<i>{den}:</i> The denominator of the fraction."]
-        # a / b
-        elif '/' in expr and not re.search(r'//', expr):
-            parts = [p.strip() for p in expr.split('/', 1)]
-            if len(parts) == 2 and parts[0] and parts[1]:
-                a, b = sanitize_token(parts[0]), sanitize_token(parts[1])
-                latex_str = r"{} = \frac{{{}}}{{{}}}".format(L(rv), L(a), L(b))
-        # product
-        elif '*' in expr:
-            parts = [sanitize_token(p) for p in re.split(r'\*', expr)]
-            if len(parts) >= 2:
-                latex_str = r"{} = {}".format(L(rv), r' \times '.join([L(p) for p in parts]))
-        # subtraction / addition
-        elif '-' in expr:
-            parts = [sanitize_token(p) for p in expr.split('-', 1)]
-            if len(parts) == 2:
-                latex_str = r"{} = {} - {}".format(L(rv), L(parts[0]), L(parts[1]))
-        elif '+' in expr:
-            parts = [sanitize_token(p) for p in expr.split('+', 1)]
-            if len(parts) == 2:
-                latex_str = r"{} = {} + {}".format(L(rv), L(parts[0]), L(parts[1]))
-
-        if latex_str:
-            notes_html = "<ul>" + "".join(f"<li>{n}</li>" for n in notes) + "</ul>" if notes else ""
-            return {"formula_html": f'<div class="math-equation">$$ {latex_str} $$</div>{notes_html}'}
-        return {"formula_html": "<p>See code context for implementation details.</p>"}
 
     # Helpers (keep your latest versions; shown trimmed here)
     def latex_escape(s: str) -> str:
         repl = [
-            ('\\', r'\\'), ('{', r'\{'), ('}', r'\}'), ('#', r'\#'),
-            ('$', r'\$'), ('%', r'\%'), ('&', r'\&'), ('_', r'\_'),
-            ('^', r'\^'), ('~', r'\~'),
+            ("\\", r"\\"),
+            ("{", r"\{"),
+            ("}", r"\}"),
+            ("#", r"\#"),
+            ("$", r"\$"),
+            ("%", r"\%"),
+            ("&", r"\&"),
+            ("_", r"\_"),
+            ("^", r"\^"),
+            ("~", r"\~"),
         ]
         out = s
         for a, b in repl:
@@ -302,35 +197,39 @@ def generate_formula_from_code(code_context: str) -> dict:
 
     def sanitize_token(t: str) -> str:
         t = t.strip()
-        t = re.sub(r'[:\.]+', ' ', t)
-        t = re.sub(r'([a-z0-9])([A-Z])', r'\1 \2', t)
-        t = t.replace('_', ' ')
-        t = re.sub(r'\s+', ' ', t).strip()
+        t = re.sub(r"[:\.]+", " ", t)
+        t = re.sub(r"([a-z0-9])([A-Z])", r"\1 \2", t)
+        t = t.replace("_", " ")
+        t = re.sub(r"\s+", " ", t).strip()
         t = latex_escape(t)
         return t.title()
 
     def L(v: str) -> str:
-        return r'\mathit{{{}}}'.format(v.replace(' ', r'\,'))
+        return r"\mathit{{{}}}".format(v.replace(" ", r"\,"))
 
     def strip_inline_comments(line: str) -> str:
-        l = line
-        l = re.split(r"--", l, maxsplit=1)[0]
-        l = re.split(r"//", l, maxsplit=1)[0]
-        l = re.split(r"(?<!:)\s'", l, maxsplit=1)[0]
-        l = re.split(r"#", l, maxsplit=1)[0]
-        return l.rstrip(" ;\t")
+        cleaned = line  # Rename from 'l' to 'cleaned'
+        cleaned = re.split(r"--", cleaned, maxsplit=1)[0]
+        cleaned = re.split(r"//", cleaned, maxsplit=1)[0]
+        cleaned = re.split(r"(?<!:)\s'", cleaned, maxsplit=1)[0]
+        cleaned = re.split(r"#", cleaned, maxsplit=1)[0]
+        return cleaned.rstrip(" ;\t")
 
     def unwrap_sql_expr(expr: str) -> str:
         e = expr.strip()
         # Use a consistent group name 'inner' and access the same
         m = re.search(r"(?is)\\bCAST\\s*\\(\\s*(?P<inner>.+?)\\s+AS\\s+[^\\)]+\\)", e)
-        if m: e = m.group("inner").strip()
+        if m:
+            e = m.group("inner").strip()
         m = re.search(r"(?is)\\bCOALESCE\\s*\\(\\s*(?P<inner>.+?)\\s*,\\s*.+?\\)", e)
-        if m: e = m.group("inner").strip()
+        if m:
+            e = m.group("inner").strip()
         m = re.search(r"(?is)\\bNULLIF\\s*\\(\\s*(?P<inner>.+?)\\s*,\\s*.+?\\)", e)
-        if m: e = m.group("inner").strip()
+        if m:
+            e = m.group("inner").strip()
         e = e.strip()
-        if e.startswith("(") and e.endswith(")"): e = e[1:-1].strip()
+        if e.startswith("(") and e.endswith(")"):
+            e = e[1:-1].strip()
         return e
 
     # NEW: safe group accessor to avoid "no such group" errors
@@ -350,7 +249,9 @@ def generate_formula_from_code(code_context: str) -> dict:
             continue
         cleaned.append(strip_inline_comments(raw).strip())
 
-    def build_html(result_var: str, expression: str, notes: list[str] | None = None) -> dict:
+    def build_html(
+        result_var: str, expression: str, notes: list[str] | None = None
+    ) -> dict:
         rv = sanitize_token(result_var)
         expr = unwrap_sql_expr(expression.strip().rstrip(";"))
         notes = notes or []
@@ -360,41 +261,62 @@ def generate_formula_from_code(code_context: str) -> dict:
         m = re.search(r"\((.*?)\s*/\s*(.*?)\)\s*\*\s*100", expr)
         if m:
             num, den = [sanitize_token(s) for s in m.groups()]
-            latex_str = r"{} = \frac{{{}}}{{{}}} \times 100".format(L(rv), L(num), L(den))
-            notes += [f"<i>{num}:</i> The numerator of the fraction.", f"<i>{den}:</i> The denominator of the fraction."]
+            latex_str = r"{} = \frac{{{}}}{{{}}} \times 100".format(
+                L(rv), L(num), L(den)
+            )
+            notes += [
+                f"<i>{num}:</i> The numerator of the fraction.",
+                f"<i>{den}:</i> The denominator of the fraction.",
+            ]
         elif re.search(r"100\s*\*\s*\((.*?)\s*/\s*(.*?)\)", expr):
             m = re.search(r"100\s*\*\s*\((.*?)\s*/\s*(.*?)\)", expr)
             num, den = [sanitize_token(s) for s in m.groups()]
-            latex_str = r"{} = 100 \times \frac{{{}}}{{{}}}".format(L(rv), L(num), L(den))
-            notes += [f"<i>{num}:</i> The numerator of the fraction.", f"<i>{den}:</i> The denominator of the fraction."]
+            latex_str = r"{} = 100 \times \frac{{{}}}{{{}}}".format(
+                L(rv), L(num), L(den)
+            )
+            notes += [
+                f"<i>{num}:</i> The numerator of the fraction.",
+                f"<i>{den}:</i> The denominator of the fraction.",
+            ]
         # a / b
-        elif '/' in expr and not re.search(r'//', expr):
-            parts = [p.strip() for p in expr.split('/', 1)]
+        elif "/" in expr and not re.search(r"//", expr):
+            parts = [p.strip() for p in expr.split("/", 1)]
             if len(parts) == 2 and parts[0] and parts[1]:
                 a, b = sanitize_token(parts[0]), sanitize_token(parts[1])
                 latex_str = r"{} = \frac{{{}}}{{{}}}".format(L(rv), L(a), L(b))
         # product
-        elif '*' in expr:
-            parts = [sanitize_token(p) for p in re.split(r'\*', expr)]
+        elif "*" in expr:
+            parts = [sanitize_token(p) for p in re.split(r"\*", expr)]
             if len(parts) >= 2:
-                latex_str = r"{} = {}".format(L(rv), r' \times '.join([L(p) for p in parts]))
+                latex_str = r"{} = {}".format(
+                    L(rv), r" \times ".join([L(p) for p in parts])
+                )
         # subtraction / addition
-        elif '-' in expr:
-            parts = [sanitize_token(p) for p in expr.split('-', 1)]
+        elif "-" in expr:
+            parts = [sanitize_token(p) for p in expr.split("-", 1)]
             if len(parts) == 2:
                 latex_str = r"{} = {} - {}".format(L(rv), L(parts[0]), L(parts[1]))
-        elif '+' in expr:
-            parts = [sanitize_token(p) for p in expr.split('+', 1)]
+        elif "+" in expr:
+            parts = [sanitize_token(p) for p in expr.split("+", 1)]
             if len(parts) == 2:
                 latex_str = r"{} = {} + {}".format(L(rv), L(parts[0]), L(parts[1]))
 
         if latex_str:
-            notes_html = "<ul>" + "".join(f"<li>{n}</li>" for n in notes) + "</ul>" if notes else ""
-            return {"formula_html": f'<div class="math-equation">$$ {latex_str} $$</div>{notes_html}'}
+            notes_html = (
+                "<ul>" + "".join(f"<li>{n}</li>" for n in notes) + "</ul>"
+                if notes
+                else ""
+            )
+            return {
+                "formula_html": f'<div class="math-equation">$$ {latex_str} $$</div>{notes_html}'
+            }
         return {"formula_html": "<p>See code context for implementation details.</p>"}
 
     # 1) DAX multi-line
-    m = re.search(r"(?is)\bDEFINE\s+MEASURE\s+[^\[]*\[(?P<name>[^\]]+)\]\s*=\s*(?P<body>.+?)(?:$|\n\s*\n)", ctx)
+    m = re.search(
+        r"(?is)\bDEFINE\s+MEASURE\s+[^\[]*\[(?P<name>[^\]]+)\]\s*=\s*(?P<body>.+?)(?:$|\n\s*\n)",
+        ctx,
+    )
     if m:
         name = gd(m, "name")
         body = gd(m, "body")
@@ -404,11 +326,19 @@ def generate_formula_from_code(code_context: str) -> dict:
             return build_html(name, expr)
 
     # 1b) DAX simple
-    m = re.search(r"(?is)^(?P<name>[A-Za-z0-9 _\[\]\.%]+?)\s*=\s*(?P<expr>.+?)(?:$|\n\s*\n)", ctx, flags=re.M)
+    m = re.search(
+        r"(?is)^(?P<name>[A-Za-z0-9 _\[\]\.%]+?)\s*=\s*(?P<expr>.+?)(?:$|\n\s*\n)",
+        ctx,
+        flags=re.M,
+    )
     if m:
         name = gd(m, "name")
         expr = gd(m, "expr")
-        if name and expr and not re.match(r"\s*(VAR|RETURN|EVALUATE)\b", name, flags=re.I):
+        if (
+            name
+            and expr
+            and not re.match(r"\s*(VAR|RETURN|EVALUATE)\b", name, flags=re.I)
+        ):
             return build_html(name, expr)
 
     # 2) SQL/TSQL/HANA: SELECT ... <expr> AS <alias> ... FROM ...
@@ -428,9 +358,9 @@ def generate_formula_from_code(code_context: str) -> dict:
             if matches:
                 last = matches[-1]
                 alias = gd(last, "alias")
-                expr  = gd(last, "expr")
+                expr = gd(last, "expr")
                 if alias and expr:
-                    alias = re.sub(r'^[\[\("\']|[\]\)"\']$', '', alias)
+                    alias = re.sub(r'^[\[\("\']|[\]\)"\']$', "", alias)
                     return build_html(alias, expr)
 
     # 2b) SQL fallback: any "<expr> AS <alias>" anywhere
@@ -442,40 +372,53 @@ def generate_formula_from_code(code_context: str) -> dict:
     if matches:
         last = matches[-1]
         alias = gd(last, "alias")
-        expr  = gd(last, "expr")
+        expr = gd(last, "expr")
         if alias and expr:
-            alias = re.sub(r'^[\[\("\']|[\]\)"\']$', '', alias)
+            alias = re.sub(r'^[\[\("\']|[\]\)"\']$', "", alias)
             # Prefer percent-style sub-expr if present
-            m_pct = re.search(r"(?is)100\s*\*\s*\((.+?/.+?)\)|\((.+?/.+?)\)\s*\*\s*100", expr)
+            m_pct = re.search(
+                r"(?is)100\s*\*\s*\((.+?/.+?)\)|\((.+?/.+?)\)\s*\*\s*100", expr
+            )
             if m_pct:
                 expr = (m_pct.group(1) or m_pct.group(2)).strip()
             else:
                 # Prefer last division inside expr
-                divs = list(re.finditer(r"(?is)([A-Za-z0-9_().\s]+)\s*/\s*([A-Za-z0-9_().\s]+)", expr))
+                divs = list(
+                    re.finditer(
+                        r"(?is)([A-Za-z0-9_().\s]+)\s*/\s*([A-Za-z0-9_().\s]+)", expr
+                    )
+                )
                 if divs:
                     a, b = divs[-1].groups()
                     expr = f"{a.strip()} / {b.strip()}"
             return build_html(alias, expr)
 
     # 2c) Strong T‑SQL percent fallback (covers CAST/NULLIF with or without AS match)
-    m_tsql_pct = re.search(r"(?is)100\s*\*\s*\(([^)]+?/[^)]+?)\)|\(([^)]+?/[^)]+?)\)\s*\*\s*100", ctx)
+    m_tsql_pct = re.search(
+        r"(?is)100\s*\*\s*\(([^)]+?/[^)]+?)\)|\(([^)]+?/[^)]+?)\)\s*\*\s*100", ctx
+    )
     if m_tsql_pct:
         expr_inner = (m_tsql_pct.group(1) or m_tsql_pct.group(2) or "").strip()
         if expr_inner:
-            m_alias_near = re.search(r"(?is)\bAS\s+(\[[^\]]+\]|\"[^\"]+\"|'[^']+'|[A-Za-z_][A-Za-z0-9_]*)", ctx)
+            m_alias_near = re.search(
+                r"(?is)\bAS\s+(\[[^\]]+\]|\"[^\"]+\"|'[^']+'|[A-Za-z_][A-Za-z0-9_]*)",
+                ctx,
+            )
             result_name = "Result"
             if m_alias_near:
                 alias = m_alias_near.group(1)
-                result_name = re.sub(r'^[\[\("\']|[\]\)"\']$', '', alias).strip() or result_name
+                result_name = (
+                    re.sub(r'^[\[\("\']|[\]\)"\']$', "", alias).strip() or result_name
+                )
             return build_html(result_name, expr_inner)
 
     # 2d) CAST(...) AS <alias> direct fallback (extract inner first arg of CAST)
     m_cast_as = re.search(
         r'(?is)CAST\s*\(\s*(?P<inner>.+?)\s+AS\s+[^\)]+\)\s+AS\s+(?P<alias>\[[^\]]+\]|"[^"]+"|\'[^\']+\'|[A-Za-z_][A-Za-z0-9_]*)',
-        ctx
+        ctx,
     )
     if m_cast_as:
-        alias = re.sub(r'^[\[\("\']|[\]\)"\']$', '', m_cast_as.group("alias")).strip()
+        alias = re.sub(r'^[\[\("\']|[\]\)"\']$', "", m_cast_as.group("alias")).strip()
         expr = unwrap_sql_expr(m_cast_as.group("inner"))
         if alias and expr:
             return build_html(alias, expr)
@@ -494,20 +437,25 @@ def generate_formula_from_code(code_context: str) -> dict:
 
     # 4) assignment with =
     for line in ctx.splitlines():
-        l = strip_inline_comments(line.strip())
-        if not l or l.startswith(("#", "--", "//", "/*", "*", "'")):
+        cleaned = strip_inline_comments(line.strip())
+        if not cleaned or cleaned.startswith(("#", "--", "//", "/*", "*", "'")):
             continue
-        if ':=' in l:
+        if ":=" in cleaned:  # FIXED
             continue
-        if '=' in l and not re.search(r"(?i)\b(create|def|function|procedure|view)\b", l):
-            lhs_rhs = l.split('=', 1)
+        if "=" in cleaned and not re.search(  # FIXED
+            r"(?i)\b(create|def|function|procedure|view)\b",
+            cleaned,  # FIXED
+        ):
+            lhs_rhs = cleaned.split("=", 1)  # FIXED
             if len(lhs_rhs) == 2:
                 lhs, rhs = [p.strip() for p in lhs_rhs]
-                if any(op in rhs for op in ('*', '/', '+', '-')):
+                if any(op in rhs for op in ("*", "/", "+", "-")):
                     return build_html(lhs, rhs)
 
     # 4b) Python/any-language assignment with math on the same line (take last match)
-    assigns = list(re.finditer(r"(?im)^\s*([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(?P<expr>.+)$", ctx))
+    assigns = list(
+        re.finditer(r"(?im)^\s*([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(?P<expr>.+)$", ctx)
+    )
     if assigns:
         for mm in reversed(assigns):
             expr = mm.group("expr").strip()
@@ -516,7 +464,9 @@ def generate_formula_from_code(code_context: str) -> dict:
                 return build_html(lhs, expr)
 
     # 4c) ABAP assignment ending with period (e.g., lv_rate = (...) * 100.)
-    m_abap = re.search(r"(?im)^\s*([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(?P<expr>.+?)\.\s*$", ctx)
+    m_abap = re.search(
+        r"(?im)^\s*([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(?P<expr>.+?)\.\s*$", ctx
+    )
     if m_abap:
         lhs = m_abap.group(1)
         expr = m_abap.group("expr").strip()
@@ -525,12 +475,12 @@ def generate_formula_from_code(code_context: str) -> dict:
 
     # 5) IEC ST assignment :=
     for line in ctx.splitlines():
-        l = strip_inline_comments(line.strip())
-        if ':=' in l:
-            lhs_rhs = l.split(':=', 1)
+        cleaned = strip_inline_comments(line.strip())  # Rename from 'l' to 'cleaned'
+        if ":=" in cleaned:
+            lhs_rhs = cleaned.split(":=", 1)
             if len(lhs_rhs) == 2:
                 lhs, rhs = [p.strip() for p in lhs_rhs]
-                if any(op in rhs for op in ('*', '/', '+', '-')):
+                if any(op in rhs for op in ("*", "/", "+", "-")):
                     return build_html(lhs, rhs)
 
     # 6) NEW: last-resort generic sweep — pick the last math-like line
@@ -539,7 +489,9 @@ def generate_formula_from_code(code_context: str) -> dict:
     result_name = "Result"
 
     # Prefer percent-style expressions first
-    pct = list(re.finditer(r"(?is)100\s*\*\s*\((.+?/.+?)\)|\((.+?/.+?)\)\s*\*\s*100", ctx))
+    pct = list(
+        re.finditer(r"(?is)100\s*\*\s*\((.+?/.+?)\)|\((.+?/.+?)\)\s*\*\s*100", ctx)
+    )
     if pct:
         grp = pct[-1].groups()
         expr = (grp[0] or grp[1] or "").strip()
@@ -548,7 +500,9 @@ def generate_formula_from_code(code_context: str) -> dict:
 
     # Next prefer divisions a / b
     if not candidate:
-        divs = list(re.finditer(r"(?is)([A-Za-z0-9_().\s]+)\s*/\s*([A-Za-z0-9_().\s]+)", ctx))
+        divs = list(
+            re.finditer(r"(?is)([A-Za-z0-9_().\s]+)\s*/\s*([A-Za-z0-9_().\s]+)", ctx)
+        )
         if divs:
             a, b = divs[-1].groups()
             candidate = f"{a.strip()} / {b.strip()}"
@@ -557,13 +511,19 @@ def generate_formula_from_code(code_context: str) -> dict:
     if candidate:
         # Try to use an alias or LHS nearby as the result variable
         #  - alias: "... AS some_name"
-        m_alias = re.search(r"(?is)\bAS\s+(\[[^\]]+\]|\"[^\"]+\"|'[^']+'|[A-Za-z_][A-Za-z0-9_]*)", ctx)
+        m_alias = re.search(
+            r"(?is)\bAS\s+(\[[^\]]+\]|\"[^\"]+\"|'[^']+'|[A-Za-z_][A-Za-z0-9_]*)", ctx
+        )
         if m_alias:
             alias = m_alias.group(1)
-            result_name = re.sub(r'^[\[\("\']|[\]\)"\']$', '', alias).strip() or result_name
+            result_name = (
+                re.sub(r'^[\[\("\']|[\]\)"\']$', "", alias).strip() or result_name
+            )
         else:
             # Look for a nearby assignment LHS like "name = ...", "name := ..."
-            m_lhs = re.search(r"(?is)^\s*([A-Za-z_][A-Za-z0-9_\.]*)\s*[:=]=?\s*.*$", ctx, flags=re.M)
+            m_lhs = re.search(
+                r"(?is)^\s*([A-Za-z_][A-Za-z0-9_\.]*)\s*[:=]=?\s*.*$", ctx, flags=re.M
+            )
             if m_lhs:
                 result_name = m_lhs.group(1)
 
@@ -571,8 +531,14 @@ def generate_formula_from_code(code_context: str) -> dict:
 
     return formula_data
 
- # add `ai_time_seconds` param
-def create_rst_file(kpi_data: dict, details: dict, template: jinja2.Template, ai_time_seconds: float | None = None):
+
+# add `ai_time_seconds` param
+def create_rst_file(
+    kpi_data: dict,
+    details: dict,
+    template: jinja2.Template,
+    ai_time_seconds: float | None = None,
+):
     """Generates and saves a .rst file for a single KPI (all languages)."""
     from html import escape
     import os
@@ -582,32 +548,41 @@ def create_rst_file(kpi_data: dict, details: dict, template: jinja2.Template, ai
 
     # 1) Find the KPI marker line within the provided code context (for line highlighting)
     kpi_line_in_context = 0
-    context_lines = (kpi_data.get('code_context') or '').split('\n')
-    kpi_name = kpi_data.get('name') or ''
+    context_lines = (kpi_data.get("code_context") or "").split("\n")
+    kpi_name = kpi_data.get("name") or ""
     for i, line in enumerate(context_lines):
-        if f"# KPI: {kpi_name}" in line or f"-- KPI: {kpi_name}" in line or f"' KPI: {kpi_name}" in line or f"/* KPI: {kpi_name}" in line:
+        if (
+            f"# KPI: {kpi_name}" in line
+            or f"-- KPI: {kpi_name}" in line
+            or f"' KPI: {kpi_name}" in line
+            or f"/* KPI: {kpi_name}" in line
+        ):
             kpi_line_in_context = i + 1
             break
-    kpi_data['context_line_number'] = kpi_line_in_context
+    kpi_data["context_line_number"] = kpi_line_in_context
 
     # 2) Determine file extension and possibly scope Python to function block
-    file_path = kpi_data.get('file_path') or ''
+    file_path = kpi_data.get("file_path") or ""
     _, ext = os.path.splitext(str(file_path).lower())
 
     if ext == ".py":
         # Scope to the function that contains the KPI marker for cleaner context
-        scoped_context, start_idx = _extract_function_block(kpi_data.get('code_context', ''), kpi_line_in_context)
-        kpi_data['code_context'] = scoped_context
+        scoped_context, start_idx = _extract_function_block(
+            kpi_data.get("code_context", ""), kpi_line_in_context
+        )
+        kpi_data["code_context"] = scoped_context
         # Recompute relative line number inside the scoped block
         if kpi_line_in_context > 0:
             rel = kpi_line_in_context - start_idx
-            kpi_data['context_line_number'] = rel if rel > 0 else 0
+            kpi_data["context_line_number"] = rel if rel > 0 else 0
         else:
-            kpi_data['context_line_number'] = 0
+            kpi_data["context_line_number"] = 0
         programmatic_formula = generate_formula_from_code(scoped_context)
     else:
         # Keep full context for SQL-like/ABAP/etc.
-        programmatic_formula = generate_formula_from_code(kpi_data.get('code_context', ''))
+        programmatic_formula = generate_formula_from_code(
+            kpi_data.get("code_context", "")
+        )
 
     # 3) Build final_details consistently for all languages
     final_details = {
@@ -615,7 +590,9 @@ def create_rst_file(kpi_data: dict, details: dict, template: jinja2.Template, ai
         "objective_html": format_text_as_html_list(details.get("objective", "")),
         "formula_description": escape(details.get("formula_description", "") or ""),
         "used_in_kpis_html": format_text_as_html_list(details.get("used_in_kpis", "")),
-        "input_measure_html": format_text_as_html_list(details.get("input_measure", "")),
+        "input_measure_html": format_text_as_html_list(
+            details.get("input_measure", "")
+        ),
         "unit_of_measure": escape(details.get("unit_of_measure", "") or ""),
         "reporting_source": escape(details.get("reporting_source", "") or ""),
         "comments": escape(details.get("comments", "") or ""),
@@ -649,8 +626,10 @@ def create_rst_file(kpi_data: dict, details: dict, template: jinja2.Template, ai
     filled = sum(1 for k in fields_to_check if _non_empty(final_details.get(k)))
 
     # Formula counts as filled only if we didn’t fall back to the generic placeholder
-    formula_html = (final_details.get("formula_html") or "")
-    formula_is_specific = bool(formula_html) and ("See code context" not in formula_html)
+    formula_html = final_details.get("formula_html") or ""
+    formula_is_specific = bool(formula_html) and (
+        "See code context" not in formula_html
+    )
     filled_total = filled + (1 if formula_is_specific else 0)
     possible_total = len(fields_to_check) + 1  # +1 for formula
 
@@ -683,20 +662,26 @@ def create_rst_file(kpi_data: dict, details: dict, template: jinja2.Template, ai
     # If an explicit LaTeX formula was provided in kpi_data, prefer it
     explicit_formula = kpi_data.get("formula")
     if explicit_formula:
-        final_details["formula_html"] = f'<div class="math-equation">$$ {explicit_formula} $$</div>'
+        final_details["formula_html"] = (
+            f'<div class="math-equation">$$ {explicit_formula} $$</div>'
+        )
 
     # 4) Compute safe filename and write the .rst file
-    safe_name = "".join(c for c in (kpi_name or '') if c.isalnum() or c in (' ', '_')).rstrip()
-    filename = (safe_name.replace(' ', '_').lower() or 'kpi') + '.rst'
+    safe_name = "".join(
+        c for c in (kpi_name or "") if c.isalnum() or c in (" ", "_")
+    ).rstrip()
+    filename = (safe_name.replace(" ", "_").lower() or "kpi") + ".rst"
     output_path = DOCS_SOURCE_DIR / filename
 
     content = template.render(kpi=kpi_data, details=final_details)
     output_path.parent.mkdir(parents=True, exist_ok=True)
-    with open(output_path, 'w', encoding='utf-8') as f:
+    with open(output_path, "w", encoding="utf-8") as f:
         f.write(content)
     return filename
 
-    #------------- Minimal index.rst writer -------------
+    # ------------- Minimal index.rst writer -------------
+
+
 def update_index_rst(page_filenames):
     """
     Write docs/index.rst with a toctree listing for the generated KPI pages.
@@ -717,8 +702,7 @@ def update_index_rst(page_filenames):
         "",
     ]
     # Add explicit filenames when provided
-    added_explicit = False
-    for fname in (page_filenames or []):
+    for fname in page_filenames or []:
         if not fname:
             continue
         try:
@@ -726,7 +710,6 @@ def update_index_rst(page_filenames):
             stem = os.path.splitext(base)[0]
             if stem:
                 lines.append(f"   {stem}")
-                added_explicit = True
         except Exception:
             continue
     # Always include wildcard to pick up any generated pages
@@ -736,7 +719,9 @@ def update_index_rst(page_filenames):
     with open(index_path, "w", encoding="utf-8") as f:
         f.write("\n".join(lines))
 
+
 # ------------- Public pipeline -------------
+
 
 def generate_bluebook(source_code_path: str):
     """
@@ -759,6 +744,7 @@ def generate_bluebook(source_code_path: str):
     build_dir = DOCS_SOURCE_DIR / "_build"
     if os.environ.get("CLEAN_BUILD") and build_dir.exists():
         import shutil
+
         shutil.rmtree(build_dir, ignore_errors=True)
         yield "Removed previous Sphinx _build directory (CLEAN_BUILD set)."
 
@@ -879,10 +865,17 @@ def generate_bluebook(source_code_path: str):
             jobs = os.environ.get("SPHINX_JOBS", "auto")
             cp = subprocess.run(
                 [
-                    "sphinx-build", "-j", jobs,
-                    "-b", "html", str(DOCS_SOURCE_DIR), str(DOCS_SOURCE_DIR / "_build")
+                    "sphinx-build",
+                    "-j",
+                    jobs,
+                    "-b",
+                    "html",
+                    str(DOCS_SOURCE_DIR),
+                    str(DOCS_SOURCE_DIR / "_build"),
                 ],
-                check=False, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                check=False,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
             )
             if cp.returncode == 0:
                 yield "Sphinx build successful."

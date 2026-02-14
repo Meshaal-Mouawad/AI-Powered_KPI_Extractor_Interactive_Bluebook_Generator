@@ -33,8 +33,8 @@ kpi flare recovery pct
 
    <div style="margin-bottom: 1.5em; display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
       <span style="font-size: 13px; font-weight: 500; color: #4a5568;">Open in:</span>
-      <a href="vscode://file//Users/meshaalmouawad/AI-Powered_KPI_Extractor_Interactive_Bluebook_Generator/sample_project/ana_kpi.hdbview:0" target="_blank" class="btn btn-vscode">VS Code</a>
-      <a href="pycharm://open?file=/Users/meshaalmouawad/AI-Powered_KPI_Extractor_Interactive_Bluebook_Generator/sample_project/ana_kpi.hdbview&line=0" target="_blank" class="btn btn-pycharm">PyCharm</a>
+      <a href="vscode://file//Users/meshaalmouawad/AI-Powered_KPI_Extractor_Interactive_Bluebook_Generator/sample_project_50/ana_kpi.hdbview:0" target="_blank" class="btn btn-vscode">VS Code</a>
+      <a href="pycharm://open?file=/Users/meshaalmouawad/AI-Powered_KPI_Extractor_Interactive_Bluebook_Generator/sample_project_50/ana_kpi.hdbview&line=0" target="_blank" class="btn btn-pycharm">PyCharm</a>
       <a href="/edit?kpi=kpi%20flare%20recovery%20pct" target="_blank" class="btn btn-edit">Edit</a>
    </div>
 
@@ -42,16 +42,16 @@ kpi flare recovery pct
       <tbody>
          <tr>
             <td>Description</td>
-            <td><ul><li>The flare recovery percentage measures the efficiency of gas recovery from flaring operations</li><li>indicating the proportion of gas that is successfully captured and reused compared to the total gas flared</li><li>Share of total gas that is recovered instead of flared</li><li>indicating the effectiveness of recovery systems</li></ul></td>
+            <td><ul><li>Share of total gas that is recovered instead of flared</li><li>indicating the effectiveness of recovery systems</li></ul></td>
          </tr>
          <tr>
             <td>Objective</td>
-            <td><ul><li>The objective of this KPI is to maximize the recovery of gas during flaring events</li><li>thereby minimizing waste and enhancing operational efficiency while reducing environmental impact</li><li>Reduce flaring and emissions by improving recovery system reliability and operation</li></ul></td>
+            <td><ul><li>Reduce flaring and emissions by improving recovery system reliability and operation</li></ul></td>
          </tr>
          <tr>
             <td>Formula</td>
             <td>
-               <p>This KPI is calculated by dividing the volume of recovered gas by the total volume of gas flared, with the result expressed as a percentage.</p>
+               <p>Calculated directly from the inputs found in the code implementation.</p>
                <div class="math-equation">$$ \mathit{Kpi\,Flare\,Recovery\,Pct} = \frac{\mathit{Recovered\,Gas\,M3}}{\mathit{Nullif(Total\,Gas\,M3,0)}} $$</div>
             </td>
          </tr>
@@ -59,10 +59,10 @@ kpi flare recovery pct
          <tr>
             <td>Generation time</td>
             <td>
-               11.3s (AI 11.3s + Render 0.0s)
+               4.1s (AI 4.1s + Render 0.0s)
                <div style="font-size: 12px; color: #6b7280; margin-top: 4px;">
-                  Total: 11.258s
-                  • AI: 11.258s
+                  Total: 4.108s
+                  • AI: 4.108s
                   • Render: 0.0s
                </div>
             </td>
@@ -70,31 +70,31 @@ kpi flare recovery pct
 
          <tr>
             <td>Extraction rate %</td>
-            <td>100.0%</td>
+            <td>88.9%</td>
          </tr>
          <tr>
             <td>Error rate %</td>
-            <td>0.0%</td>
+            <td>11.1%</td>
          </tr>
          <tr>
             <td>Used in KPI(s)</td>
-            <td><ul><li>This KPI is utilized in performance assessments related to environmental compliance</li><li>operational efficiency</li><li>and sustainability initiatives within the oil and gas sector</li></ul></td>
+            <td><ul><li>This KPI can serve as an input to higher-level operational and performance dashboards</li></ul></td>
          </tr>
          <tr>
             <td>Input Measure</td>
-            <td><ul><li>The input measures for this KPI include the volume of recovered gas in cubic meters and the total volume of gas flared in cubic meters</li><li>Gas flared volume and gas recovered volume over the measurement period</li></ul></td>
+            <td><ul><li>Gas flared volume and gas recovered volume over the measurement period</li></ul></td>
          </tr>
          <tr>
             <td>Unit of Measure</td>
-            <td>The unit of measure for this KPI is percentage.</td>
+            <td>%</td>
          </tr>
          <tr>
             <td>Reporting Source</td>
-            <td>Data for this KPI is typically sourced from operational reports and gas recovery system monitoring tools.</td>
+            <td>Operations data sources such as historians, SCADA/DCS tags, and production logs.</td>
          </tr>
          <tr>
             <td>Comments</td>
-            <td>A higher flare recovery percentage indicates better performance in gas management and a commitment to reducing flaring, which is crucial for meeting regulatory requirements and corporate sustainability goals.</td>
+            <td>No additional comments or special considerations were provided for this KPI.</td>
          </tr>
       </tbody>
    </table>

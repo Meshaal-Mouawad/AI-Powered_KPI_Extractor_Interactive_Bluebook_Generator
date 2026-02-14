@@ -33,8 +33,8 @@ Propylene to Ethylene (P/E) Ratio
 
    <div style="margin-bottom: 1.5em; display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
       <span style="font-size: 13px; font-weight: 500; color: #4a5568;">Open in:</span>
-      <a href="vscode://file//Users/meshaalmouawad/AI-Powered_KPI_Extractor_Interactive_Bluebook_Generator/sample_project/dotnet_kpi.cs:0" target="_blank" class="btn btn-vscode">VS Code</a>
-      <a href="pycharm://open?file=/Users/meshaalmouawad/AI-Powered_KPI_Extractor_Interactive_Bluebook_Generator/sample_project/dotnet_kpi.cs&line=0" target="_blank" class="btn btn-pycharm">PyCharm</a>
+      <a href="vscode://file//Users/meshaalmouawad/AI-Powered_KPI_Extractor_Interactive_Bluebook_Generator/sample_project_50/dotnet_kpi.cs:0" target="_blank" class="btn btn-vscode">VS Code</a>
+      <a href="pycharm://open?file=/Users/meshaalmouawad/AI-Powered_KPI_Extractor_Interactive_Bluebook_Generator/sample_project_50/dotnet_kpi.cs&line=0" target="_blank" class="btn btn-pycharm">PyCharm</a>
       <a href="/edit?kpi=Propylene%20to%20Ethylene%20%28P/E%29%20Ratio" target="_blank" class="btn btn-edit">Edit</a>
    </div>
 
@@ -59,11 +59,11 @@ Propylene to Ethylene (P/E) Ratio
          <tr>
             <td>Generation time</td>
             <td>
-               0.0s (AI 0.0s + Render 0.0s)
+               4.3s (AI 4.3s + Render 0.0s)
                <div style="font-size: 12px; color: #6b7280; margin-top: 4px;">
-                  Total: 0.002s
-                  • AI: 0.001s
-                  • Render: 0.001s
+                  Total: 4.349s
+                  • AI: 4.347s
+                  • Render: 0.002s
                </div>
             </td>
          </tr>

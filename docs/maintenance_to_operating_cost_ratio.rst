@@ -33,8 +33,8 @@ Maintenance to Operating Cost Ratio
 
    <div style="margin-bottom: 1.5em; display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
       <span style="font-size: 13px; font-weight: 500; color: #4a5568;">Open in:</span>
-      <a href="vscode://file//Users/meshaalmouawad/AI-Powered_KPI_Extractor_Interactive_Bluebook_Generator/sample_project/generic_kpi.txt:1" target="_blank" class="btn btn-vscode">VS Code</a>
-      <a href="pycharm://open?file=/Users/meshaalmouawad/AI-Powered_KPI_Extractor_Interactive_Bluebook_Generator/sample_project/generic_kpi.txt&line=1" target="_blank" class="btn btn-pycharm">PyCharm</a>
+      <a href="vscode://file//Users/meshaalmouawad/AI-Powered_KPI_Extractor_Interactive_Bluebook_Generator/sample_project_50/generic_kpi.txt:1" target="_blank" class="btn btn-vscode">VS Code</a>
+      <a href="pycharm://open?file=/Users/meshaalmouawad/AI-Powered_KPI_Extractor_Interactive_Bluebook_Generator/sample_project_50/generic_kpi.txt&line=1" target="_blank" class="btn btn-pycharm">PyCharm</a>
       <a href="/edit?kpi=Maintenance%20to%20Operating%20Cost%20Ratio" target="_blank" class="btn btn-edit">Edit</a>
    </div>
 
@@ -59,10 +59,10 @@ Maintenance to Operating Cost Ratio
          <tr>
             <td>Generation time</td>
             <td>
-               1m 26s (AI 1m 26s + Render 0.0s)
+               4.3s (AI 4.3s + Render 0.0s)
                <div style="font-size: 12px; color: #6b7280; margin-top: 4px;">
-                  Total: 86.332s
-                  • AI: 86.332s
+                  Total: 4.275s
+                  • AI: 4.275s
                   • Render: 0.0s
                </div>
             </td>

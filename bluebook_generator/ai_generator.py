@@ -1,12 +1,19 @@
 # Optimize the time
-import os, json, time
+import os
+import json
+import time
+import hashlib
+import numpy as np
 from typing import Any, Dict, List, Tuple
 from pathlib import Path
-import hashlib
 from openai import OpenAI
 from dotenv import load_dotenv
+from .kpi_extractor import find_kpis_in_directory
 
 load_dotenv()
+
+# In bluebook_generator/ai_generator.py, add this at the top:
+DOCS_SOURCE_DIR = Path(__file__).parent / "docs"
 
 # Single OpenAI client reused across calls
 _API_KEY = os.environ.get("OPENAI_API_KEY")
@@ -20,6 +27,9 @@ USE_KB = os.environ.get("AI_USE_KB", "1") not in {"0", "false", "False"}
 # Simple on-disk response cache
 CACHE_PATH = Path(__file__).parent / "ai_cache.json"
 
+# ... rest of your code continues ...
+
+
 def _cache_load() -> dict:
     if CACHE_PATH.exists():
         try:
@@ -28,11 +38,15 @@ def _cache_load() -> dict:
             return {}
     return {}
 
+
 def _cache_save(cache: dict) -> None:
     try:
-        json.dump(cache, open(CACHE_PATH, "w", encoding="utf-8"), ensure_ascii=False, indent=2)
+        json.dump(
+            cache, open(CACHE_PATH, "w", encoding="utf-8"), ensure_ascii=False, indent=2
+        )
     except Exception:
         pass
+
 
 def _cache_key(text_a: str, text_b: str = "") -> str:
     h = hashlib.sha1()
@@ -42,39 +56,36 @@ def _cache_key(text_a: str, text_b: str = "") -> str:
         h.update(text_b.encode("utf-8", errors="ignore"))
     return h.hexdigest()
 
+
 def _mtime_str(p: Path) -> str:
     try:
         return str(int(p.stat().st_mtime))
     except Exception:
         return "0"
 
-import os
-import json
-import time
-from typing import Dict, Any, List, Tuple
-from dotenv import load_dotenv
-from openai import OpenAI
-
-load_dotenv()
-from .kpi_extractor import find_kpis_in_directory
-
-
-import re
-import ast
-import numpy as np  # used only for cosine similarity
 
 # Explicitly export public API to avoid "cannot import name" issues
 
 # ---- Lightweight Knowledge Base (KB) + Overrides integration ----
 
+
 def _kb_file_path() -> str:
     # Put your curated petrochemical KPI KB here (optional). Example schema below.
     # Path is relative to project root; adjust as needed.
-    return os.path.join(os.path.dirname(os.path.dirname(__file__)), "bluebook_generator", "kb", "petro_kpi_kb.json")
+    return os.path.join(
+        os.path.dirname(os.path.dirname(__file__)),
+        "bluebook_generator",
+        "kb",
+        "petro_kpi_kb.json",
+    )
+
 
 def _overrides_file_path() -> str:
     # Stores user edits by KPI name. Created on first edit.
-    return os.path.join(os.path.dirname(os.path.dirname(__file__)), "docs", "overrides.json")
+    return os.path.join(
+        os.path.dirname(os.path.dirname(__file__)), "docs", "overrides.json"
+    )
+
 
 def _safe_load_json(path: str) -> Any:
     try:
@@ -85,18 +96,23 @@ def _safe_load_json(path: str) -> Any:
         pass
     return None
 
+
 def _get_text_embedding(client: OpenAI, text: str) -> List[float]:
     # Small, inexpensive embedding for retrieval
     emb = client.embeddings.create(model="text-embedding-3-small", input=text)
     return emb.data[0].embedding
 
+
 def _cosine_sim(a: np.ndarray, b: np.ndarray) -> float:
-    denom = (np.linalg.norm(a) * np.linalg.norm(b))
+    denom = np.linalg.norm(a) * np.linalg.norm(b)
     if denom == 0:
         return 0.0
     return float(np.dot(a, b) / denom)
 
-def _retrieve_kb_examples(client: OpenAI, kpi_name: str, top_k: int = 3) -> List[Dict[str, Any]]:
+
+def _retrieve_kb_examples(
+    client: OpenAI, kpi_name: str, top_k: int = 3
+) -> List[Dict[str, Any]]:
     """
     Returns up to top_k KB items most similar to the KPI name.
     KB item schema example:
@@ -121,7 +137,7 @@ def _retrieve_kb_examples(client: OpenAI, kpi_name: str, top_k: int = 3) -> List
 
     ranked: List[Tuple[float, Dict[str, Any]]] = []
     for item in kb:
-        text = f"{item.get('name','')} {item.get('description','')} {item.get('objective','')}"
+        text = f"{item.get('name', '')} {item.get('description', '')} {item.get('objective', '')}"
         try:
             emb = np.array(_get_text_embedding(client, text), dtype=np.float32)
             ranked.append((_cosine_sim(query_emb, emb), item))
@@ -130,6 +146,7 @@ def _retrieve_kb_examples(client: OpenAI, kpi_name: str, top_k: int = 3) -> List
 
     ranked.sort(key=lambda x: x[0], reverse=True)
     return [r[1] for r in ranked[:top_k]]
+
 
 def _load_user_overrides_for(kpi_name: str) -> Dict[str, Any]:
     """
@@ -152,6 +169,7 @@ def _load_user_overrides_for(kpi_name: str) -> Dict[str, Any]:
         return data.get(kpi_name, {}) or {}
     return {}
 
+
 _GENERIC_PHRASES = {
     "desc": [
         "is a key performance indicator used to assess process efficiency and operational performance",
@@ -172,12 +190,14 @@ _GENERIC_PHRASES = {
     ],
 }
 
+
 def _is_generic_text(text: str | None, kind: str) -> bool:
     if not text:
         return True
     t = text.strip().lower()
     patterns = _GENERIC_PHRASES.get(kind, [])
     return any(p in t for p in patterns)
+
 
 def _append_sentence_if_missing(text: str, sentence: str) -> str:
     text = (text or "").strip()
@@ -186,6 +206,7 @@ def _append_sentence_if_missing(text: str, sentence: str) -> str:
     if sentence and sentence.lower() not in text.lower():
         return f"{text} {sentence}"
     return text
+
 
 # NEW: strict single-category classifier based on KPI name only
 def _classify_kpi(kpi_name: str) -> str | None:
@@ -209,7 +230,10 @@ def _classify_kpi(kpi_name: str) -> str | None:
         return "specific_catalyst_cost"
     return None
 
-def _enrich_with_domain_hints(kpi_name: str, code_context: str, data: Dict[str, Any]) -> Dict[str, Any]:
+
+def _enrich_with_domain_hints(
+    kpi_name: str, code_context: str, data: Dict[str, Any]
+) -> Dict[str, Any]:
     """
     Merge generic fields with domain-aware sentences. Exactly ONE category applies,
     chosen from the KPI name to avoid cross-contamination between KPIs.
@@ -219,131 +243,217 @@ def _enrich_with_domain_hints(kpi_name: str, code_context: str, data: Dict[str, 
 
     def set_if_generic(field: str, value: str):
         current = data.get(field, "") or ""
-        data[field] = value if _is_generic_text(
-            current,
-            "desc" if field == "description" else
-            "obj" if field == "objective" else
-            "used" if field == "used_in_kpis" else
-            "input" if field == "input_measure" else
-            "comments_empty" if field == "comments" else "desc"
-        ) else _append_sentence_if_missing(current, value)
+        data[field] = (
+            value
+            if _is_generic_text(
+                current,
+                "desc"
+                if field == "description"
+                else "obj"
+                if field == "objective"
+                else "used"
+                if field == "used_in_kpis"
+                else "input"
+                if field == "input_measure"
+                else "comments_empty"
+                if field == "comments"
+                else "desc",
+            )
+            else _append_sentence_if_missing(current, value)
+        )
 
     uom = (data.get("unit_of_measure") or "").strip().lower()
     src = (data.get("reporting_source") or "").strip().lower()
 
     if category == "mfi_variance":
-        set_if_generic("description",
-            "The Polymer Melt Flow Index (MFI) Variance measures the variability in the melt flow index of polymer samples and indicates how easily the polymer flows when melted.")
-        set_if_generic("objective",
-            "Monitoring MFI variance helps ensure consistent product quality and process stability; low variance suggests a stable process and adherence to quality standards.")
-        set_if_generic("input_measure",
-            "Melt Flow Index test results from polymer samples collected during production or laboratory testing.")
-        set_if_generic("used_in_kpis",
-            "Used in quality control and assurance to evaluate polymer production performance and detect potential manufacturing issues.")
+        set_if_generic(
+            "description",
+            "The Polymer Melt Flow Index (MFI) Variance measures the variability in the melt flow index of polymer samples and indicates how easily the polymer flows when melted.",
+        )
+        set_if_generic(
+            "objective",
+            "Monitoring MFI variance helps ensure consistent product quality and process stability; low variance suggests a stable process and adherence to quality standards.",
+        )
+        set_if_generic(
+            "input_measure",
+            "Melt Flow Index test results from polymer samples collected during production or laboratory testing.",
+        )
+        set_if_generic(
+            "used_in_kpis",
+            "Used in quality control and assurance to evaluate polymer production performance and detect potential manufacturing issues.",
+        )
         if uom in {"", "variance (units^2)", "unit not specified", "n/a"}:
             data["unit_of_measure"] = "dimensionless"
         if not src or "histor" in src or "logs" in src:
-            data["reporting_source"] = "Laboratory test results of polymer samples taken during production."
-        set_if_generic("comments",
-            "Tracking MFI variance is essential for maintaining product quality and ensuring products meet required specifications for intended applications.")
+            data["reporting_source"] = (
+                "Laboratory test results of polymer samples taken during production."
+            )
+        set_if_generic(
+            "comments",
+            "Tracking MFI variance is essential for maintaining product quality and ensuring products meet required specifications for intended applications.",
+        )
 
     elif category == "pe_ratio":
-        set_if_generic("description",
-            "The ratio of propylene to ethylene production volumes, used to assess the balance of the product slate.")
-        set_if_generic("objective",
-            "Align production strategy with market demand and margins by monitoring relative propylene versus ethylene output.")
-        set_if_generic("input_measure",
-            "Total propylene produced and total ethylene produced in the measurement period.")
+        set_if_generic(
+            "description",
+            "The ratio of propylene to ethylene production volumes, used to assess the balance of the product slate.",
+        )
+        set_if_generic(
+            "objective",
+            "Align production strategy with market demand and margins by monitoring relative propylene versus ethylene output.",
+        )
+        set_if_generic(
+            "input_measure",
+            "Total propylene produced and total ethylene produced in the measurement period.",
+        )
         if uom in {"", "unit not specified", "n/a"}:
             data["unit_of_measure"] = "ratio (dimensionless)"
         if not src:
-            data["reporting_source"] = "Process historian (e.g., AVEVA PI System) and control system archives."
+            data["reporting_source"] = (
+                "Process historian (e.g., AVEVA PI System) and control system archives."
+            )
 
     elif category == "on_spec_percentage":
-        set_if_generic("description",
-            "This KPI expresses the proportion of production that meets all quality standards relative to total batches.")
-        set_if_generic("objective",
-            "Improve first-pass quality and reduce rework or off-spec material by monitoring on-spec performance over time.")
-        set_if_generic("input_measure",
-            "Counts of on-spec batches and total batches in the measurement period.")
+        set_if_generic(
+            "description",
+            "This KPI expresses the proportion of production that meets all quality standards relative to total batches.",
+        )
+        set_if_generic(
+            "objective",
+            "Improve first-pass quality and reduce rework or off-spec material by monitoring on-spec performance over time.",
+        )
+        set_if_generic(
+            "input_measure",
+            "Counts of on-spec batches and total batches in the measurement period.",
+        )
         if uom in {"", "unit not specified", "n/a"}:
             data["unit_of_measure"] = "%"
         if not src:
-            data["reporting_source"] = "Process historian and quality management/execution system records."
+            data["reporting_source"] = (
+                "Process historian and quality management/execution system records."
+            )
 
     elif category == "flare_recovery_rate":
-        set_if_generic("description",
-            "Share of total gas that is recovered instead of flared, indicating the effectiveness of recovery systems.")
-        set_if_generic("objective",
-            "Reduce flaring and emissions by improving recovery system reliability and operation.")
-        set_if_generic("input_measure",
-            "Gas flared volume and gas recovered volume over the measurement period.")
+        set_if_generic(
+            "description",
+            "Share of total gas that is recovered instead of flared, indicating the effectiveness of recovery systems.",
+        )
+        set_if_generic(
+            "objective",
+            "Reduce flaring and emissions by improving recovery system reliability and operation.",
+        )
+        set_if_generic(
+            "input_measure",
+            "Gas flared volume and gas recovered volume over the measurement period.",
+        )
         if uom in {"", "unit not specified", "n/a", "variance (units^2)"}:
             data["unit_of_measure"] = "%"
         if not src:
-            data["reporting_source"] = "Process historian (flare meters and recovery system flow meters)."
+            data["reporting_source"] = (
+                "Process historian (flare meters and recovery system flow meters)."
+            )
 
     elif category == "throughput":
-        set_if_generic("description",
-            "Average processing rate of material over the measurement period, typically normalized to daily capacity.")
-        set_if_generic("objective",
-            "Maximize utilization while respecting equipment and constraint limits.")
-        set_if_generic("input_measure",
-            "Total feedstock processed and the number of operating hours in the measurement period.")
-        if ("* 24" in ctx or "*24" in ctx) and ("/ hours" in ctx or "/hours" in ctx or "hours_online" in ctx):
+        set_if_generic(
+            "description",
+            "Average processing rate of material over the measurement period, typically normalized to daily capacity.",
+        )
+        set_if_generic(
+            "objective",
+            "Maximize utilization while respecting equipment and constraint limits.",
+        )
+        set_if_generic(
+            "input_measure",
+            "Total feedstock processed and the number of operating hours in the measurement period.",
+        )
+        if ("* 24" in ctx or "*24" in ctx) and (
+            "/ hours" in ctx or "/hours" in ctx or "hours_online" in ctx
+        ):
             data["unit_of_measure"] = "tons/day"
         elif uom in {"", "unit not specified", "n/a"}:
             data["unit_of_measure"] = "tons/hour"
         if not src:
-            data["reporting_source"] = "Process historian (e.g., AVEVA PI System) and control system archives."
+            data["reporting_source"] = (
+                "Process historian (e.g., AVEVA PI System) and control system archives."
+            )
 
     elif category == "yield_percentage":
-        set_if_generic("description",
-            "Proportion of desired product produced relative to total input, indicating conversion efficiency.")
-        set_if_generic("objective",
-            "Improve conversion efficiency and identify losses or off-spec production by trending yield over time.")
-        set_if_generic("input_measure",
-            "Desired product output and corresponding input over the measurement period.")
+        set_if_generic(
+            "description",
+            "Proportion of desired product produced relative to total input, indicating conversion efficiency.",
+        )
+        set_if_generic(
+            "objective",
+            "Improve conversion efficiency and identify losses or off-spec production by trending yield over time.",
+        )
+        set_if_generic(
+            "input_measure",
+            "Desired product output and corresponding input over the measurement period.",
+        )
         if uom in {"", "unit not specified", "n/a"}:
             data["unit_of_measure"] = "%"
         if not src:
-            data["reporting_source"] = "Process historian and production execution logs."
+            data["reporting_source"] = (
+                "Process historian and production execution logs."
+            )
 
     elif category == "oee":
-        set_if_generic("description",
-            "Overall Equipment Effectiveness combines Availability, Performance, and Quality into a single effectiveness score.")
-        set_if_generic("objective",
-            "Increase effective productive time by reducing downtime, speed losses, and quality losses.")
-        set_if_generic("input_measure",
-            "Availability, performance, and quality factors calculated for the asset or line.")
+        set_if_generic(
+            "description",
+            "Overall Equipment Effectiveness combines Availability, Performance, and Quality into a single effectiveness score.",
+        )
+        set_if_generic(
+            "objective",
+            "Increase effective productive time by reducing downtime, speed losses, and quality losses.",
+        )
+        set_if_generic(
+            "input_measure",
+            "Availability, performance, and quality factors calculated for the asset or line.",
+        )
         if uom in {"", "unit not specified", "n/a"}:
             data["unit_of_measure"] = "%"
         if not src:
-            data["reporting_source"] = "MES/Production systems and equipment runtime counters."
+            data["reporting_source"] = (
+                "MES/Production systems and equipment runtime counters."
+            )
 
     elif category == "specific_catalyst_cost":
-        set_if_generic("description",
-            "Cost of catalyst consumed per ton of product, used to monitor and optimize catalyst usage.")
-        set_if_generic("objective",
-            "Control catalyst spend while maintaining performance and product quality.")
-        set_if_generic("input_measure",
-            "Catalyst cost used and product tons over the measurement period.")
+        set_if_generic(
+            "description",
+            "Cost of catalyst consumed per ton of product, used to monitor and optimize catalyst usage.",
+        )
+        set_if_generic(
+            "objective",
+            "Control catalyst spend while maintaining performance and product quality.",
+        )
+        set_if_generic(
+            "input_measure",
+            "Catalyst cost used and product tons over the measurement period.",
+        )
         if uom in {"", "unit not specified", "n/a"}:
             data["unit_of_measure"] = "currency per ton"
         if not src:
-            data["reporting_source"] = "ERP/finance records and production totals from historians or MES."
+            data["reporting_source"] = (
+                "ERP/finance records and production totals from historians or MES."
+            )
 
     # If after enrichment comments remain empty, ensure non-empty default
     if _is_generic_text(data.get("comments"), "comments_empty"):
-        data["comments"] = "No additional comments or special considerations were provided for this KPI."
+        data["comments"] = (
+            "No additional comments or special considerations were provided for this KPI."
+        )
     return data
 
+
 # ------------------ Existing helpers (restored) ------------------
-def _infer_unit_of_measure(kpi_name: str, code_context: str, current_value: str | None) -> str:
+def _infer_unit_of_measure(
+    kpi_name: str, code_context: str, current_value: str | None
+) -> str:
     """
     Best-effort unit inference from KPI name and code context.
     Only overrides if current_value is missing or looks generic.
     """
+
     def is_generic(v: str | None) -> bool:
         if not v:
             return True
@@ -392,10 +502,12 @@ def _infer_unit_of_measure(kpi_name: str, code_context: str, current_value: str 
 
     return current_value or "unit not specified"
 
+
 def _infer_reporting_source(code_context: str, current_value: str | None) -> str:
     """
     Provide a more specific reporting source when the current value looks generic or empty.
     """
+
     def is_generic(v: str | None) -> bool:
         if not v:
             return True
@@ -411,13 +523,27 @@ def _infer_reporting_source(code_context: str, current_value: str | None) -> str
 
     ctx = (code_context or "").lower()
 
-    if any(k in ctx for k in ["histori", "pi system", "osisoft", "aveva", "processbook"]):
+    if any(
+        k in ctx for k in ["histori", "pi system", "osisoft", "aveva", "processbook"]
+    ):
         return "Process historian (e.g., AVEVA PI System) and control system archives."
     if any(k in ctx for k in ["opc", "scada", "dcs", "plc"]):
         return "SCADA/DCS via OPC/PLC tags."
     if any(k in ctx for k in ["sensor", "telemetry", "iot"]):
         return "Direct sensor telemetry and IoT gateways."
-    if any(k in ctx for k in ["sql", "postgres", "mysql", "mssql", "sqlite", "warehouse", "bigquery", "snowflake"]):
+    if any(
+        k in ctx
+        for k in [
+            "sql",
+            "postgres",
+            "mysql",
+            "mssql",
+            "sqlite",
+            "warehouse",
+            "bigquery",
+            "snowflake",
+        ]
+    ):
         return "Manufacturing database or data warehouse (SQL-backed)."
     if any(k in ctx for k in ["csv", ".csv", "xlsx", "excel"]):
         return "File-based logs and exports (CSV/Excel) from plant systems."
@@ -428,11 +554,15 @@ def _infer_reporting_source(code_context: str, current_value: str | None) -> str
 
     return "Operations data sources such as historians, SCADA/DCS tags, and production logs."
 
+
 def _fill_comments_if_empty(text: str | None) -> str:
     text = (text or "").strip()
     if text:
         return text
-    return "No additional comments or special considerations were provided for this KPI."
+    return (
+        "No additional comments or special considerations were provided for this KPI."
+    )
+
 
 def generate_kpi_details(kpi_name: str, code_context: str) -> Dict[str, Any]:
     """Uses OpenAI's GPT model to generate plain text descriptions ONLY."""
@@ -454,15 +584,22 @@ def generate_kpi_details(kpi_name: str, code_context: str) -> Dict[str, Any]:
 
     # 1) Retrieval: domain KB + user overrides as few-shot guidance
     user_overrides = _load_user_overrides_for(kpi_name)
-    kb_examples: List[Dict[str, Any]] = _retrieve_kb_examples(client, kpi_name, top_k=3) if USE_KB else []
+    kb_examples: List[Dict[str, Any]] = (
+        _retrieve_kb_examples(client, kpi_name, top_k=3) if USE_KB else []
+    )
 
     kb_block = ""
     if kb_examples:
-        kb_block = "Domain Knowledge (Petrochemical KPI examples):\n" + json.dumps(kb_examples, ensure_ascii=False)
+        kb_block = "Domain Knowledge (Petrochemical KPI examples):\n" + json.dumps(
+            kb_examples, ensure_ascii=False
+        )
 
     overrides_block = ""
     if user_overrides:
-        overrides_block = "User-Approved Overrides (preferred wording for this KPI):\n" + json.dumps(user_overrides, ensure_ascii=False)
+        overrides_block = (
+            "User-Approved Overrides (preferred wording for this KPI):\n"
+            + json.dumps(user_overrides, ensure_ascii=False)
+        )
 
     guidance = "\n\n".join([b for b in [kb_block, overrides_block] if b])
 
@@ -512,10 +649,17 @@ def generate_kpi_details(kpi_name: str, code_context: str) -> Dict[str, Any]:
             result = parsed
             break
         except Exception as e:
-            is_last = (i == retries - 1)
-            transient = any(s in str(e).lower() for s in [
-                "rate limit", "timeout", "overloaded", "temporarily unavailable", "connection"
-            ])
+            is_last = i == retries - 1
+            transient = any(
+                s in str(e).lower()
+                for s in [
+                    "rate limit",
+                    "timeout",
+                    "overloaded",
+                    "temporarily unavailable",
+                    "connection",
+                ]
+            )
             if not transient or is_last:
                 result = {
                     "description": f"{kpi_name} is a key performance indicator used to assess process efficiency and operational performance.",
@@ -528,19 +672,29 @@ def generate_kpi_details(kpi_name: str, code_context: str) -> Dict[str, Any]:
                     "comments": "No additional comments or special considerations were provided for this KPI.",
                 }
                 break
-            time.sleep(min(base_delay * (2 ** i), 4))
+            time.sleep(min(base_delay * (2**i), 4))
 
     # Ensure all required keys exist
     assert result is not None
     for key_name in (
-        "description", "objective", "formula_description", "used_in_kpis",
-        "input_measure", "unit_of_measure", "reporting_source", "comments"
+        "description",
+        "objective",
+        "formula_description",
+        "used_in_kpis",
+        "input_measure",
+        "unit_of_measure",
+        "reporting_source",
+        "comments",
     ):
         result.setdefault(key_name, "")
 
     # Apply safeguards and enrichment
-    result["unit_of_measure"] = _infer_unit_of_measure(kpi_name, code_context, result.get("unit_of_measure"))
-    result["reporting_source"] = _infer_reporting_source(code_context, result.get("reporting_source"))
+    result["unit_of_measure"] = _infer_unit_of_measure(
+        kpi_name, code_context, result.get("unit_of_measure")
+    )
+    result["reporting_source"] = _infer_reporting_source(
+        code_context, result.get("reporting_source")
+    )
     result["comments"] = _fill_comments_if_empty(result.get("comments"))
     result = _enrich_with_domain_hints(kpi_name, code_context, result)
 
@@ -549,20 +703,23 @@ def generate_kpi_details(kpi_name: str, code_context: str) -> Dict[str, Any]:
     _cache_save(cache)
     return result
 
+
 # ... existing code ...
+
 
 def generate_bluebook(source_code_path: str):
     """Main generator logic that yields progress messages."""
     # 1) Remove old generated .rst files (keep index.rst if present)
-    for item in DOCS_SOURCE_DIR.glob('*.rst'):
-        if item.is_file() and item.name != 'index.rst':
+    for item in DOCS_SOURCE_DIR.glob("*.rst"):
+        if item.is_file() and item.name != "index.rst":
             item.unlink()
     yield "Cleaned old documentation files."
 
     # 2) Also remove previous HTML build so stale pages cannot survive
-    build_dir = DOCS_SOURCE_DIR / '_build'
+    build_dir = DOCS_SOURCE_DIR / "_build"
     if build_dir.exists():
         import shutil
+
         shutil.rmtree(build_dir, ignore_errors=True)
         yield "Removed previous Sphinx _build directory."
 

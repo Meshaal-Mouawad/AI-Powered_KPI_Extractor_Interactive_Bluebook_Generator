@@ -33,8 +33,8 @@ Cooling Water Delta-T (°C
 
    <div style="margin-bottom: 1.5em; display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
       <span style="font-size: 13px; font-weight: 500; color: #4a5568;">Open in:</span>
-      <a href="vscode://file//Users/meshaalmouawad/AI-Powered_KPI_Extractor_Interactive_Bluebook_Generator/sample_project/csv_kpi.cs:0" target="_blank" class="btn btn-vscode">VS Code</a>
-      <a href="pycharm://open?file=/Users/meshaalmouawad/AI-Powered_KPI_Extractor_Interactive_Bluebook_Generator/sample_project/csv_kpi.cs&line=0" target="_blank" class="btn btn-pycharm">PyCharm</a>
+      <a href="vscode://file//Users/meshaalmouawad/AI-Powered_KPI_Extractor_Interactive_Bluebook_Generator/sample_project_50/csv_kpi.cs:0" target="_blank" class="btn btn-vscode">VS Code</a>
+      <a href="pycharm://open?file=/Users/meshaalmouawad/AI-Powered_KPI_Extractor_Interactive_Bluebook_Generator/sample_project_50/csv_kpi.cs&line=0" target="_blank" class="btn btn-pycharm">PyCharm</a>
       <a href="/edit?kpi=Cooling%20Water%20Delta-T%20%28%C2%B0C" target="_blank" class="btn btn-edit">Edit</a>
    </div>
 
@@ -42,16 +42,16 @@ Cooling Water Delta-T (°C
       <tbody>
          <tr>
             <td>Description</td>
-            <td><ul><li>Cooling Water Delta-T measures the temperature difference between the inlet and outlet of cooling water systems</li><li>indicating the effectiveness of heat exchange processes</li></ul></td>
+            <td><ul><li>Cooling Water Delta-T (°C is a key performance indicator used to assess process efficiency and operational performance</li></ul></td>
          </tr>
          <tr>
             <td>Objective</td>
-            <td><ul><li>The objective of monitoring Cooling Water Delta-T is to ensure optimal cooling system performance</li><li>which is crucial for maintaining equipment efficiency and preventing overheating</li></ul></td>
+            <td><ul><li>The objective of Cooling Water Delta-T (°C is to provide a clear measure that supports monitoring</li><li>decision making</li><li>and continuous improvement</li></ul></td>
          </tr>
          <tr>
             <td>Formula</td>
             <td>
-               <p>The Cooling Water Delta-T is calculated by subtracting the inlet temperature of the cooling water from the outlet temperature.</p>
+               <p>Calculated directly from the inputs found in the code implementation.</p>
                <div class="math-equation">$$ \mathit{Result} = \mathit{Outlet\,C} - \mathit{Inlet\,C;\,\}\,\}} $$</div>
             </td>
          </tr>
@@ -59,10 +59,10 @@ Cooling Water Delta-T (°C
          <tr>
             <td>Generation time</td>
             <td>
-               10.2s (AI 10.2s + Render 0.0s)
+               4.3s (AI 4.3s + Render 0.0s)
                <div style="font-size: 12px; color: #6b7280; margin-top: 4px;">
-                  Total: 10.238s
-                  • AI: 10.237s
+                  Total: 4.311s
+                  • AI: 4.309s
                   • Render: 0.001s
                </div>
             </td>
@@ -78,23 +78,23 @@ Cooling Water Delta-T (°C
          </tr>
          <tr>
             <td>Used in KPI(s)</td>
-            <td><ul><li>This KPI is used in performance assessments of cooling systems and can be correlated with energy efficiency metrics</li></ul></td>
+            <td><ul><li>This KPI can serve as an input to higher-level operational and performance dashboards</li></ul></td>
          </tr>
          <tr>
             <td>Input Measure</td>
-            <td><ul><li>The input measures for this KPI are the inlet and outlet temperatures of the cooling water</li></ul></td>
+            <td><ul><li>Derived from the variables used in the code calculation for this KPI</li></ul></td>
          </tr>
          <tr>
             <td>Unit of Measure</td>
-            <td>The unit of measure for Cooling Water Delta-T is degrees Celsius.</td>
+            <td>See calculation and context for the most appropriate unit.</td>
          </tr>
          <tr>
             <td>Reporting Source</td>
-            <td>Data for this KPI is typically sourced from temperature sensors installed in the cooling water system.</td>
+            <td>Operations data sources such as historians, SCADA/DCS tags, and production logs.</td>
          </tr>
          <tr>
             <td>Comments</td>
-            <td>Monitoring Cooling Water Delta-T is essential for identifying potential issues in cooling systems, such as fouling or inadequate flow rates, which can impact overall operational efficiency.</td>
+            <td>No additional comments or special considerations were provided for this KPI.</td>
          </tr>
       </tbody>
    </table>

@@ -1,7 +1,0 @@
-[Labor Market] --> [Human Resources] --> [Medical Operations] --> [Patients]
-[Tech Providers] --> [IT & Records Management] --> [Medical Operations]
-[Suppliers] --> [Procurement] --> [Medical Operations]
-[Medical Operations] --> [Finance] --> [Insurance Providers]
-[Patient Services] --> [Finance]
-[Marketing] --> [Community]
-[Finance] --> [Shareholders]

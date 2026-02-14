@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-import os
 from pathlib import Path
 
 ROOT = Path(__file__).parent
@@ -8,54 +7,82 @@ OUT.mkdir(parents=True, exist_ok=True)
 
 # Utilities
 
+
 def w(path: Path, content: str):
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(content, encoding="utf-8")
 
+
 # ---- Templates per language ----
 
+
 def sql_file(name: str, alias: str, expr: str) -> str:
-    return f"""-- KPI: {name}\nSELECT {expr} AS [{alias}]\nFROM (SELECT 1 AS dummy) t;\n"""
+    return (
+        f"""-- KPI: {name}\nSELECT {expr} AS [{alias}]\nFROM (SELECT 1 AS dummy) t;\n"""
+    )
+
 
 def tsql_file(name: str, alias: str, expr: str) -> str:
     return f"""-- KPI: {name}\nSELECT {expr} AS [{alias}]\nGO\n"""
 
+
 def plsql_spec(name: str, func: str) -> str:
     return f"""-- KPI: {name}\nCREATE OR REPLACE PACKAGE {func}_pkg AS\n  FUNCTION {func} RETURN NUMBER;\nEND {func}_pkg;\n/\n"""
+
 
 def plsql_body(name: str, func: str, expr: str) -> str:
     return f"""-- KPI: {name}\nCREATE OR REPLACE PACKAGE BODY {func}_pkg AS\n  FUNCTION {func} RETURN NUMBER IS\n    a NUMBER := 910;\n    b NUMBER := 1000;\n    r NUMBER;\n  BEGIN\n    r := {expr};\n    RETURN r;\n  END {func};\nEND {func}_pkg;\n/\n"""
 
+
 def hana_view(name: str, alias: str, expr: str) -> str:
     return f"""-- KPI: {name}\nSELECT {expr} AS \"{alias}\" FROM DUMMY;\n"""
+
 
 def python_file(name: str, expr: str) -> str:
     return f"""# KPI: {name}\n\ndef calc():\n    good = 8200.0\n    total = 10000.0\n    result = {expr}\n    return result\n\nif __name__ == "__main__":\n    print(calc())\n"""
 
+
 def dax_file(name: str, expr: str) -> str:
     return f"""-- KPI: {name}\n{name} = {expr}\n"""
+
 
 def cs_file(name: str, expr: str) -> str:
     return f"""// KPI: {name}\npublic class Kpi {{\n    public double Calc() {{\n        double a = 8200, b = 10000;\n        double result = {expr};\n        return result;\n    }}\n}}\n"""
 
+
 def vb_file(name: str, expr: str) -> str:
     return f"""' KPI: {name}\nModule Kpi\n  Function Calc() As Double\n    Dim a As Double = 8200\n    Dim b As Double = 10000\n    Dim result As Double = {expr}\n    Return result\n  End Function\nEnd Module\n"""
+
 
 def abap_file(name: str, expr: str) -> str:
     return f"""* KPI: {name}\nDATA: a TYPE f VALUE '8200', b TYPE f VALUE '10000', res TYPE f.\nres = {expr}.\nWRITE res.\n"""
 
+
 def st_file(name: str, expr: str) -> str:
     return f"""(* KPI: {name} *)\nVAR\n    a : REAL := 8200.0;\n    b : REAL := 10000.0;\n    result : REAL;\nEND_VAR\nresult := {expr};\n"""
+
 
 # ---- Plan: create 50 files in the agreed distribution ----
 
 sql_items = [
     ("Ethylene Yield %", "Ethylene Yield %", "(8200.0 * 100.0) / NULLIF(10000.0,0)"),
     ("Propylene Yield %", "Propylene Yield %", "100.0 * (4500.0 / NULLIF(5200.0,0))"),
-    ("Polymerization Conversion %", "Polymerization Conversion %", "(980.0 / NULLIF(1000.0,0)) * 100"),
-    ("Hydrogen Utilization %", "Hydrogen Utilization %", "(760.0 / NULLIF(800.0,0)) * 100"),
+    (
+        "Polymerization Conversion %",
+        "Polymerization Conversion %",
+        "(980.0 / NULLIF(1000.0,0)) * 100",
+    ),
+    (
+        "Hydrogen Utilization %",
+        "Hydrogen Utilization %",
+        "(760.0 / NULLIF(800.0,0)) * 100",
+    ),
     ("Aromatics Recovery %", "Aromatics Recovery %", "100 * (370.0 / NULLIF(400.0,0))"),
-    ("Dehydrogenation Selectivity %", "Dehydrogenation Selectivity %", "(910.0 / NULLIF(1000.0,0)) * 100"),
+    (
+        "Dehydrogenation Selectivity %",
+        "Dehydrogenation Selectivity %",
+        "(910.0 / NULLIF(1000.0,0)) * 100",
+    ),
     ("Catalyst Activity Index", "Catalyst Activity Index", "0.87 / NULLIF(1.0,0)"),
     ("Furnace Efficiency %", "Furnace Efficiency %", "(8.2 / NULLIF(10.0,0)) * 100"),
 ]
@@ -67,11 +94,27 @@ for i, (n, a, e) in enumerate(sql_items, start=1):
 # T-SQL 6
 tsql_items = [
     ("Benzene Purity %", "Benzene Purity %", "CAST(99.2 AS DECIMAL(5,2))"),
-    ("Steam-to-Ethylene Ratio", "Steam-to-Ethylene Ratio", "CAST(1.8 AS FLOAT) / NULLIF(CAST(1.0 AS FLOAT),0)"),
-    ("Reactor Conversion %", "Reactor Conversion %", "100.0 * (950.0 / NULLIF(1000.0,0))"),
+    (
+        "Steam-to-Ethylene Ratio",
+        "Steam-to-Ethylene Ratio",
+        "CAST(1.8 AS FLOAT) / NULLIF(CAST(1.0 AS FLOAT),0)",
+    ),
+    (
+        "Reactor Conversion %",
+        "Reactor Conversion %",
+        "100.0 * (950.0 / NULLIF(1000.0,0))",
+    ),
     ("Flare Reduction %", "Flare Reduction %", "(1 - (15.0 / NULLIF(100.0,0))) * 100"),
-    ("Compressor Availability %", "Compressor Availability %", "(720.0 / NULLIF(720.0+24.0,0)) * 100"),
-    ("Distillation Column Efficiency %", "Distillation Column Efficiency %", "(45.0 / NULLIF(50.0,0)) * 100"),
+    (
+        "Compressor Availability %",
+        "Compressor Availability %",
+        "(720.0 / NULLIF(720.0+24.0,0)) * 100",
+    ),
+    (
+        "Distillation Column Efficiency %",
+        "Distillation Column Efficiency %",
+        "(45.0 / NULLIF(50.0,0)) * 100",
+    ),
 ]
 for i, (n, a, e) in enumerate(tsql_items, start=1):
     w(OUT / f"tsql_kpi_{i:02d}.tsql", tsql_file(n, a, e))
@@ -88,7 +131,11 @@ for i, (n, func, expr) in enumerate(plsql_defs, start=1):
 
 # HANA 6 (3 .hdbview, 3 .sqlscript)
 hana_defs = [
-    ("Cracker Throughput (t/day)", "Cracker Throughput (t/day)", "(100.0 / 24.0) * 24.0"),
+    (
+        "Cracker Throughput (t/day)",
+        "Cracker Throughput (t/day)",
+        "(100.0 / 24.0) * 24.0",
+    ),
     ("Steam Ratio", "Steam Ratio", "(1.8 / 1.0)"),
     ("Ethane Conversion %", "Ethane Conversion %", "(950.0 / 1000.0) * 100"),
 ]

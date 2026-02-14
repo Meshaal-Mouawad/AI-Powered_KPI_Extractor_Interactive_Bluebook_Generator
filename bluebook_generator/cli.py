@@ -1,7 +1,6 @@
 import os
 import sys
 from pathlib import Path
-
 import click
 
 # Local import: rely on package-relative path
@@ -18,10 +17,23 @@ def main():
 
 
 @main.command()
-@click.argument("source", type=click.Path(exists=True, file_okay=False, path_type=Path), required=False)
-@click.option("--clean-build/--no-clean-build", default=False, help="Delete docs/_build before building.")
-@click.option("--workers", type=int, default=lambda: int(os.environ.get("KPI_AI_WORKERS", "4")), show_default=True,
-              help="Number of parallel AI workers (overrides KPI_AI_WORKERS env var).")
+@click.argument(
+    "source",
+    type=click.Path(exists=True, file_okay=False, path_type=Path),
+    required=False,
+)
+@click.option(
+    "--clean-build/--no-clean-build",
+    default=False,
+    help="Delete docs/_build before building.",
+)
+@click.option(
+    "--workers",
+    type=int,
+    default=lambda: int(os.environ.get("KPI_AI_WORKERS", "4")),
+    show_default=True,
+    help="Number of parallel AI workers (overrides KPI_AI_WORKERS env var).",
+)
 def generate(source: Path | None, clean_build: bool, workers: int):
     """Scan SOURCE for KPIs and build the documentation Bluebook.
 
@@ -54,7 +66,9 @@ def generate(source: Path | None, clean_build: bool, workers: int):
     if build_index.exists():
         click.echo(f"[bluebook] Done. Open: {build_index}")
     else:
-        click.echo("[bluebook] Done. Note: Sphinx HTML build may have been skipped if 'sphinx-build' is not installed.")
+        click.echo(
+            "[bluebook] Done. Note: Sphinx HTML build may have been skipped if 'sphinx-build' is not installed."
+        )
 
 
 if __name__ == "__main__":  # pragma: no cover

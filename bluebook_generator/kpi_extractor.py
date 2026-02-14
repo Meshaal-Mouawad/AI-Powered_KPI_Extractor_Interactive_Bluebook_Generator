@@ -1,11 +1,42 @@
 import os
 import re
 from typing import List, Dict, Tuple
+
 # Scanner performance knobs
-IGNORE_DIRS = {".git", ".hg", ".svn", "node_modules", "dist", "build", "__pycache__", ".venv", "venv", ".mypy_cache", ".pytest_cache"}
-ALLOWED_EXTS = {".py", ".sql", ".ps1", ".dax", ".cs", ".vb", ".abap", ".st", 
-                 ".hdbview", ".hdbprocedure", ".hdbfunction", ".hdbtablefunction", ".sqlscript",
-                 ".tsql", ".pks", ".pkb", ".pls", ".txt", ".csv"}
+IGNORE_DIRS = {
+    ".git",
+    ".hg",
+    ".svn",
+    "node_modules",
+    "dist",
+    "build",
+    "__pycache__",
+    ".venv",
+    "venv",
+    ".mypy_cache",
+    ".pytest_cache",
+}
+ALLOWED_EXTS = {
+    ".py",
+    ".sql",
+    ".ps1",
+    ".dax",
+    ".cs",
+    ".vb",
+    ".abap",
+    ".st",
+    ".hdbview",
+    ".hdbprocedure",
+    ".hdbfunction",
+    ".hdbtablefunction",
+    ".sqlscript",
+    ".tsql",
+    ".pks",
+    ".pkb",
+    ".pls",
+    ".txt",
+    ".csv",
+}
 MAX_FILE_MB = float(os.environ.get("KPI_MAX_FILE_MB", "2"))  # default 2 MB
 
 # Optional formula extraction from comments like "Formula: ..."
@@ -44,8 +75,8 @@ _SUPPORTED_EXTS = {
     ".dax.txt": "dax",
     # IEC 61131‑3 Structured Text / PLC textual files
     ".st": "iec_st",
-    ".scl": "iec_st",   # Siemens SCL
-    ".awl": "iec_st",   # STL/AWL textual
+    ".scl": "iec_st",  # Siemens SCL
+    ".awl": "iec_st",  # STL/AWL textual
     # Generic text/CSV exports (Excel/BI/SAP dumps)
     ".txt": "text",
     ".csv": "csv",
@@ -54,9 +85,9 @@ _SUPPORTED_EXTS = {
 
 # ---------- Utilities ----------
 
+
 def _read_text_file_safe(path: str, max_bytes: int = 2_000_000) -> str:
-    """Read small text files safely; skip very large or unreadable files.
-    """
+    """Read small text files safely; skip very large or unreadable files."""
     try:
         if os.path.getsize(path) > max_bytes:
             return ""
@@ -76,7 +107,9 @@ def _window(lines: List[str], center: int, before: int = 10, after: int = 20) ->
     return "\n".join(lines[start:end])
 
 
-def _expand_forward_statement(lines: List[str], start_index: int, back: int = 5, max_forward: int = 200) -> str:
+def _expand_forward_statement(
+    lines: List[str], start_index: int, back: int = 5, max_forward: int = 200
+) -> str:
     """Return a forward-expanded SQL-ish statement context starting a few lines before start_index.
 
     - Includes up to `back` lines before the start_index for context.
@@ -104,20 +137,24 @@ def _expand_forward_statement(lines: List[str], start_index: int, back: int = 5,
             break
         if _re.match(r"^\s*GO\s*$", line, _re.I):
             break
-        if _re.match(r"^\s*/\s*$", line):  # Oracle '/' statement separator on its own line
+        if _re.match(
+            r"^\s*/\s*$", line
+        ):  # Oracle '/' statement separator on its own line
             break
 
-    return "\n".join(l.rstrip("\n") for l in lines[ctx_start:end + 1])
+    return "\n".join(line.rstrip("\n") for line in lines[ctx_start : end + 1])
 
 
 def _normalize_name(raw: str) -> str:
     name = (raw or "").strip()
     name = re.sub(r'^[\[\("\']+|[\]\)"\']+$', "", name).strip()
-    name = re.sub(r'[_\s]+', " ", name)
+    name = re.sub(r"[_\s]+", " ", name)
     return name
 
 
-def _extract_by_comment_tag(lines: List[str], pattern: re.Pattern, language: str) -> List[Dict]:
+def _extract_by_comment_tag(
+    lines: List[str], pattern: re.Pattern, language: str
+) -> List[Dict]:
     """Capture `KPI: Name` markers using a language-specific comment pattern."""
     out = []
     for i, line in enumerate(lines):
@@ -125,22 +162,27 @@ def _extract_by_comment_tag(lines: List[str], pattern: re.Pattern, language: str
         if not m:
             continue
         name = _normalize_name(m.group("name"))
-        out.append({
-            "name": name,
-            "language": language,
-            "file_line": i + 1,
-            "code_context": _window(lines, i),
-            "_rank": 1,  # base rank for comment hits
-            "_kind": "comment"
-        })
+        out.append(
+            {
+                "name": name,
+                "language": language,
+                "file_line": i + 1,
+                "code_context": _window(lines, i),
+                "_rank": 1,  # base rank for comment hits
+                "_kind": "comment",
+            }
+        )
     return out
+
 
 def _extract_python(text: str) -> List[Dict]:
     lines = text.splitlines()
     out: List[Dict] = []
 
     # # KPI: Name
-    out += _extract_by_comment_tag(lines, re.compile(r"#\s*KPI\s*:\s*(?P<name>.+)$", re.I), "python")
+    out += _extract_by_comment_tag(
+        lines, re.compile(r"#\s*KPI\s*:\s*(?P<name>.+)$", re.I), "python"
+    )
 
     # Functions with KPI-ish names
     for i, line in enumerate(lines):
@@ -148,13 +190,29 @@ def _extract_python(text: str) -> List[Dict]:
         if not m:
             continue
         fn = m.group(1)
-        if any(k in fn.lower() for k in ("kpi", "yield", "percentage", "ratio", "throughput", "oee", "variance", "recovery", "cost", "emission")):
-            out.append({
-                "name": _normalize_name(fn.replace("_", " ")),
-                "language": "python",
-                "file_line": i + 1,
-                "code_context": _window(lines, i),
-            })
+        if any(
+            k in fn.lower()
+            for k in (
+                "kpi",
+                "yield",
+                "percentage",
+                "ratio",
+                "throughput",
+                "oee",
+                "variance",
+                "recovery",
+                "cost",
+                "emission",
+            )
+        ):
+            out.append(
+                {
+                    "name": _normalize_name(fn.replace("_", " ")),
+                    "language": "python",
+                    "file_line": i + 1,
+                    "code_context": _window(lines, i),
+                }
+            )
     return out
 
 
@@ -164,31 +222,43 @@ def _extract_csharp_vb(text: str, language: str) -> List[Dict]:
 
     # C# attribute form: [KPI("Name")]
     for i, line in enumerate(lines):
-        m = re.search(r"\[\s*KPI(?:Attribute)?\s*\(\s*\"(?P<name>[^\"]+)\"\s*\)\s*\]", line, re.I)
+        m = re.search(
+            r"\[\s*KPI(?:Attribute)?\s*\(\s*\"(?P<name>[^\"]+)\"\s*\)\s*\]", line, re.I
+        )
         if m:
-            out.append({
-                "name": _normalize_name(m.group("name")),
-                "language": language,
-                "file_line": i + 1,
-                "code_context": _window(lines, i, 5, 60),  # widened after-context for Return
-            })
+            out.append(
+                {
+                    "name": _normalize_name(m.group("name")),
+                    "language": language,
+                    "file_line": i + 1,
+                    "code_context": _window(
+                        lines, i, 5, 60
+                    ),  # widened after-context for Return
+                }
+            )
 
     # C#: // KPI: Name
-    out += _extract_by_comment_tag(lines, re.compile(r"//\s*KPI\s*:\s*(?P<name>.+)$", re.I), language)
+    out += _extract_by_comment_tag(
+        lines, re.compile(r"//\s*KPI\s*:\s*(?P<name>.+)$", re.I), language
+    )
     # VB.NET: ' KPI: Name
-    out += _extract_by_comment_tag(lines, re.compile(r"'\s*KPI\s*:\s*(?P<name>.+)$", re.I), language)
+    out += _extract_by_comment_tag(
+        lines, re.compile(r"'\s*KPI\s*:\s*(?P<name>.+)$", re.I), language
+    )
 
     # Methods like CalculateXxxKpi(...)
     for i, line in enumerate(lines):
         m = re.search(r"\b(Calculate|Compute)[A-Za-z0-9_]*Kpi\s*\(", line, re.I)
         if m:
             name = _normalize_name(m.group(0).split("(")[0])
-            out.append({
-                "name": name,
-                "language": language,
-                "file_line": i + 1,
-                "code_context": _window(lines, i, 5, 60),
-            })
+            out.append(
+                {
+                    "name": name,
+                    "language": language,
+                    "file_line": i + 1,
+                    "code_context": _window(lines, i, 5, 60),
+                }
+            )
     return out
 
 
@@ -220,14 +290,16 @@ def _extract_sql_like(text: str, dialect: str) -> List[Dict]:
                 break
 
     for i, name in comments:
-        out.append({
-            "name": name,
-            "language": dialect,
-            "file_line": i + 1,
-            "code_context": _expand_forward_statement(lines, i),
-            "_rank": 3,
-            "_kind": "sql_comment"
-        })
+        out.append(
+            {
+                "name": name,
+                "language": dialect,
+                "file_line": i + 1,
+                "code_context": _expand_forward_statement(lines, i),
+                "_rank": 3,
+                "_kind": "sql_comment",
+            }
+        )
 
     has_comment = len(comments) > 0
 
@@ -237,45 +309,56 @@ def _extract_sql_like(text: str, dialect: str) -> List[Dict]:
         for i, line in enumerate(stripped_lines):
             m = re.search(
                 r"\bcreate\s+(?:or\s+replace\s+)?function\s+(?P<fn>[A-Za-z0-9_\.$]+)",
-                line, re.I
+                line,
+                re.I,
             )
             if m:
                 fn_name = _normalize_name(m.group("fn"))
-                out.append({
-                    "name": fn_name,
-                    "language": dialect,
-                    "file_line": i + 1,
-                    "code_context": _expand_forward_statement(lines, i),
-                    "_rank": 2,
-                    "_kind": "create_function"
-                })
+                out.append(
+                    {
+                        "name": fn_name,
+                        "language": dialect,
+                        "file_line": i + 1,
+                        "code_context": _expand_forward_statement(lines, i),
+                        "_rank": 2,
+                        "_kind": "create_function",
+                    }
+                )
                 # Keep scanning; multiple functions are possible
 
         # 2b) CREATE VIEW view_kpi_* AS ...
         for i, line in enumerate(stripped_lines):
-            m = re.search(r"\bcreate\s+view\s+([A-Za-z0-9_\.]*kpi[A-Za-z0-9_\.]*)\b", line, re.I)
+            m = re.search(
+                r"\bcreate\s+view\s+([A-Za-z0-9_\.]*kpi[A-Za-z0-9_\.]*)\b", line, re.I
+            )
             if m:
-                out.append({
-                    "name": _normalize_name(m.group(1)),
-                    "language": dialect,
-                    "file_line": i + 1,
-                    "code_context": _window(lines, i, 5, 120),
-                    "_rank": 2,
-                    "_kind": "create_view"
-                })
+                out.append(
+                    {
+                        "name": _normalize_name(m.group(1)),
+                        "language": dialect,
+                        "file_line": i + 1,
+                        "code_context": _window(lines, i, 5, 120),
+                        "_rank": 2,
+                        "_kind": "create_view",
+                    }
+                )
 
         # 2c) SELECT ... expr AS alias (alias contains kpi_* or measure_*)
         for i, line in enumerate(stripped_lines):
-            m = re.search(r"\bas\s+(kpi[_A-Za-z0-9]+|measure[_A-Za-z0-9]+)\b", line, re.I)
+            m = re.search(
+                r"\bas\s+(kpi[_A-Za-z0-9]+|measure[_A-Za-z0-9]+)\b", line, re.I
+            )
             if m:
-                out.append({
-                    "name": _normalize_name(m.group(1)),
-                    "language": dialect,
-                    "file_line": i + 1,
-                    "code_context": _window(lines, i, 3, 80),
-                    "_rank": 2,
-                    "_kind": "select_alias"
-                })
+                out.append(
+                    {
+                        "name": _normalize_name(m.group(1)),
+                        "language": dialect,
+                        "file_line": i + 1,
+                        "code_context": _window(lines, i, 3, 80),
+                        "_rank": 2,
+                        "_kind": "select_alias",
+                    }
+                )
 
         # 2d) LAST-RESORT (PL/SQL only): if we see a math RETURN, emit one KPI using the file name
         if dialect.lower() in {"plsql"} and not out:
@@ -285,18 +368,28 @@ def _extract_sql_like(text: str, dialect: str) -> List[Dict]:
                 # Derive a human-ish name from the file if available
                 try:
                     import os as _os
-                    base_name = _normalize_name(_os.path.splitext(_os.path.basename(__file__ if False else ""))[0]) or "PLSQL KPI"
+
+                    base_name = (
+                        _normalize_name(
+                            _os.path.splitext(
+                                _os.path.basename(__file__ if False else "")
+                            )[0]
+                        )
+                        or "PLSQL KPI"
+                    )
                 except Exception:
                     pass
                 # Use a wide context: the whole file, so formula extractor can grab the RETURN expression
-                out.append({
-                    "name": base_name,
-                    "language": dialect,
-                    "file_line": 1,
-                    "code_context": text,
-                    "_rank": 1,
-                    "_kind": "plsql_return_fallback"
-                })
+                out.append(
+                    {
+                        "name": base_name,
+                        "language": dialect,
+                        "file_line": 1,
+                        "code_context": text,
+                        "_rank": 1,
+                        "_kind": "plsql_return_fallback",
+                    }
+                )
 
     return out
 
@@ -314,8 +407,9 @@ def _extract_hana(text: str) -> List[Dict]:
     # 2) JSON-style .hdbview fallback
     try:
         import json
+
         obj = json.loads(text)
-        vd = (obj.get("viewDefinition") or {})
+        vd = obj.get("viewDefinition") or {}
         cols = vd.get("columns") or []
         best = None
         for c in cols:
@@ -328,16 +422,21 @@ def _extract_hana(text: str) -> List[Dict]:
                 score += 2
             if any(ch in expr for ch in "*/+-"):
                 score += 1
-            best = max([best, (score, name, expr)] if best else [(score, name, expr)], key=lambda t: t[0])
+            best = max(
+                [best, (score, name, expr)] if best else [(score, name, expr)],
+                key=lambda t: t[0],
+            )
         if best:
             _, name, expr = best
             code = f"SELECT {expr} AS {name}"
-            return [{
-                "name": _normalize_name(name),
-                "language": "hana",
-                "file_line": 1,
-                "code_context": code,
-            }]
+            return [
+                {
+                    "name": _normalize_name(name),
+                    "language": "hana",
+                    "file_line": 1,
+                    "code_context": code,
+                }
+            ]
     except Exception:
         pass
 
@@ -347,8 +446,6 @@ def _extract_hana(text: str) -> List[Dict]:
 def _extract_tsql(text: str) -> List[Dict]:
     """T‑SQL specific files (.tsql) → reuse SQL-like extraction with label 'tsql'."""
     return _extract_sql_like(text, "tsql")
-
-
 
 
 def _extract_plsql(text: str) -> List[Dict]:
@@ -362,12 +459,14 @@ def _extract_plsql(text: str) -> List[Dict]:
         m = re.search(r"\bFUNCTION\s+([A-Za-z0-9_\.$]+)", line, re.I)
         if m:
             fn = _normalize_name(m.group(1))
-            return [{
-                "name": fn,
-                "language": "plsql",
-                "file_line": i + 1,
-                "code_context": _window(lines, i),
-            }]
+            return [
+                {
+                    "name": fn,
+                    "language": "plsql",
+                    "file_line": i + 1,
+                    "code_context": _window(lines, i),
+                }
+            ]
     return out
 
 
@@ -379,16 +478,20 @@ def _extract_dax(text: str) -> List[Dict]:
 
     # DEFINE MEASURE 'Table'[Measure] = ...
     for i, line in enumerate(lines):
-        m = re.search(r"\bDEFINE\s+MEASURE\s+[^\[]*\[(?P<name>[^\]]+)\]\s*=", line, re.I)
+        m = re.search(
+            r"\bDEFINE\s+MEASURE\s+[^\[]*\[(?P<name>[^\]]+)\]\s*=", line, re.I
+        )
         if m:
             name = _normalize_name(m.group("name"))
             seen_names.add(name.lower())
-            out.append({
-                "name": name,
-                "language": "dax",
-                "file_line": i + 1,
-                "code_context": _window(lines, i),
-            })
+            out.append(
+                {
+                    "name": name,
+                    "language": "dax",
+                    "file_line": i + 1,
+                    "code_context": _window(lines, i),
+                }
+            )
 
     # Simple measure lines: Name = Expression
     for i, line in enumerate(lines):
@@ -399,12 +502,14 @@ def _extract_dax(text: str) -> List[Dict]:
             name = _normalize_name(m.group("name"))
             if name.lower() not in seen_names and len(name.strip()) > 2:
                 seen_names.add(name.lower())
-                out.append({
-                    "name": name,
-                    "language": "dax",
-                    "file_line": i + 1,
-                    "code_context": _window(lines, i),
-                })
+                out.append(
+                    {
+                        "name": name,
+                        "language": "dax",
+                        "file_line": i + 1,
+                        "code_context": _window(lines, i),
+                    }
+                )
 
     # -- KPI: Name (only add if not already captured as a measure)
     for i, line in enumerate(lines):
@@ -412,12 +517,14 @@ def _extract_dax(text: str) -> List[Dict]:
         if m:
             name = _normalize_name(m.group("name"))
             if name.lower() not in seen_names:
-                out.append({
-                    "name": name,
-                    "language": "dax",
-                    "file_line": i + 1,
-                    "code_context": _window(lines, i),
-                })
+                out.append(
+                    {
+                        "name": name,
+                        "language": "dax",
+                        "file_line": i + 1,
+                        "code_context": _window(lines, i),
+                    }
+                )
     return out
 
 
@@ -426,17 +533,21 @@ def _extract_abap(text: str) -> List[Dict]:
     out: List[Dict] = []
 
     # "* KPI: Name"
-    out += _extract_by_comment_tag(lines, re.compile(r"\*\s*KPI\s*:\s*(?P<name>.+)$", re.I), "abap")
+    out += _extract_by_comment_tag(
+        lines, re.compile(r"\*\s*KPI\s*:\s*(?P<name>.+)$", re.I), "abap"
+    )
 
     # REPORT ... KPI ...
     for i, line in enumerate(lines):
         if re.search(r"\bREPORT\b.*\bKPI\b", line, re.I):
-            out.append({
-                "name": _normalize_name(line),
-                "language": "abap",
-                "file_line": i + 1,
-                "code_context": _window(lines, i),
-            })
+            out.append(
+                {
+                    "name": _normalize_name(line),
+                    "language": "abap",
+                    "file_line": i + 1,
+                    "code_context": _window(lines, i),
+                }
+            )
     return out
 
 
@@ -450,29 +561,35 @@ def _extract_iec_st(text: str) -> List[Dict]:
     out: List[Dict] = []
 
     # // KPI: Name
-    out += _extract_by_comment_tag(lines, re.compile(r"//\s*KPI\s*:\s*(?P<name>.+)$", re.I), "iec_st")
+    out += _extract_by_comment_tag(
+        lines, re.compile(r"//\s*KPI\s*:\s*(?P<name>.+)$", re.I), "iec_st"
+    )
 
     # (* KPI: Name *)
     for i, line in enumerate(lines):
         m = re.search(r"\(\*\s*KPI\s*:\s*(?P<name>[^*]+)\*\)", line, re.I)
         if m:
-            out.append({
-                "name": _normalize_name(m.group("name")),
-                "language": "iec_st",
-                "file_line": i + 1,
-                "code_context": _window(lines, i),
-            })
+            out.append(
+                {
+                    "name": _normalize_name(m.group("name")),
+                    "language": "iec_st",
+                    "file_line": i + 1,
+                    "code_context": _window(lines, i),
+                }
+            )
 
     # {** KPI: Name **}
     for i, line in enumerate(lines):
         m = re.search(r"\{\*+\s*KPI\s*:\s*(?P<name>[^*]+)\*+\}", line, re.I)
         if m:
-            out.append({
-                "name": _normalize_name(m.group("name")),
-                "language": "iec_st",
-                "file_line": i + 1,
-                "code_context": _window(lines, i),
-            })
+            out.append(
+                {
+                    "name": _normalize_name(m.group("name")),
+                    "language": "iec_st",
+                    "file_line": i + 1,
+                    "code_context": _window(lines, i),
+                }
+            )
 
     return out
 
@@ -482,45 +599,60 @@ def _extract_generic(text: str) -> List[Dict]:
     lines = text.splitlines()
     out: List[Dict] = []
     # Support common comment styles in mixed text
-    out += _extract_by_comment_tag(lines, re.compile(r"#\s*KPI\s*:\s*(?P<name>.+)$", re.I), "generic")
-    out += _extract_by_comment_tag(lines, re.compile(r"//\s*KPI\s*:\s*(?P<name>.+)$", re.I), "generic")
-    out += _extract_by_comment_tag(lines, re.compile(r"--\s*KPI\s*:\s*(?P<name>.+)$", re.I), "generic")
-    out += _extract_by_comment_tag(lines, re.compile(r"^\s*\*\s*KPI\s*:\s*(?P<name>.+)$", re.I), "generic")  # ABAP-style
+    out += _extract_by_comment_tag(
+        lines, re.compile(r"#\s*KPI\s*:\s*(?P<name>.+)$", re.I), "generic"
+    )
+    out += _extract_by_comment_tag(
+        lines, re.compile(r"//\s*KPI\s*:\s*(?P<name>.+)$", re.I), "generic"
+    )
+    out += _extract_by_comment_tag(
+        lines, re.compile(r"--\s*KPI\s*:\s*(?P<name>.+)$", re.I), "generic"
+    )
+    out += _extract_by_comment_tag(
+        lines, re.compile(r"^\s*\*\s*KPI\s*:\s*(?P<name>.+)$", re.I), "generic"
+    )  # ABAP-style
     # Also allow bare lines: "KPI: ..." with no comment marker
     bare_pat = re.compile(r"^\s*KPI\s*:\s*(?P<name>.+)$", re.I)
     for i, line in enumerate(lines):
         # C/SQL block comments
         m = re.search(r"/\*\s*KPI\s*:\s*(?P<name>[^*]+)\*/", line, re.I)
         if m:
-            out.append({
-                "name": _normalize_name(m.group("name")),
-                "language": "generic",
-                "file_line": i + 1,
-                "code_context": _window(lines, i),
-            })
+            out.append(
+                {
+                    "name": _normalize_name(m.group("name")),
+                    "language": "generic",
+                    "file_line": i + 1,
+                    "code_context": _window(lines, i),
+                }
+            )
             continue
         # IEC ST block comments: (* KPI: ... *)
         m_st = re.search(r"\(\*\s*KPI\s*:\s*(?P<name>[^*]+)\*\)", line, re.I)
         if m_st:
-            out.append({
-                "name": _normalize_name(m_st.group("name")),
-                "language": "generic",
-                "file_line": i + 1,
-                "code_context": _window(lines, i),
-            })
+            out.append(
+                {
+                    "name": _normalize_name(m_st.group("name")),
+                    "language": "generic",
+                    "file_line": i + 1,
+                    "code_context": _window(lines, i),
+                }
+            )
             continue
         mb = bare_pat.search(line)
         if mb:
-            out.append({
-                "name": _normalize_name(mb.group("name")),
-                "language": "generic",
-                "file_line": i + 1,
-                "code_context": _window(lines, i),
-            })
+            out.append(
+                {
+                    "name": _normalize_name(mb.group("name")),
+                    "language": "generic",
+                    "file_line": i + 1,
+                    "code_context": _window(lines, i),
+                }
+            )
     return out
 
 
 # ---------- Dispatcher ----------
+
 
 def _detect_language_by_extension(path_lower: str) -> str:
     """Map file extension to a language."""
@@ -555,6 +687,7 @@ def _extract_from_text(text: str, language_hint: str) -> List[Dict]:
 
 # ---------- Public API ----------
 
+
 def find_kpis_in_directory(root_path: str) -> List[Dict]:
     """
     Walk a directory tree and extract KPI candidates across multiple languages.
@@ -576,9 +709,13 @@ def find_kpis_in_directory(root_path: str) -> List[Dict]:
             return results
     except Exception:
         return results
-    for dirpath, dirnames, filenames in os.walk(base):  # FIX: use `base` (not base_path)
+    for dirpath, dirnames, filenames in os.walk(
+        base
+    ):  # FIX: use `base` (not base_path)
         # prune directories in-place
-        dirnames[:] = [d for d in dirnames if d not in IGNORE_DIRS and not d.startswith('.')]
+        dirnames[:] = [
+            d for d in dirnames if d not in IGNORE_DIRS and not d.startswith(".")
+        ]
 
         for fn in filenames:
             ext = os.path.splitext(fn)[1].lower()
@@ -586,7 +723,11 @@ def find_kpis_in_directory(root_path: str) -> List[Dict]:
 
             # Extension filter (allow bypass via env KPI_SCAN_ALL=1). By default, scan all to be robust for test sets.
             _scan_all_env = os.environ.get("KPI_SCAN_ALL")
-            scan_all = True if _scan_all_env is None else (_scan_all_env in {"1", "true", "True"})
+            scan_all = (
+                True
+                if _scan_all_env is None
+                else (_scan_all_env in {"1", "true", "True"})
+            )
             if ALLOWED_EXTS and (ext not in ALLOWED_EXTS) and not scan_all:
                 continue
 
@@ -609,13 +750,15 @@ def find_kpis_in_directory(root_path: str) -> List[Dict]:
                     base_name = os.path.basename(path)
                     name_stem = os.path.splitext(base_name)[0]
                     synth_name = _normalize_name(name_stem)
-                    results.append({
-                        "name": synth_name or "KPI",
-                        "language": lang,
-                        "file_line": 1,
-                        "code_context": "",
-                        "file_path": path
-                    })
+                    results.append(
+                        {
+                            "name": synth_name or "KPI",
+                            "language": lang,
+                            "file_line": 1,
+                            "code_context": "",
+                            "file_path": path,
+                        }
+                    )
                 except Exception:
                     pass
                 continue
@@ -657,14 +800,16 @@ def find_kpis_in_directory(root_path: str) -> List[Dict]:
                         ctx = text
                         if len(ctx) > 8000:
                             ctx = ctx[:4000] + "\n...\n" + ctx[-4000:]
-                        file_kpis = [{
-                            "name": synth_name or "KPI",
-                            "language": lang,
-                            "file_line": 1,
-                            "code_context": ctx,
-                            "_rank": 0,
-                            "_kind": "filename_fallback"
-                        }]
+                        file_kpis = [
+                            {
+                                "name": synth_name or "KPI",
+                                "language": lang,
+                                "file_line": 1,
+                                "code_context": ctx,
+                                "_rank": 0,
+                                "_kind": "filename_fallback",
+                            }
+                        ]
                 except Exception:
                     pass
                 if not file_kpis:
@@ -676,14 +821,16 @@ def find_kpis_in_directory(root_path: str) -> List[Dict]:
                         ctx = text
                         if len(ctx) > 8000:
                             ctx = ctx[:4000] + "\n...\n" + ctx[-4000:]
-                        file_kpis = [{
-                            "name": synth_name or "KPI",
-                            "language": lang,
-                            "file_line": 1,
-                            "code_context": ctx,
-                            "_rank": -1,
-                            "_kind": "forced_fallback"
-                        }]
+                        file_kpis = [
+                            {
+                                "name": synth_name or "KPI",
+                                "language": lang,
+                                "file_line": 1,
+                                "code_context": ctx,
+                                "_rank": -1,
+                                "_kind": "forced_fallback",
+                            }
+                        ]
                     except Exception:
                         pass
                     if not file_kpis:
@@ -693,7 +840,9 @@ def find_kpis_in_directory(root_path: str) -> List[Dict]:
             def rank(item: Dict) -> Tuple[int, int]:
                 r = int(item.get("_rank", 0))
                 n = item.get("name") or ""
-                human = 1 if re.search(r"[ ()\[\]]", n) else 0  # prefer names with spaces/paren/brackets
+                human = (
+                    1 if re.search(r"[ ()\[\]]", n) else 0
+                )  # prefer names with spaces/paren/brackets
                 return (r, human)
 
             best = max(file_kpis, key=rank)

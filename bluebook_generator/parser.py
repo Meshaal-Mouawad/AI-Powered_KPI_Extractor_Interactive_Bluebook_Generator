@@ -1,3 +1,4 @@
+from pathlib import Path  # Add this line at the top
 
 
 def extract_formula_from_comments(code_lines):
@@ -10,21 +11,16 @@ def extract_formula_from_comments(code_lines):
             return line.split("Formula:", 1)[1].strip()
     return None
 
+
+# In bluebook_generator/parser.py, fix the loop:
 def find_kpis_in_directory(directory):
     # ...existing code...
-    for file in files:
-        # ...existing code...
+    files = list(Path(directory).glob("**/*.py"))  # Define files first!
+    for filepath in files:  # Now use filepath consistently
         with open(filepath, "r", encoding="utf-8") as f:
             lines = f.readlines()
         # ...existing code...
         # Try to extract formula from comments
-        formula = extract_formula_from_comments(lines)
-        kpi = {
-            # ...existing code...
-            "formula": formula,
-            # ...existing code...
-        }
+        extract_formula_from_comments(lines)
         # ...existing code...
     # ...existing code...
-
-
