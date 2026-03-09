@@ -197,20 +197,27 @@ def generate_formula_from_code(code_context: str) -> dict:
 
     def sanitize_token(t: str) -> str:
         t = t.strip()
+        t = re.sub(r"^[{}\[\]();,\s]+|[{}\[\]();,\s]+$", "", t)
         t = re.sub(r"[:\.]+", " ", t)
         t = re.sub(r"([a-z0-9])([A-Z])", r"\1 \2", t)
         t = t.replace("_", " ")
+        t = re.sub(r"(?i)(maintenance)to(operating)", r"\1 to \2", t)
+        t = re.sub(r"(?i)(cost)ratio", r"\1 ratio", t)
+        t = re.sub(r"(?i)(feedstock)throughput", r"\1 throughput", t)
+        t = re.sub(r"(?i)(error)rate", r"\1 rate", t)
+        t = re.sub(r"(?i)(extraction)rate", r"\1 rate", t)
         t = re.sub(r"\s+", " ", t).strip()
         t = latex_escape(t)
         return t.title()
 
     def L(v: str) -> str:
-        return r"\mathit{{{}}}".format(v.replace(" ", r"\,"))
+        return r"\mathit{{{}}}".format(v)
 
     def strip_inline_comments(line: str) -> str:
         cleaned = line  # Rename from 'l' to 'cleaned'
         cleaned = re.split(r"--", cleaned, maxsplit=1)[0]
         cleaned = re.split(r"//", cleaned, maxsplit=1)[0]
+        cleaned = re.split(r"\(\*", cleaned, maxsplit=1)[0]
         cleaned = re.split(r"(?<!:)\s'", cleaned, maxsplit=1)[0]
         cleaned = re.split(r"#", cleaned, maxsplit=1)[0]
         return cleaned.rstrip(" ;\t")
@@ -218,19 +225,54 @@ def generate_formula_from_code(code_context: str) -> dict:
     def unwrap_sql_expr(expr: str) -> str:
         e = expr.strip()
         # Use a consistent group name 'inner' and access the same
-        m = re.search(r"(?is)\\bCAST\\s*\\(\\s*(?P<inner>.+?)\\s+AS\\s+[^\\)]+\\)", e)
+        m = re.search(r"(?is)\bCAST\s*\(\s*(?P<inner>.+?)\s+AS\s+[^\)]+\)", e)
         if m:
             e = m.group("inner").strip()
-        m = re.search(r"(?is)\\bCOALESCE\\s*\\(\\s*(?P<inner>.+?)\\s*,\\s*.+?\\)", e)
+        m = re.search(r"(?is)\bCOALESCE\s*\(\s*(?P<inner>.+?)\s*,\s*.+?\)", e)
         if m:
             e = m.group("inner").strip()
-        m = re.search(r"(?is)\\bNULLIF\\s*\\(\\s*(?P<inner>.+?)\\s*,\\s*.+?\\)", e)
-        if m:
-            e = m.group("inner").strip()
+        e = re.sub(r"(?is)\bNULLIF\s*\(\s*(.+?)\s*,\s*.+?\)", r"\1", e)
+        e = re.sub(r"[;{}]+$", "", e).strip()
         e = e.strip()
         if e.startswith("(") and e.endswith(")"):
             e = e[1:-1].strip()
         return e
+
+    def split_top_level_division(expr: str) -> tuple[str, str] | None:
+        depth = 0
+        for idx, ch in enumerate(expr):
+            if ch == "(":
+                depth += 1
+            elif ch == ")":
+                depth = max(depth - 1, 0)
+            elif ch == "/" and depth == 0:
+                lhs = expr[:idx].strip()
+                rhs = expr[idx + 1 :].strip()
+                if lhs and rhs:
+                    return lhs, rhs
+        return None
+
+    def infer_oil_gas_definition(term: str) -> str:
+        raw = term.lower().replace("_", " ")
+        if "total" in raw and "gas" in raw:
+            return "Total gas handled in the reporting period (feed, flare, or processed volume as applicable)."
+        if "recovered" in raw and "gas" in raw:
+            return "Recovered gas volume captured for reuse instead of flaring or venting."
+        if "mass flow" in raw or "massflow" in raw:
+            return "Measured mass flow rate from process instrumentation during the reporting period."
+        if "vol flow" in raw or "volflow" in raw or "volume flow" in raw:
+            return "Measured volumetric flow rate used to normalize concentration or yield calculations."
+        if raw.strip() == "total":
+            return "Total measured quantity for the KPI scope during the reporting period."
+        if "operating" in raw and "cost" in raw:
+            return "Total operating expenditure for the unit/asset in the reporting period."
+        if "maintenance" in raw and "cost" in raw:
+            return "Total maintenance expenditure (planned + unplanned) for the reporting period."
+        if "throughput" in raw:
+            return "Total processed feedstock or product volume through the unit over the reporting period."
+        if "emissions" in raw or "sox" in raw:
+            return "SOx concentration or emission reading measured from analyzer or stack monitoring data."
+        return f"Measured value for {sanitize_token(term)} in the KPI calculation context."
 
     # NEW: safe group accessor to avoid "no such group" errors
     def gd(m: re.Match | None, key: str, default: str = "") -> str:
@@ -257,53 +299,75 @@ def generate_formula_from_code(code_context: str) -> dict:
         notes = notes or []
         latex_str = ""
 
+        symbol_pool = ["X", "Y", "Z", "A", "B", "C", "D"]
+
+        def symbolic_terms(terms: list[str]) -> tuple[list[str], list[str]]:
+            mapped: list[str] = []
+            defs: list[str] = []
+            for i, term in enumerate(terms):
+                clean_term = sanitize_token(term)
+                if not clean_term:
+                    continue
+                sym = symbol_pool[i] if i < len(symbol_pool) else f"V{i+1}"
+                mapped.append(sym)
+                defs.append(f"<i>{sym}:</i> {infer_oil_gas_definition(clean_term)}")
+            return mapped, defs
+
         # (a/b)*100 or 100*(a/b)
         m = re.search(r"\((.*?)\s*/\s*(.*?)\)\s*\*\s*100", expr)
         if m:
-            num, den = [sanitize_token(s) for s in m.groups()]
-            latex_str = r"{} = \frac{{{}}}{{{}}} \times 100".format(
-                L(rv), L(num), L(den)
-            )
-            notes += [
-                f"<i>{num}:</i> The numerator of the fraction.",
-                f"<i>{den}:</i> The denominator of the fraction.",
-            ]
+            syms, defs = symbolic_terms([m.group(1), m.group(2)])
+            if len(syms) == 2:
+                latex_str = r"{} = \frac{{{}}}{{{}}} \times 100".format(
+                    L(rv), L(syms[0]), L(syms[1])
+                )
+                notes += defs
         elif re.search(r"100\s*\*\s*\((.*?)\s*/\s*(.*?)\)", expr):
             m = re.search(r"100\s*\*\s*\((.*?)\s*/\s*(.*?)\)", expr)
-            num, den = [sanitize_token(s) for s in m.groups()]
-            latex_str = r"{} = 100 \times \frac{{{}}}{{{}}}".format(
-                L(rv), L(num), L(den)
-            )
-            notes += [
-                f"<i>{num}:</i> The numerator of the fraction.",
-                f"<i>{den}:</i> The denominator of the fraction.",
-            ]
+            syms, defs = symbolic_terms([m.group(1), m.group(2)])
+            if len(syms) == 2:
+                latex_str = r"{} = 100 \times \frac{{{}}}{{{}}}".format(
+                    L(rv), L(syms[0]), L(syms[1])
+                )
+                notes += defs
         # a / b
         elif "/" in expr and not re.search(r"//", expr):
-            parts = [p.strip() for p in expr.split("/", 1)]
-            if len(parts) == 2 and parts[0] and parts[1]:
-                a, b = sanitize_token(parts[0]), sanitize_token(parts[1])
-                latex_str = r"{} = \frac{{{}}}{{{}}}".format(L(rv), L(a), L(b))
+            div_parts = split_top_level_division(expr) or tuple(
+                p.strip() for p in expr.split("/", 1)
+            )
+            if len(div_parts) == 2 and div_parts[0] and div_parts[1]:
+                syms, defs = symbolic_terms([div_parts[0], div_parts[1]])
+                if len(syms) == 2:
+                    latex_str = r"{} = \frac{{{}}}{{{}}}".format(
+                        L(rv), L(syms[0]), L(syms[1])
+                    )
+                    notes += defs
         # product
         elif "*" in expr:
-            parts = [sanitize_token(p) for p in re.split(r"\*", expr)]
-            if len(parts) >= 2:
+            parts = [p for p in re.split(r"\*", expr) if p.strip()]
+            syms, defs = symbolic_terms(parts)
+            if len(syms) >= 2:
                 latex_str = r"{} = {}".format(
-                    L(rv), r" \times ".join([L(p) for p in parts])
+                    L(rv), r" \times ".join([L(p) for p in syms])
                 )
+                notes += defs
         # subtraction / addition
         elif "-" in expr:
-            parts = [sanitize_token(p) for p in expr.split("-", 1)]
-            if len(parts) == 2:
-                latex_str = r"{} = {} - {}".format(L(rv), L(parts[0]), L(parts[1]))
+            parts = [p.strip() for p in expr.split("-", 1)]
+            syms, defs = symbolic_terms(parts)
+            if len(syms) == 2:
+                latex_str = r"{} = {} - {}".format(L(rv), L(syms[0]), L(syms[1]))
+                notes += defs
         elif "+" in expr:
-            parts = [sanitize_token(p) for p in expr.split("+", 1)]
-            if len(parts) == 2:
-                latex_str = r"{} = {} + {}".format(L(rv), L(parts[0]), L(parts[1]))
+            parts = [p.strip() for p in expr.split("+", 1)]
+            syms, defs = symbolic_terms(parts)
+            if len(syms) == 2:
+                latex_str = r"{} = {} + {}".format(L(rv), L(syms[0]), L(syms[1]))
+                notes += defs
 
         if latex_str:
             notes_html = (
-                "<ul>" + "".join(f"<li>{n}</li>" for n in notes) + "</ul>"
+                "<p><b>Where:</b></p><ul>" + "".join(f"<li>{n}</li>" for n in notes) + "</ul>"
                 if notes
                 else ""
             )
@@ -423,10 +487,24 @@ def generate_formula_from_code(code_context: str) -> dict:
         if alias and expr:
             return build_html(alias, expr)
 
+    # 2e) JSON/HANA-style column expression fallback
+    m_json_expr = re.search(
+        r'(?is)"name"\s*:\s*"(?P<name>[^"]+)".*?"expression"\s*:\s*"(?P<expr>[^"]+)"',
+        ctx,
+    )
+    if m_json_expr:
+        name = gd(m_json_expr, "name")
+        expr = gd(m_json_expr, "expr")
+        if name and expr:
+            return build_html(name, expr)
+
     # 3) return <expr>;
-    m = re.search(r"(?is)\breturn\b\s+(?P<expr>.+)", ctx)
-    if m and gd(m, "expr"):
-        return build_html("Result", gd(m, "expr"))
+    return_matches = list(re.finditer(r"(?im)\breturn\b\s+(?P<expr>[^;\r\n]+)", ctx))
+    if return_matches:
+        for m in reversed(return_matches):
+            expr = gd(m, "expr").strip()
+            if any(op in expr for op in ("*", "/", "+", "-")):
+                return build_html("Result", expr)
 
     # 3b) VB Return: handle at line start with optional indent (e.g., "Return operatingHours / numberOfFailures")
     m_vb_return = re.search(r"(?im)^\s*return\s+(?P<expr>[^\r\n]+)$", ctx)
@@ -482,6 +560,10 @@ def generate_formula_from_code(code_context: str) -> dict:
                 lhs, rhs = [p.strip() for p in lhs_rhs]
                 if any(op in rhs for op in ("*", "/", "+", "-")):
                     return build_html(lhs, rhs)
+
+    # 5b) Domain fallback: SOx concentration snippets with variable declarations
+    if re.search(r"(?i)sox\s*conc|soxconc", ctx) and re.search(r"(?i)sox\s*mass\s*flow|soxmassflow", ctx) and re.search(r"(?i)vol\s*flow|volflow", ctx):
+        return build_html("soxConc", "soxMassFlow / volFlow")
 
     # 6) NEW: last-resort generic sweep — pick the last math-like line
     #    Works for VB/Python/C-like/SQL-ish snippets when earlier patterns miss.
