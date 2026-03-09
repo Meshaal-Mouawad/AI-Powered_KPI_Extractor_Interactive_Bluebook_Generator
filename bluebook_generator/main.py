@@ -252,28 +252,6 @@ def generate_formula_from_code(code_context: str) -> dict:
                     return lhs, rhs
         return None
 
-    def infer_oil_gas_definition(term: str) -> str:
-        raw = term.lower().replace("_", " ")
-        if "total" in raw and "gas" in raw:
-            return "Total gas handled in the reporting period (feed, flare, or processed volume as applicable)."
-        if "recovered" in raw and "gas" in raw:
-            return "Recovered gas volume captured for reuse instead of flaring or venting."
-        if "mass flow" in raw or "massflow" in raw:
-            return "Measured mass flow rate from process instrumentation during the reporting period."
-        if "vol flow" in raw or "volflow" in raw or "volume flow" in raw:
-            return "Measured volumetric flow rate used to normalize concentration or yield calculations."
-        if raw.strip() == "total":
-            return "Total measured quantity for the KPI scope during the reporting period."
-        if "operating" in raw and "cost" in raw:
-            return "Total operating expenditure for the unit/asset in the reporting period."
-        if "maintenance" in raw and "cost" in raw:
-            return "Total maintenance expenditure (planned + unplanned) for the reporting period."
-        if "throughput" in raw:
-            return "Total processed feedstock or product volume through the unit over the reporting period."
-        if "emissions" in raw or "sox" in raw:
-            return "SOx concentration or emission reading measured from analyzer or stack monitoring data."
-        return f"Measured value for {sanitize_token(term)} in the KPI calculation context."
-
     # NEW: safe group accessor to avoid "no such group" errors
     def gd(m: re.Match | None, key: str, default: str = "") -> str:
         if not m:
@@ -310,7 +288,7 @@ def generate_formula_from_code(code_context: str) -> dict:
                     continue
                 sym = symbol_pool[i] if i < len(symbol_pool) else f"V{i+1}"
                 mapped.append(sym)
-                defs.append(f"<i>{sym}:</i> {infer_oil_gas_definition(clean_term)}")
+                defs.append(f"<i>{sym}:</i> {clean_term}.")
             return mapped, defs
 
         # (a/b)*100 or 100*(a/b)
@@ -336,12 +314,8 @@ def generate_formula_from_code(code_context: str) -> dict:
                 p.strip() for p in expr.split("/", 1)
             )
             if len(div_parts) == 2 and div_parts[0] and div_parts[1]:
-                syms, defs = symbolic_terms([div_parts[0], div_parts[1]])
-                if len(syms) == 2:
-                    latex_str = r"{} = \frac{{{}}}{{{}}}".format(
-                        L(rv), L(syms[0]), L(syms[1])
-                    )
-                    notes += defs
+                a, b = sanitize_token(div_parts[0]), sanitize_token(div_parts[1])
+                latex_str = r"{} = \frac{{{}}}{{{}}}".format(L(rv), L(a), L(b))
         # product
         elif "*" in expr:
             parts = [p for p in re.split(r"\*", expr) if p.strip()]
