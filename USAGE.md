@@ -122,6 +122,44 @@ Alternative (without installing the console script):
 - PowerShell activation policy errors:
     - Temporarily allow scripts: `Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process`
 
+## Push your changes to GitHub and create a Pull Request
+
+If you fixed formulas locally but do not see any Pull Request in GitHub, it usually means your commit is still only on your machine (not pushed yet), or it was pushed directly to a branch without opening a PR.
+
+### 1) Check your current branch and latest commits
+
+- `git branch --show-current`
+- `git log --oneline -n 5`
+
+### 2) Push your branch to GitHub
+
+- First time pushing this branch:
+  - `git push -u origin <your-branch-name>`
+- Next pushes on same branch:
+  - `git push`
+
+### 3) Open PR in GitHub UI
+
+1. Go to your repository on GitHub.
+2. GitHub usually shows a **Compare & pull request** banner after push — click it.
+3. Set:
+   - **base** = your target branch (often `main`)
+   - **compare** = your feature branch (the one you pushed)
+4. Click **Create pull request**.
+
+### 4) Optional: create PR from CLI
+
+If you use GitHub CLI:
+
+- `gh pr create --base main --head <your-branch-name> --title "Fix KPI formula rendering" --body "Describe changes"`
+
+### Why you may not see a PR
+
+- You committed locally but did not run `git push`.
+- You pushed to `main` directly (no PR is created automatically).
+- You are viewing a different fork/org/repository than the one you pushed to.
+- Your branch has no differences versus the base branch.
+
 ## Quick end-to-end test (macOS example)
 
 - `cd /Users/meshaalmouawad/AI-Powered_KPI_Extractor_Interactive_Bluebook_Generator`
