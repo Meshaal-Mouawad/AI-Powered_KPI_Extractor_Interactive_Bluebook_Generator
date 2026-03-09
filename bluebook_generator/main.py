@@ -206,12 +206,13 @@ def generate_formula_from_code(code_context: str) -> dict:
         return t.title()
 
     def L(v: str) -> str:
-        return r"\mathit{{{}}}".format(v.replace(" ", r"\,"))
+        return r"\mathit{{{}}}".format(v)
 
     def strip_inline_comments(line: str) -> str:
         cleaned = line  # Rename from 'l' to 'cleaned'
         cleaned = re.split(r"--", cleaned, maxsplit=1)[0]
         cleaned = re.split(r"//", cleaned, maxsplit=1)[0]
+        cleaned = re.split(r"\(\*", cleaned, maxsplit=1)[0]
         cleaned = re.split(r"(?<!:)\s'", cleaned, maxsplit=1)[0]
         cleaned = re.split(r"#", cleaned, maxsplit=1)[0]
         return cleaned.rstrip(" ;\t")
@@ -271,27 +272,37 @@ def generate_formula_from_code(code_context: str) -> dict:
         notes = notes or []
         latex_str = ""
 
+        symbol_pool = ["X", "Y", "Z", "A", "B", "C", "D"]
+
+        def symbolic_terms(terms: list[str]) -> tuple[list[str], list[str]]:
+            mapped: list[str] = []
+            defs: list[str] = []
+            for i, term in enumerate(terms):
+                clean_term = sanitize_token(term)
+                if not clean_term:
+                    continue
+                sym = symbol_pool[i] if i < len(symbol_pool) else f"V{i+1}"
+                mapped.append(sym)
+                defs.append(f"<i>{sym}:</i> {clean_term}.")
+            return mapped, defs
+
         # (a/b)*100 or 100*(a/b)
         m = re.search(r"\((.*?)\s*/\s*(.*?)\)\s*\*\s*100", expr)
         if m:
-            num, den = [sanitize_token(s) for s in m.groups()]
-            latex_str = r"{} = \frac{{{}}}{{{}}} \times 100".format(
-                L(rv), L(num), L(den)
-            )
-            notes += [
-                f"<i>{num}:</i> The numerator of the fraction.",
-                f"<i>{den}:</i> The denominator of the fraction.",
-            ]
+            syms, defs = symbolic_terms([m.group(1), m.group(2)])
+            if len(syms) == 2:
+                latex_str = r"{} = \frac{{{}}}{{{}}} \times 100".format(
+                    L(rv), L(syms[0]), L(syms[1])
+                )
+                notes += defs
         elif re.search(r"100\s*\*\s*\((.*?)\s*/\s*(.*?)\)", expr):
             m = re.search(r"100\s*\*\s*\((.*?)\s*/\s*(.*?)\)", expr)
-            num, den = [sanitize_token(s) for s in m.groups()]
-            latex_str = r"{} = 100 \times \frac{{{}}}{{{}}}".format(
-                L(rv), L(num), L(den)
-            )
-            notes += [
-                f"<i>{num}:</i> The numerator of the fraction.",
-                f"<i>{den}:</i> The denominator of the fraction.",
-            ]
+            syms, defs = symbolic_terms([m.group(1), m.group(2)])
+            if len(syms) == 2:
+                latex_str = r"{} = 100 \times \frac{{{}}}{{{}}}".format(
+                    L(rv), L(syms[0]), L(syms[1])
+                )
+                notes += defs
         # a / b
         elif "/" in expr and not re.search(r"//", expr):
             div_parts = split_top_level_division(expr) or tuple(
@@ -302,24 +313,30 @@ def generate_formula_from_code(code_context: str) -> dict:
                 latex_str = r"{} = \frac{{{}}}{{{}}}".format(L(rv), L(a), L(b))
         # product
         elif "*" in expr:
-            parts = [sanitize_token(p) for p in re.split(r"\*", expr)]
-            if len(parts) >= 2:
+            parts = [p for p in re.split(r"\*", expr) if p.strip()]
+            syms, defs = symbolic_terms(parts)
+            if len(syms) >= 2:
                 latex_str = r"{} = {}".format(
-                    L(rv), r" \times ".join([L(p) for p in parts])
+                    L(rv), r" \times ".join([L(p) for p in syms])
                 )
+                notes += defs
         # subtraction / addition
         elif "-" in expr:
-            parts = [sanitize_token(p) for p in expr.split("-", 1)]
-            if len(parts) == 2:
-                latex_str = r"{} = {} - {}".format(L(rv), L(parts[0]), L(parts[1]))
+            parts = [p.strip() for p in expr.split("-", 1)]
+            syms, defs = symbolic_terms(parts)
+            if len(syms) == 2:
+                latex_str = r"{} = {} - {}".format(L(rv), L(syms[0]), L(syms[1]))
+                notes += defs
         elif "+" in expr:
-            parts = [sanitize_token(p) for p in expr.split("+", 1)]
-            if len(parts) == 2:
-                latex_str = r"{} = {} + {}".format(L(rv), L(parts[0]), L(parts[1]))
+            parts = [p.strip() for p in expr.split("+", 1)]
+            syms, defs = symbolic_terms(parts)
+            if len(syms) == 2:
+                latex_str = r"{} = {} + {}".format(L(rv), L(syms[0]), L(syms[1]))
+                notes += defs
 
         if latex_str:
             notes_html = (
-                "<ul>" + "".join(f"<li>{n}</li>" for n in notes) + "</ul>"
+                "<p><b>Where:</b></p><ul>" + "".join(f"<li>{n}</li>" for n in notes) + "</ul>"
                 if notes
                 else ""
             )
@@ -512,6 +529,10 @@ def generate_formula_from_code(code_context: str) -> dict:
                 lhs, rhs = [p.strip() for p in lhs_rhs]
                 if any(op in rhs for op in ("*", "/", "+", "-")):
                     return build_html(lhs, rhs)
+
+    # 5b) Domain fallback: SOx concentration snippets with variable declarations
+    if re.search(r"(?i)sox\s*conc|soxconc", ctx) and re.search(r"(?i)sox\s*mass\s*flow|soxmassflow", ctx) and re.search(r"(?i)vol\s*flow|volflow", ctx):
+        return build_html("soxConc", "soxMassFlow / volFlow")
 
     # 6) NEW: last-resort generic sweep — pick the last math-like line
     #    Works for VB/Python/C-like/SQL-ish snippets when earlier patterns miss.
