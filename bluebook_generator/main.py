@@ -197,6 +197,7 @@ def generate_formula_from_code(code_context: str) -> dict:
 
     def sanitize_token(t: str) -> str:
         t = t.strip()
+        t = re.sub(r"^[{}\[\]();,\s]+|[{}\[\]();,\s]+$", "", t)
         t = re.sub(r"[:\.]+", " ", t)
         t = re.sub(r"([a-z0-9])([A-Z])", r"\1 \2", t)
         t = t.replace("_", " ")
@@ -218,19 +219,32 @@ def generate_formula_from_code(code_context: str) -> dict:
     def unwrap_sql_expr(expr: str) -> str:
         e = expr.strip()
         # Use a consistent group name 'inner' and access the same
-        m = re.search(r"(?is)\\bCAST\\s*\\(\\s*(?P<inner>.+?)\\s+AS\\s+[^\\)]+\\)", e)
+        m = re.search(r"(?is)\bCAST\s*\(\s*(?P<inner>.+?)\s+AS\s+[^\)]+\)", e)
         if m:
             e = m.group("inner").strip()
-        m = re.search(r"(?is)\\bCOALESCE\\s*\\(\\s*(?P<inner>.+?)\\s*,\\s*.+?\\)", e)
+        m = re.search(r"(?is)\bCOALESCE\s*\(\s*(?P<inner>.+?)\s*,\s*.+?\)", e)
         if m:
             e = m.group("inner").strip()
-        m = re.search(r"(?is)\\bNULLIF\\s*\\(\\s*(?P<inner>.+?)\\s*,\\s*.+?\\)", e)
-        if m:
-            e = m.group("inner").strip()
+        e = re.sub(r"(?is)\bNULLIF\s*\(\s*(.+?)\s*,\s*.+?\)", r"\1", e)
+        e = re.sub(r"[;{}]+$", "", e).strip()
         e = e.strip()
         if e.startswith("(") and e.endswith(")"):
             e = e[1:-1].strip()
         return e
+
+    def split_top_level_division(expr: str) -> tuple[str, str] | None:
+        depth = 0
+        for idx, ch in enumerate(expr):
+            if ch == "(":
+                depth += 1
+            elif ch == ")":
+                depth = max(depth - 1, 0)
+            elif ch == "/" and depth == 0:
+                lhs = expr[:idx].strip()
+                rhs = expr[idx + 1 :].strip()
+                if lhs and rhs:
+                    return lhs, rhs
+        return None
 
     # NEW: safe group accessor to avoid "no such group" errors
     def gd(m: re.Match | None, key: str, default: str = "") -> str:
@@ -280,9 +294,11 @@ def generate_formula_from_code(code_context: str) -> dict:
             ]
         # a / b
         elif "/" in expr and not re.search(r"//", expr):
-            parts = [p.strip() for p in expr.split("/", 1)]
-            if len(parts) == 2 and parts[0] and parts[1]:
-                a, b = sanitize_token(parts[0]), sanitize_token(parts[1])
+            div_parts = split_top_level_division(expr) or tuple(
+                p.strip() for p in expr.split("/", 1)
+            )
+            if len(div_parts) == 2 and div_parts[0] and div_parts[1]:
+                a, b = sanitize_token(div_parts[0]), sanitize_token(div_parts[1])
                 latex_str = r"{} = \frac{{{}}}{{{}}}".format(L(rv), L(a), L(b))
         # product
         elif "*" in expr:
@@ -423,10 +439,24 @@ def generate_formula_from_code(code_context: str) -> dict:
         if alias and expr:
             return build_html(alias, expr)
 
+    # 2e) JSON/HANA-style column expression fallback
+    m_json_expr = re.search(
+        r'(?is)"name"\s*:\s*"(?P<name>[^"]+)".*?"expression"\s*:\s*"(?P<expr>[^"]+)"',
+        ctx,
+    )
+    if m_json_expr:
+        name = gd(m_json_expr, "name")
+        expr = gd(m_json_expr, "expr")
+        if name and expr:
+            return build_html(name, expr)
+
     # 3) return <expr>;
-    m = re.search(r"(?is)\breturn\b\s+(?P<expr>.+)", ctx)
-    if m and gd(m, "expr"):
-        return build_html("Result", gd(m, "expr"))
+    return_matches = list(re.finditer(r"(?im)\breturn\b\s+(?P<expr>[^;\r\n]+)", ctx))
+    if return_matches:
+        for m in reversed(return_matches):
+            expr = gd(m, "expr").strip()
+            if any(op in expr for op in ("*", "/", "+", "-")):
+                return build_html("Result", expr)
 
     # 3b) VB Return: handle at line start with optional indent (e.g., "Return operatingHours / numberOfFailures")
     m_vb_return = re.search(r"(?im)^\s*return\s+(?P<expr>[^\r\n]+)$", ctx)
