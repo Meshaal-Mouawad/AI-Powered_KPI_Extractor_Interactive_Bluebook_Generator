@@ -309,12 +309,8 @@ def generate_formula_from_code(code_context: str) -> dict:
                 p.strip() for p in expr.split("/", 1)
             )
             if len(div_parts) == 2 and div_parts[0] and div_parts[1]:
-                syms, defs = symbolic_terms([div_parts[0], div_parts[1]])
-                if len(syms) == 2:
-                    latex_str = r"{} = \frac{{{}}}{{{}}}".format(
-                        L(rv), L(syms[0]), L(syms[1])
-                    )
-                    notes += defs
+                a, b = sanitize_token(div_parts[0]), sanitize_token(div_parts[1])
+                latex_str = r"{} = \frac{{{}}}{{{}}}".format(L(rv), L(a), L(b))
         # product
         elif "*" in expr:
             parts = [p for p in re.split(r"\*", expr) if p.strip()]
