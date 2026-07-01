@@ -92,3 +92,4 @@ def setup(app):
         loading_method="defer",
     )
     app.add_css_file("custom.css")
+    app.add_css_file("leap/ECDS_TOKENS.css")

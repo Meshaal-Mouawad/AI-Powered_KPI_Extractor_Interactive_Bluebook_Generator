@@ -22,15 +22,15 @@ Key Performance Indicators
    :maxdepth: 1
    :caption: Key Performance Indicators:
 
-   yield_percentage
-   onspec_rate
-   daily_feedstock_throughput_tonsday
-   polymer_melt_flow_index_mfi_variance
-   mean_time_between_failures_mtbf
    propylene_to_ethylene_pe_ratio
-   maintenance_to_operating_cost_ratio
    cooling_water_deltat_c
-   kpi_flare_recovery_pct
    sox_emissions_concentration_kgm3
+   mean_time_between_failures_mtbf
+   yield_percentage
+   polymer_melt_flow_index_mfi_variance
+   onspec_rate
+   kpi_flare_recovery_pct
+   maintenance_to_operating_cost_ratio
+   daily_feedstock_throughput_tonsday
    oee
    specific_catalyst_cost_ton

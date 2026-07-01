@@ -18,7 +18,7 @@ Use it:
 
 Conversation history is NOT shared memory.
 
-The `.ai` directory is the single source of truth.
+The `.ai` directory is the single source of truth for shared project memory.
 
 ---
 
@@ -172,6 +172,79 @@ is considered complete until it has been written into `.ai`.
 
 ---
 
+# Repository Scope Rules
+
+Before inspecting the repository:
+
+1. Read `.ai/REPOSITORY_SCOPE.md`.
+2. Read `.ai/AI_IGNORE.md`.
+3. Identify the subsystem relevant to the task.
+4. Inspect only files required for that subsystem.
+5. Do not perform recursive repository-wide scans unless explicitly instructed.
+
+The repository contains:
+
+- canonical source files,
+- diagnostic evidence,
+- generated artifacts,
+- ignored directories,
+- historical work,
+- human verification artifacts.
+
+Agents must respect these classifications.
+
+---
+
+# Generated Output Rules
+
+Generated files are considered diagnostic evidence, not repair targets.
+
+Agents MAY inspect generated output when debugging:
+
+- rendering issues,
+- formula generation,
+- Sphinx behavior,
+- UI problems,
+- governance display,
+- documentation generation.
+
+Examples:
+
+- `docs/*.rst`
+- `docs/_build/*.html`
+- generated reports
+- generated Bluebooks
+
+However, agents MUST NOT implement the final fix by patching generated output.
+
+Instead, agents must identify and modify the upstream source:
+
+- source code,
+- extraction logic,
+- governance logic,
+- templates,
+- configuration,
+- canonical static assets,
+- business rules.
+
+Generated output may be used as evidence but never as the source of truth.
+
+---
+# Cheapkeeper Rule
+
+To minimize AI token consumption:
+
+1. Identify the subsystem before reading files.
+2. Read only files relevant to that subsystem.
+3. Avoid repository-wide scans.
+4. Prefer human verification over repeated regeneration.
+5. Escalate to stronger models only when diagnosis complexity exceeds implementation cost.
+
+Principle:
+
+> Never pay twice for the same understanding.
+
+---
 # Before Ending
 
 Update:

@@ -38,8 +38,14 @@ ARCHITECTURE.md     → HOW
 
 ---
 
-## 2026-06-30 — Register Qwen for future optional use
+## 2026-07-01 — UI Architecture and Theme Strategy
 
-**Decision:** Qwen is available as a future optional coding agent, but not part of the daily workflow yet.
+**Decision:**
+- Enforce ONE unified LEAP UI architecture.
+- Implement THREE interchangeable themes (Mission Control, Cognitive Workspace, LEAP Evolution).
+- Default production theme: Cognitive Workspace (Light Teal).
+- Support dynamic theme switching.
+- Canonical warning component: `05_WARNING_COMPONENT.md`.
 
-**Why:** It may help later for implementation/refactoring, but current stack is enough.
+**Why:** Ensure visual consistency across diverse enterprise use cases while maintaining a single maintainable codebase.
+

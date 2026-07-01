@@ -19,6 +19,20 @@ Task: Fix recurring MathJax formula corruption in KPI pages.
 ## Next action
 System stable. Monitor for future sidebar regressions and strictly follow formula rendering invariants defined in `.ai/LESSONS_LEARNED.md`.
 
+## Important Update: UI System Registration
+The LEAP UI system has been registered:
+- Architecture: One unified architecture.
+- Themes: Three themes (Enterprise Mission Control, Enterprise Cognitive Workspace [Default], Current LEAP Evolution) with dynamic switching.
+- Canonical components: Warning components from `05_WARNING_COMPONENT.md` must be used.
+- All future agents MUST adhere to this UI structure. Do not implement new architectures.
+
+## Important Update: Phase 4B.1 (Foundation)
+- Implemented design tokens for ECDS (`.ui/LEAPui/ECDS_TOKENS.css`).
+- Supported themes: `light-teal` (default), `dark`, `classic`.
+- Dynamic switching support via `data-theme` body attributes.
+- Tokenized border radii, shadows, motion, and typography.
+- UI foundation is now ready for application-wide theme integration.
+
 ## Important warning
 - Do not route explicit LaTeX through `generate_formula_from_code()`.
 - Explicit LaTeX is presentation syntax and must not be processed as executable code (reference `.ai/LESSONS_LEARNED.md`).

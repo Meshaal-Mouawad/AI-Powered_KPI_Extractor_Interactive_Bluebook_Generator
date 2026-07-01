@@ -1,6 +1,13 @@
 # CHANGELOG.md
 
+## 2026-07-01 — Gemini CLI — UI Foundation Phase 4B.1 Implemented
+- Implemented Enterprise Cognitive Design System (ECDS) design tokens in `.ui/LEAPui/ECDS_TOKENS.css`.
+- Defined design tokens for border radii, shadows, motion, and typography.
+- Established three supported themes (`light-teal`, `dark`, `classic`) with dynamic `data-theme` switching.
+- Verification: Validated theme token compilation.
+
 ## 2026-07-01 — Codex — MathJax Formula Rendering Fixed
+
 - Fixed recurring formula corruption where explicit LaTeX from source comments rendered as `\Mathrm` / `\Frac`.
 - Added deterministic LaTeX preservation in `bluebook_generator/main.py` instead of re-parsing explicit LaTeX as code.
 - Updated formula annotation behavior so LaTeX business formulas use executable source expressions for annotation tokens.

@@ -1,0 +1,29 @@
+# UI_PACKAGE_MAP.md
+
+## Shared Memory
+
+Read every session:
+
+- UI_DESIGN_SYSTEM.md
+- UI_AGENT_PROMPT.md
+- UI_BEHAVIOR_SPEC.md
+- UI_EVALUATION_SUMMARY.md
+- LEAP_MARKET_POSITIONING_AND_ECDS.md
+- THEME_SPEC.md
+
+---
+
+## Visual Assets
+
+Inspect only during UI work:
+
+.ui/LEAPui/LEAP_3_THEME_UI_PACKAGE/
+
+Files:
+
+- 01_ECDS_MASTER.md
+- 02_THEME_DARK.md
+- 03_THEME_LIGHT_TEAL.md
+- 04_THEME_CLASSIC.md
+- 05_WARNING_COMPONENT.md
+- 06_GEMINI_UI_PROMPT.md
