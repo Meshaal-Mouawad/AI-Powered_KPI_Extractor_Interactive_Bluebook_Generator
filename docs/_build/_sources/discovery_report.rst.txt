@@ -155,66 +155,66 @@ KPI Inventory
      - Detection
      - Accountable
      - Source
-   * - :doc:`onspec_rate`
-     - 95%
-     - SQL
-     - Sql Comment
-     - Enterprise Data Owner
-     - ``sql_kpi.sql``
-   * - :doc:`propylene_to_ethylene_pe_ratio`
-     - 90%
-     - CSHARP
-     - Comment
-     - Enterprise Data Owner
-     - ``dotnet_kpi.cs``
-   * - :doc:`kpi_flare_recovery_pct`
-     - 85%
-     - HANA
-     - Hana Json
-     - HSE Data Owner
-     - ``ana_kpi.hdbview``
-   * - :doc:`polymer_melt_flow_index_mfi_variance`
-     - 90%
-     - ABAP
-     - Comment
-     - Enterprise Data Owner
-     - ``abap_kpi.abap``
-   * - :doc:`sox_emissions_concentration_kgm3`
-     - 90%
-     - IEC_ST
-     - Comment
-     - HSE Data Owner
-     - ``lc_kpi.st``
    * - :doc:`yield_percentage`
      - 95%
      - PLSQL
      - Sql Comment
      - Operations Data Owner
      - ``plsql_kpi.pks``
-   * - :doc:`cooling_water_deltat_c`
-     - 90%
-     - CSHARP
-     - Comment
+   * - :doc:`onspec_rate`
+     - 95%
+     - SQL
+     - Sql Comment
      - Enterprise Data Owner
-     - ``csv_kpi.cs``
-   * - :doc:`mean_time_between_failures_mtbf`
-     - 90%
-     - VBNET
-     - Comment
-     - Maintenance Data Owner
-     - ``vb_kpi.vb``
-   * - :doc:`maintenance_to_operating_cost_ratio`
-     - 90%
-     - GENERIC
-     - Comment
-     - Finance Data Owner
-     - ``generic_kpi.txt``
+     - ``sql_kpi.sql``
    * - :doc:`daily_feedstock_throughput_tonsday`
      - 90%
      - PYTHON
      - Comment
      - Operations Data Owner
      - ``python_kpi.py``
+   * - :doc:`polymer_melt_flow_index_mfi_variance`
+     - 90%
+     - ABAP
+     - Comment
+     - Enterprise Data Owner
+     - ``abap_kpi.abap``
+   * - :doc:`mean_time_between_failures_mtbf`
+     - 90%
+     - VBNET
+     - Comment
+     - Maintenance Data Owner
+     - ``vb_kpi.vb``
+   * - :doc:`propylene_to_ethylene_pe_ratio`
+     - 90%
+     - CSHARP
+     - Comment
+     - Enterprise Data Owner
+     - ``dotnet_kpi.cs``
+   * - :doc:`maintenance_to_operating_cost_ratio`
+     - 90%
+     - GENERIC
+     - Comment
+     - Finance Data Owner
+     - ``generic_kpi.txt``
+   * - :doc:`cooling_water_deltat_c`
+     - 90%
+     - CSHARP
+     - Comment
+     - Enterprise Data Owner
+     - ``csv_kpi.cs``
+   * - :doc:`kpi_flare_recovery_pct`
+     - 85%
+     - HANA
+     - Hana Json
+     - HSE Data Owner
+     - ``ana_kpi.hdbview``
+   * - :doc:`sox_emissions_concentration_kgm3`
+     - 90%
+     - IEC_ST
+     - Comment
+     - HSE Data Owner
+     - ``lc_kpi.st``
    * - :doc:`oee`
      - 95%
      - DAX
