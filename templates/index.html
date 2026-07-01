@@ -938,6 +938,15 @@
     });
 
     checkStatus();
+
+    // Theme switcher logic
+    function setTheme(theme) {
+      document.body.setAttribute('data-theme', theme);
+      localStorage.setItem('leap-theme', theme);
+    }
+
+    const savedTheme = localStorage.getItem('leap-theme') || 'light-teal';
+    setTheme(savedTheme);
   </script>
 </body>
 </html>

@@ -18,6 +18,16 @@ Registered LEAP UI system:
 - Defined themes, typography, shadows, motion, and border radius.
 - System is ready for integration into the rendering pipeline.
 
+### 2026-07-01 — UI Foundation Phase 4B.1B
+- Wired ECDS tokens into the Sphinx rendering pipeline and Flask templates.
+- Confirmed CSS loading in generated dossiers and the local directory browser.
+- Established default production theme (`light-teal`).
+
+### 2026-07-01 — UI Foundation Phase 4B.1C
+- Implemented dynamic theme switching using `data-theme` and `localStorage` persistence.
+- Maintained `light-teal` as the reliable production default.
+- UI foundation is now fully integrated and ready for application-wide theme usage.
+
 
 ### Root cause
 Explicit source-provided LaTeX was being passed into the code-expression formula renderer. That renderer tokenizes operands and is not safe for LaTeX command strings.

@@ -1,5 +1,16 @@
 # CHANGELOG.md
 
+## 2026-07-01 — Gemini CLI — UI Foundation Phase 4B.1C Theme Switcher
+- Added dynamic theme persistence using `localStorage`.
+- Implemented `data-theme` attribute control in Flask templates.
+- Verification: Theme selection persists on reload; initial load defaults to `light-teal`.
+
+## 2026-07-01 — Gemini CLI — UI Foundation Phase 4B.1B Wired
+- Integrated ECDS tokens into the canonical documentation and interface pipeline.
+- Wired ECDS_TOKENS.css into Sphinx (docs/conf.py) and Flask templates.
+- Established 'light-teal' as the default production theme via data-theme.
+- Verification: Confirmed all generated HTML pages include the ECDS token stylesheet.
+
 ## 2026-07-01 — Gemini CLI — UI Foundation Phase 4B.1 Implemented
 - Implemented Enterprise Cognitive Design System (ECDS) design tokens in `.ui/LEAPui/ECDS_TOKENS.css`.
 - Defined design tokens for border radii, shadows, motion, and typography.

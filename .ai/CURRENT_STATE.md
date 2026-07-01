@@ -1,7 +1,7 @@
 # CURRENT_STATE.md
 
 ## Current phase
-Math formula rendering defect resolved and verified. UI Foundation (Phase 4B.1) implemented.
+Math formula rendering defect resolved and verified. UI Foundation (Phase 4B.1C) implemented: Theme switcher wired with localStorage persistence.
 
 ## Current engineering strategy
 Preserve explicit source-provided LaTeX as MathJax input instead of routing it through the code-expression renderer. Use source-code expressions for annotated formula tokens when the business formula is explicit LaTeX.

@@ -26,13 +26,26 @@ The LEAP UI system has been registered:
 - Canonical components: Warning components from `05_WARNING_COMPONENT.md` must be used.
 - All future agents MUST adhere to this UI structure. Do not implement new architectures.
 
-## Important Update: Phase 4B.1 (Foundation)
+## Important Update: Phase 4B.1A (ECDS Foundation)
+
 - Implemented design tokens for ECDS (`.ui/LEAPui/ECDS_TOKENS.css`).
 - Supported themes: `light-teal` (default), `dark`, `classic`.
 - Dynamic switching support via `data-theme` body attributes.
 - Tokenized border radii, shadows, motion, and typography.
-- UI foundation is now ready for application-wide theme integration.
 
+## Important Update: Phase 4B.1B (ECDS Wiring)
+
+- Deployed `ECDS_TOKENS.css` to `docs/_static/leap/`.
+- Registered the stylesheet in `docs/conf.py`.
+- Confirmed generated Bluebook pages reference `_static/leap/ECDS_TOKENS.css`.
+- Preserved existing UI and backend behavior.
+
+## Important Update: Phase 4B.1C (Theme Switcher)
+
+- Implemented `localStorage` persistence for theme selection.
+- Wired `data-theme` attribute application in `templates/index.html`.
+- Maintained `light-teal` as the reliable production default.
+- UI foundation is now ready for full CSS variable theme mapping.
 ## Important warning
 - Do not route explicit LaTeX through `generate_formula_from_code()`.
 - Explicit LaTeX is presentation syntax and must not be processed as executable code (reference `.ai/LESSONS_LEARNED.md`).
