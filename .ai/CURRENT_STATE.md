@@ -1,17 +1,15 @@
 # CURRENT_STATE.md
 
 ## Current phase
-Repository analysis complete. Documentation and memory bootstrapping phase finished.
+Math formula rendering defect resolved and verified.
 
 ## Current engineering strategy
-1. Maintain deterministic, file-based memory in `.ai/`.
-2. Do not refactor code yet.
-3. Prepare for PhD-critical debugging.
+Preserve explicit source-provided LaTeX as MathJax input instead of routing it through the code-expression renderer. Use source-code expressions for annotated formula tokens when the business formula is explicit LaTeX.
 
 ## Current immediate task
-Awaiting specific directive for next development cycle (Bug fix, feature expansion, or documentation update).
+Monitor future KPI generations for formula rendering regressions, especially source comments that contain LaTeX commands such as `\mathrm` and `\frac`.
 
 ## Known context
-- Repository structure mapped.
-- Core pipeline components identified (`main.py`, `kpi_extractor.py`, `governance.py`).
-- No pending application modifications.
+- Root cause was backend formula handling in `bluebook_generator/main.py`, not Sphinx or MathJax configuration.
+- `generate_formula_from_code()` is correct for executable source expressions but unsafe for explicit LaTeX strings.
+- `sample_project/vb_kpi.vb` now generates a valid MTBF formula in `docs/mean_time_between_failures_mtbf.rst`.

@@ -6,16 +6,38 @@
 **Status:** Open
 **Severity:** Medium
 **Description:** `bluebook_generator/main.py` is >100KB, indicating a likely violation of SRP.
-**Next action:** Plan refactor/decomposition.
 
 ### RISK-002 — Extraction Robustness
 **Status:** Open
 **Severity:** High
 **Description:** `kpi_extractor.py` uses heuristic parsing which may fail on complex code structures.
-**Next action:** Audit extraction success rates on `sample_project_50/`.
 
 ### RISK-003 — AI Trustworthiness
 **Status:** Open
 **Severity:** High
 **Description:** AI-generated narrative draft certification risk.
-**Next action:** Enforce "Draft" labels in documentation generation.
+
+### RISK-005 — Missing Blue Book Static Assets
+**Status:** Resolved
+**Severity:** High
+**Area:** Documentation
+**Description:** Fixed by creating `docs/_static/` and restoring assets, and refining CSS footer visibility.
+
+### RISK-006 — Inconsistent Footer Implementation
+**Status:** Resolved
+**Severity:** Low
+**Area:** UI/UX
+**Description:** Extracted rich footer to shared partial (`footer.html`) used by `layout.html` and `kpi_template.rst.j2`. Fixed malformed partial.
+
+### RISK-007 — LaTeX Formula Rendering Failure
+**Status:** Resolved
+**Severity:** Medium
+**Area:** Documentation
+**Description:** Reopened after MTBF still rendered as `\Mathrm` / `\Frac`. Root cause was explicit LaTeX being routed through `generate_formula_from_code()`, which is intended for executable code expressions and corrupts LaTeX commands during tokenization. Resolved by preserving explicit LaTeX via dedicated normalization/wrapping helpers and using source-code expressions for annotation tokens.
+**Note:** Strictly follow LaTeX processing rules in `.ai/LESSONS_LEARNED.md` to avoid future tokenization corruption.
+
+### RISK-008 — KPI Sidebar Section Regression
+**Status:** Resolved
+**Severity:** Medium
+**Area:** UI/UX
+**Description:** New KPI pages were missing the "Source Provenance" sidebar section. Resolved by realigning the `kpi_template.rst.j2` structural naming.
